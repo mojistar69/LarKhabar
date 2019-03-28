@@ -1,53 +1,238 @@
 <?php
-
+use app\models\City;
+use app\models\Zone;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\widgets\Breadcrumbs;
+use app\widgets\Alert;
 /* @var $this yii\web\View */
 
 $this->title = 'سامانه 118';
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+<div class="row" align="right">
+    <!-- /.box -->
+    <div class="box-body no-padding">
 
-    <div class="body-content">
+        <div style="height:40px; width:200px;" class="form-group">
+            <table width="400">
+                <tr >
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                    <td width="40"><label> &nbsp;&nbsp;&nbsp;منطقه</label></td>
+                    <td width="100">
+                        <?php $form = ActiveForm::begin();
+                        $zones = ArrayHelper::map(Zone::find()->all(), 'id', 'name'); ?>
+                        <?= Html::dropDownList("zoneId", null, $zones,
+                            ['prompt' => 'کل استان', 'id' => 'zoneId', 'class' => 'form-control',
+                                'onchange' => '
+                                                $.get("index.php?r=city/lists&id=' . '"+$(this).val(),function(data){
+                                                $("#cityId").html(data);
+                                                });'
+                            ]);
+                        ?>
+                        <?php ActiveForm::end(); ?>
+                    </td>
+                    <td><label> &nbsp;&nbsp;شهر</label></td>
+                    <td >
+                        <?php $form = ActiveForm::begin();
+                        $cities = ArrayHelper::map(City::find()->all(), 'id', 'name');
+                        ?>
+                        <?= Html::dropDownList("cityId", null, $cities, ['prompt' => 'انتخاب', 'id' => 'cityId', 'class' => 'form-control']) ?>
+                        <?php ActiveForm::end(); ?>
+                    </td>
+                </tr>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                <tr>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                </tr>
+            </table>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <br>
         </div>
 
     </div>
 </div>
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <!-- /.box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">اپراتورها</h3>
+            <!-- tools box -->
+            <div class="pull-left box-tools">
+                <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
+                            class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /. tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+            <table class="table table-condensed">
+                <tbody>
+                <tr>
+
+                    <td align="center">اپراتورهای سیستم</td>
+                    <td align="center">اپراتورهای محلی</td>
+                    <td align="center">اپراتورهای غیر محلی</td>
+                    <td align="center">زمان پاسخ دهی</td>
+                    <td align="center">میانگین زمان</td>
+                </tr>
+                <tr>
+
+                    <td align="center">
+                        <span name="txtCountOp" class="badge bg-red">0</span></td>
+                    <td align="center">
+                        <span name="txtCountActiveOp" class="badge bg-yellow">0</span></td>
+                    <td align="center">
+                        <span name="txtUnLocal" class="badge bg-green">0</span></td>
+                    <td align="center">
+                        <span name="txtTotalTime" class="badge bg-blue">00:00:00</span></td>
+                    <td align="center">
+                        <span name="txtAvgTime" class="badge bg-orange">00:00:00</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <!-- /.col -->
+    <!-- /.box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">تماس ها</h3>
+            <!-- tools box -->
+            <div class="pull-left box-tools">
+                <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
+                            class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /. tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <td align="center">تماس های وارده</td>
+                    <td align="center">قطع مشترک در حالت انتظار</td>
+                    <td align="center">پاسخ گویی توسط اپراتور</td>
+                    <td align="center">قطع تماس از طرف مشترک</td>
+                    <td align="center">مزاحم</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <span name="txtEnteredCall" class="badge bg-red">0</span></td>
+                    <td align="center">
+                        <span name="txt401402" class="badge bg-yellow">0</span></td>
+                    <td align="center">
+                        <span name="txt301304219" class="badge bg-green">0</span></td>
+                    <td align="center">
+                        <span name="txt203" class="badge bg-blue">0</span></td>
+                    <td align="center">
+                        <span name="txtDisturber" class="badge bg-orange">0</span></td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+<!--  </section>-->
+
+
+<!-- /.content -->
+<!--</div>-->
+<!-- /.content-wrapper -->
+
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+
+<script>
+    setInterval(function () { chartdetails(); }, 3000);
+</script>
+
+<script type="text/javascript">
+    function chartdetails() {
+        var cityId=$('#cityId').val();
+        var zoneId=$('#zoneId').val();
+        if(!cityId) cityId=0;
+        if(!zoneId) zoneId=0;
+        $.ajax({
+            url: 'index.php?r=dashboard/refresh-data',
+            data: "zoneId=" +zoneId  + "&cityId=" + cityId,
+            type: 'GET',
+            dataType: "json",
+
+            success: OnSuccess_,
+            error: OnErrorCall_
+        });
+
+        function OnSuccess_(data) {
+            console.log(data);
+            //txtCountOp
+            $('span[name="txtCountOp"]').empty();
+            $('span[name="txtCountOp"]').append('<span name="txtCountOp" class="badge bg-red">' + data[0] + '</span>');
+
+            //txtCountActiveOp
+            $('span[name="txtCountActiveOp"]').empty();
+            $('span[name="txtCountActiveOp"]').append('<span name="txtCountActiveOp" class="badge bg-yellow">' + data[1] + '</span>');
+            //UnLocal
+            $('span[name="txtUnLocal"]').empty();
+            $('span[name="txtUnLocal"]').append('<span name="txtUnLocal" class="badge bg-green">' + data[2] + '</span>');
+            //TotalTime
+            $('span[name="txtTotalTime"]').empty();
+            $('span[name="txtTotalTime"]').append('<span name="txtTotalTime" class="badge bg-blue">' + data[3] + '</span>');
+            //txtAvgTime
+            $('span[name="txtAvgTime"]').empty();
+            $('span[name="txtAvgTime"]').append('<span name="txtAvgTime" class="badge bg-orange">' + data[4] + '</span>');
+
+            //////////////////////////////////////
+            ////////////////////////////////////
+            //txtEnteredCall
+            $('span[name="txtEnteredCall"]').empty();
+            $('span[name="txtEnteredCall"]').append('<span name="txtEnteredCall" class="badge bg-red">' + data[5] + '</span>');
+
+            //txt401402
+            $('span[name="txt401402"]').empty();
+            $('span[name="txt401402"]').append('<span name="txt401402" class="badge bg-yellow">' + data[6] + '</span>');
+            //txt301304219
+            $('span[name="txt301304219"]').empty();
+            $('span[name="txt301304219"]').append('<span name="txt301304219" class="badge bg-green">' + data[7] + '</span>');
+            //txt203
+            $('span[name="txt203"]').empty();
+            $('span[name="txt203"]').append('<span name="txt203" class="badge bg-blue">' + data[8] + '</span>');
+            //txtDisturber
+            $('span[name="txtDisturber"]').empty();
+            $('span[name="txtDisturber"]').append('<span name="txtDisturber" class="badge bg-orange">' + data[9] + '</span>');
+
+            ///////////////////////////
+            //////////////////////////
+        }
+        function OnErrorCall_(data) {
+            console.log(data);
+            console.log("اتصال به سرور قطع می باشد!");
+        }
+    }
+</script>
+
+

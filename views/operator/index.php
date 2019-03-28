@@ -2,41 +2,53 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use miloschuman\highcharts\Highcharts;
 
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\OperatorSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Operators';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="operator-index">
 
-<div id="container" style="width:100%; height:400px;"></div>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var myChart = Highcharts.chart('container', {
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: 'Fruit Consumption'
-            },
-            xAxis: {
-                categories: ['Apples', 'Bananas', 'Oranges']
-            },
-            yAxis: {
-                title: {
-                    text: 'Fruit eaten'
-                }
-            },
-            series: [{
-                name: 'Jane',
-                data: [1, 0, 4]
-            }, {
-                name: 'John',
-                data: [5, 7, 3]
-            }]
-        });
-    });
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-</script>
+    <p>
+        <?= Html::a('Create Operator', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+//            ['class' => 'yii\grid\SerialColumn'],
+
+            'opid',
+//            'opnumber',
+//            'currentcallid',
+//            'state',
+//            'pass',
+            //'user',
+            //'citycode',
+            //'cityid',
+            //'activate',
+            'name',
+            'family',
+            //'phone',
+            //'mobile',
+            //'sex',
+            //'supervisorconfirm',
+            //'showcallerid',
+            //'showstatistics',
+            //'serviceenabled',
+            //'operationtype',
+            //'opnumberpre',
+            //'vUser',
+            //'vPass',
+
+//            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+</div>

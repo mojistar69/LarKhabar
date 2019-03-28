@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Operator;
-use app\models\OperatorSearch;
+use app\models\archivecall;
+use app\models\ArchiveCallSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OperatorController implements the CRUD actions for Operator model.
+ * ArchiveCallController implements the CRUD actions for archivecall model.
  */
-class OperatorController extends Controller
+class ArchiveCallController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class OperatorController extends Controller
     }
 
     /**
-     * Lists all Operator models.
+     * Lists all archivecall models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new OperatorSearch();
+        $searchModel = new ArchiveCallSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,8 +45,8 @@ class OperatorController extends Controller
     }
 
     /**
-     * Displays a single Operator model.
-     * @param integer $id
+     * Displays a single archivecall model.
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -58,16 +58,16 @@ class OperatorController extends Controller
     }
 
     /**
-     * Creates a new Operator model.
+     * Creates a new archivecall model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Operator();
+        $model = new archivecall();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->opid]);
+            return $this->redirect(['view', 'id' => $model->calluid]);
         }
 
         return $this->render('create', [
@@ -76,9 +76,9 @@ class OperatorController extends Controller
     }
 
     /**
-     * Updates an existing Operator model.
+     * Updates an existing archivecall model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -87,7 +87,7 @@ class OperatorController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->opid]);
+            return $this->redirect(['view', 'id' => $model->calluid]);
         }
 
         return $this->render('update', [
@@ -96,9 +96,9 @@ class OperatorController extends Controller
     }
 
     /**
-     * Deletes an existing Operator model.
+     * Deletes an existing archivecall model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -110,15 +110,15 @@ class OperatorController extends Controller
     }
 
     /**
-     * Finds the Operator model based on its primary key value.
+     * Finds the archivecall model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Operator the loaded model
+     * @param string $id
+     * @return archivecall the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Operator::findOne($id)) !== null) {
+        if (($model = archivecall::findOne($id)) !== null) {
             return $model;
         }
 
