@@ -16,6 +16,8 @@ class ArchiveCallSearch extends archivecall
      */
     public $name;
     public $family;
+    public $startDate;
+    public $endDate;
 
     public function rules()
     {
@@ -56,8 +58,10 @@ class ArchiveCallSearch extends archivecall
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->andFilterWhere(['>=', 'startdatetime', '2018-12-15 08:03:00']);
-        $query->andFilterWhere(['<=', 'startdatetime', '2018-12-15 08:03:20']);
+//        $startDate_str=$startDate.' '.'00:00:00';
+//        $endDate_str=$endDate.' '.'00:03:00';
+//        $query->andFilterWhere(['>=', 'startdatetime', $startDate_str]);
+//        $query->andFilterWhere(['<=', 'startdatetime', $endDate_str]);
         // grid filtering conditions
         $query->andFilterWhere([
             'calluid' => $this->calluid,

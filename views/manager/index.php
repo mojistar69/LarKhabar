@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\OperatorSearch */
+/* @var $searchModel app\models\ManagerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'اپراتورها';
-//$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'مدیران';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="operator-index">
+<div class="manager-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('ایجاد اپراتور', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('ایجاد مدیر', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= $dataProvider->pagination->pageSize=10;?>
     <?= GridView::widget([
@@ -25,16 +25,17 @@ $this->title = 'اپراتورها';
         'summary' => '',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+
+
             'name',
             'family',
-            'user',
-//            'opnumber',
-//            'state',
-//            'pass',
-            //'citycode',
-            //'cityid',
-            'activate',
+            'username',
+//            'accessType',
+            //'phoneNumber',
+            //'mobileNumber',
 
+            //'zoneId',
+            //'type',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

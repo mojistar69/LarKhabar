@@ -1,11 +1,21 @@
 <?php
 use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
 $this->title = 'سامانه 118';
+ActiveForm::begin(['action'=>['operator-master/selected'],'options'=>['method'=>'post']]);
 echo GridView::widget(['dataProvider'=>$dataProvider,
     'filterModel'=>$searchModel,
+    'summary' => '',
     'columns'=>[
         [
             'class' => 'yii\grid\CheckboxColumn',
+            ],
+
+        [
+            'attribute'=>'calluid',
+            'label'=>'شماره تماس'
         ],
         [
             'attribute'=>'opid',
@@ -30,10 +40,10 @@ echo GridView::widget(['dataProvider'=>$dataProvider,
 
 
 
-    ],])
+    ],
+    ])
 
 
 ?>
-<a href="<?= Yii::$app->homeUrl ?>?r=operator-master-report">
-<button type="button" class="btn btn-block btn-success btn-lg">گزارش</button>
-</a>
+<?=Html::submitButton('گزارش', ['class' => 'btn btn-primary']);?>
+<?php ActiveForm::end(); ?>

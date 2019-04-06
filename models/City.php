@@ -46,10 +46,10 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'zoneid' => 'Zoneid',
-            'code' => 'Code',
-            'name' => 'Name',
-            'headernumber' => 'Headernumber',
+            'zoneid' => 'شماره منطقه',
+            'code' => 'کد',
+            'name' => 'نام',
+            'headernumber' => 'شماره',
             'newheadernumber' => 'Newheadernumber',
             'preCode' => 'Pre Code',
             'priority' => 'Priority',

@@ -25,9 +25,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> شهر</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i> مدیر</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i> اپراتور</a></li>
+                        <li class="active"><a href="<?= Yii::$app->homeUrl ?>?r=city"><i class="fa fa-circle-o"></i> شهر</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=manager"><i class="fa fa-circle-o"></i> مدیر</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator"><i class="fa fa-circle-o"></i> اپراتور</a></li>
                     </ul>
                 </li>
 
@@ -42,12 +42,12 @@
                     <ul class="treeview-menu">
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=online-traffic"><i class="fa fa-circle-o"></i>ترافیک آنلاین</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-master"><i class="fa fa-circle-o"></i>کارکرد اپراتور</a></li>
-                        <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i>آرشیو اپراتور</a></li>
-                        <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i>جزئیات عملکرد اپراتور</a>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=archive-operator"><i class="fa fa-circle-o"></i>آرشیو اپراتور</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-detail"><i class="fa fa-circle-o"></i>جزئیات عملکرد اپراتور</a>
                         </li>
-                        <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i>میانگین عملکرد اپراتور</a>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-master"><i class="fa fa-circle-o"></i>میانگین عملکرد اپراتور</a>
                         </li>
-                        <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i>آمار کلی تماس ها</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-master"><i class="fa fa-circle-o"></i>آمار کلی تماس ها</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

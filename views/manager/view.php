@@ -4,20 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Operator */
+/* @var $model app\models\Manager */
 
 $this->title = $model->name;
-//$this->params['breadcrumbs'][] = ['label' => 'Operators', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => 'Managers', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="operator-view">
+<div class="manager-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('بروزرسانی', ['update', 'id' => $model->opid], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('حذف', ['delete', 'id' => $model->opid], [
+        <?= Html::a('بروزرسانی', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('حذف', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,20 +29,16 @@ $this->title = $model->name;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-
-            'opnumber',
-
-            'state',
-
-            'user',
-
-            'activate',
+            'id',
             'name',
             'family',
-            'phone',
-            'mobile',
-            'sex',
-
+            'username',
+            'password',
+            'phoneNumber',
+            'mobileNumber',
+            'accessType',
+            'zoneId',
+            'type',
         ],
     ]) ?>
 

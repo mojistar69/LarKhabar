@@ -14,21 +14,21 @@ AppAsset::register($this);
     <!-- /.box -->
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title"> کارکرداپراتورها</h3>
+            <h3 class="box-title"> جزییات عملکرد اپراتور</h3>
             <!-- tools box -->
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
-                        class="fa fa-minus"></i>
+                            class="fa fa-minus"></i>
                 </button>
             </div>
             <!-- /. tools -->
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
-<!--/////////////////////////////////////////////////-->
+            <!--/////////////////////////////////////////////////-->
 
             <div class="container" style="max-width: 500px;">
-                <?php ActiveForm::begin(['action'=>['operator-master/grid'],'options'=>['method'=>'post']]); ?>
+                <?php ActiveForm::begin(['action'=>['operator-detail/grid'],'options'=>['method'=>'post']]); ?>
                 <div class="form-group">
                     <div class="input-group">
                         <label for="startDate">از تاریخ</label>
@@ -67,7 +67,7 @@ AppAsset::register($this);
             <!-- tools box -->
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
-                        class="fa fa-minus"></i>
+                            class="fa fa-minus"></i>
                 </button>
             </div>
             <!-- /. tools -->
@@ -81,3 +81,4 @@ AppAsset::register($this);
     <!-- /.box -->
     <!-- /.col -->
 </div>
+

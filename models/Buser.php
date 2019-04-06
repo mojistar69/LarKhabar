@@ -50,4 +50,14 @@ class Buser extends \yii\db\ActiveRecord
             'authKey' => 'Auth Key',
         ];
     }
+    public static function findByUsername($username)
+    {
+        return static::findOne(['username' => $username]);
+    }
+
+
+    public function validatePassword($password)
+    {
+        return $this->password === $password;
+    }
 }

@@ -28,10 +28,10 @@ class AppAsset extends AssetBundle
       'bower_components/Ionicons/css/ionicons.min.css',
       'dist/css/AdminLTE.css',
       'dist/css/skins/_all-skins.min.css',
+      'dist/css/kamadatepicker.css',
     ];
     public $js = [
         'dist/js/highcharts.js',
-      //  'bower_components/jquery/dist/jquery.min.js',
         'bower_components/jquery-ui/jquery-ui.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'bower_components/raphael/raphael.min.js',
@@ -45,6 +45,9 @@ class AppAsset extends AssetBundle
         'dist/js/adminlte.min.js',
         'dist/js/pages/dashboard.js',
         'dist/js/demo.js',
+        'dist/js/kamadatepicker.js',
+//        'dist/js/jquery.js',
+
 
 
     ];

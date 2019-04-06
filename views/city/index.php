@@ -6,30 +6,28 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cities';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'شهر';
+
 ?>
 <div class="city-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create City', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('ثبت شهر', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?= $dataProvider->pagination->pageSize=10;?>
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
+        'summary' => '',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'zoneid',
-            'code',
             'name',
-            'headernumber',
-            //'newheadernumber',
-            //'preCode',
-            //'priority',
+            'code',
+
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

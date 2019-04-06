@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Buser;
-use yii\data\ActiveDataProvider;
+use app\models\Manager;
+use app\models\ManagerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BuserController implements the CRUD actions for Buser model.
+ * ManagerController implements the CRUD actions for Manager model.
  */
-class BuserController extends Controller
+class ManagerController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,22 +30,22 @@ class BuserController extends Controller
     }
 
     /**
-     * Lists all Buser models.
+     * Lists all Manager models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Buser::find(),
-        ]);
+        $searchModel = new ManagerSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Buser model.
+     * Displays a single Manager model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class BuserController extends Controller
     }
 
     /**
-     * Creates a new Buser model.
+     * Creates a new Manager model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Buser();
+        $model = new Manager();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class BuserController extends Controller
     }
 
     /**
-     * Updates an existing Buser model.
+     * Updates an existing Manager model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class BuserController extends Controller
     }
 
     /**
-     * Deletes an existing Buser model.
+     * Deletes an existing Manager model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,20 +110,18 @@ class BuserController extends Controller
     }
 
     /**
-     * Finds the Buser model based on its primary key value.
+     * Finds the Manager model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Buser the loaded model
+     * @return Manager the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Buser::findOne($id)) !== null) {
+        if (($model = Manager::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-
 }

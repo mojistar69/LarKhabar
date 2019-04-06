@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Operator */
 
-$this->title = 'Update Operator: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Operators', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->opid]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'ویرایش اپراتور ' . $model->name;
+//$this->params['breadcrumbs'][] = ['label' => 'Operators', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->opid]];
+//$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="operator-update">
 
