@@ -46,7 +46,6 @@ class ArchiveCallSearch extends archivecall
     public function search($params)
     {
         $query = archivecall::find();
-        $query->joinWith(['operator']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -58,10 +57,7 @@ class ArchiveCallSearch extends archivecall
             // $query->where('0=1');
             return $dataProvider;
         }
-//        $startDate_str=$startDate.' '.'00:00:00';
-//        $endDate_str=$endDate.' '.'00:03:00';
-//        $query->andFilterWhere(['>=', 'startdatetime', $startDate_str]);
-//        $query->andFilterWhere(['<=', 'startdatetime', $endDate_str]);
+
         // grid filtering conditions
         $query->andFilterWhere([
             'calluid' => $this->calluid,
@@ -86,7 +82,6 @@ class ArchiveCallSearch extends archivecall
             ->andFilterWhere(['like', 'responses', $this->responses])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'family', $this->family]);
-
 
         return $dataProvider;
     }

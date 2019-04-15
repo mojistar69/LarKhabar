@@ -12,6 +12,9 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'jdate' => [
+            'class' => 'jDate\DateTime'
+        ],
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
             'nullDisplay' => '',

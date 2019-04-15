@@ -8,6 +8,7 @@ use app\models\Operator;
 use app\models\OperatorSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\debug\models\timeline\Search;
 
 class OperatorMasterController extends \yii\web\Controller
@@ -20,25 +21,31 @@ class OperatorMasterController extends \yii\web\Controller
 
     public function actionSelected()
     {
-        $select = (array) Yii::$app->request->post('selection');
-        $selection_str='';
-        foreach ($select as $s ){
-        $selection_str=$selection_str.','.$s;
-    }
-        $selection_str=substr($selection_str,1,strlen($selection_str));
-
+        $startDatetime='2018-01-01 00:00:00';
+        $endDatetime='2020-01-01 00:00:00';
+        $select_array = (array) Yii::$app->request->post('selection');
+        $operators=$this->select($select_array);
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("SELECT opid FROM `archivecalls` WHERE calluid IN ($selection_str)");
-        $operators = $command->queryAll();
+        $command = $connection->createCommand("call selectmaster(:operators,:startdate,:enddate)")
+            ->bindValue(':operators' , '1,1117,1116' )
+            ->bindValue(':operators' , $operators )
+            ->bindValue(':startdate' , '2018-01-01 00:00:00' )
+            ->bindValue(':enddate' , '2020-01-01 00:00:00' );
+        $result = $command->queryAll();
 
-        $operators_str='';
-        foreach ($operators as $o ){
-            $operators_str=$operators_str.','.$o['opid'];
+        $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
+        return $this->render('operatorMasterReport',['dataProvider'=>$dataProvider
+        ]);
+    }
+
+    public function select($select_array)
+    {
+        $selection_str='';
+        foreach ($select_array as $s ){
+            $selection_str=$selection_str.','.$s;
         }
-        $operators_str=substr($operators_str,1,strlen($operators_str));
-//        var_dump($operators_str);
-        return $this->redirect(['operator-master-report/index', 'operators_str' => $operators_str]);
-
+        $selection_str=substr($selection_str,1,strlen($selection_str));
+        return $selection_str;
     }
 
     public function actionGrid()
@@ -48,19 +55,30 @@ class OperatorMasterController extends \yii\web\Controller
         $tmp1 = explode('/', Yii::$app->request->post('startDate'));
         $startDate = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2],'-');
     }
-        $endDate='2018-12-15';
+        $endDate='2020-12-15';
         if (Yii::$app->request->post('endDate')!='') {
             $tmp2 = explode('/', Yii::$app->request->post('endDate'));
-            $endDate = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2],'-');
+            $endDate = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2],'-');
         }
+        $startDatetime='\''.$startDate.' 00:00:00\'';
+        $endDatetime='\''.$endDate.' 00:00:00\'';
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("select operators.cityid,operators.opid,operators.name as name,operators.family as family,
+operators.opnumber as opnumber,archivecalls.calluid as calluid,
+archivecalls.startdatetime as startdatetime
+from archivecalls  
+join operators on archivecalls.opid = operators.opid 
+where archivecalls.startdatetime >= $startDatetime
+and archivecalls.enddatetime <= $endDatetime
+group by opid; ");
+        $result = $command->queryAll();
 
-        $archivecallSearch= new ArchiveCallSearch();
-        $dataProvider=$archivecallSearch->Search(\Yii::$app->request->queryParams);
+        $archiveCallSearch= new ArchiveCallSearch();
+        $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
         $dataProvider->pagination->pageSize=10;
-        return $this->render('grid',['searchModel'=>$archivecallSearch,
-                                          'dataProvider'=>$dataProvider
-]);
-
+        return $this->render('grid',['searchModel'=>$archiveCallSearch,
+            'dataProvider'=>$dataProvider
+        ]);
 
     }
     function jalali_to_gregorian($jy,$jm,$jd,$mod=''){
@@ -90,5 +108,16 @@ class OperatorMasterController extends \yii\web\Controller
             $gd-=$v;
         }
         return($mod=='')?array($gy,$gm,$gd):$gy.$mod.$gm.$mod.$gd;}
+
+    public function actionSearch()
+    {
+        $searchModel = new ArchiveCallSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->post());
+
+        return $this->render('grid', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
 }

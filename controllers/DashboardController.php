@@ -55,6 +55,7 @@ class DashboardController extends \yii\web\Controller
         $CountOperatorQuery = $command->queryAll();
         $CountOperator=$CountOperatorQuery[0]['count'];
 
+
         //CountActiveOperators
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentOperators_GetCountByCityCode(:cityId)")

@@ -1,13 +1,12 @@
 <?php
 use yii\grid\GridView;
-use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->title = 'سامانه 118';
-
+use yii\helpers\Html;
+ActiveForm::begin(['action'=>['operator-average/selected'],'options'=>['method'=>'post']]);
 ?>
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">کارکرد اپراتور</h3>
+        <h3 class="box-title">میانگین عملکرد اپراتور</h3>
         <!-- tools box -->
         <div class="pull-left box-tools">
             <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -18,12 +17,9 @@ $this->title = 'سامانه 118';
     </div>
     <!-- /.box-header -->
     <div class="box-body no-padding">
-
-
         <?php
-        ActiveForm::begin(['action'=>['operator-master/selected'],'options'=>['method'=>'post']]);
         echo GridView::widget(['dataProvider'=>$dataProvider,
-//            'filterModel'=>$searchModel,
+            'filterModel'=>$searchModel,
             'summary' => '',
             'columns'=>[
                 [
@@ -34,13 +30,10 @@ $this->title = 'سامانه 118';
                 ],
 
                 [
-                    'attribute'=>'calluid',
-                    'label'=>'شماره تماس'
+                    'attribute'=>'opnumber',
+                    'label'=>'اپراتور'
                 ],
-                [
-                    'attribute'=>'opid',
-                    'label'=>'شماره اپراتور'
-                ],
+
                 [
                     'attribute'=>'name',
                     'value'=>'name',
@@ -53,20 +46,11 @@ $this->title = 'سامانه 118';
                     'label'=>' نام خانوادگی اپراتور'
                 ],
 
-                [
-                    'attribute' => 'تاریخ',
-                    'format' => 'raw',
-                    'value' => function ($searchModel) {
-                        $date = new DateTime($searchModel['startdatetime']);
-                        return Yii::$app->jdate->date("o/n/d – H:i", (int) strtotime($date->format('Y-m-d H:i:s')));
-                    },
-                ],
-            ],
-        ])
+            ],])
         ?>
     </div>
     <!-- /.box-body -->
 </div>
-
 <?= Html::submitButton('گزارش', ['class' => 'btn btn-primary']);?>
 <?php ActiveForm::end(); ?>
+

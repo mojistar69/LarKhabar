@@ -14,7 +14,7 @@ AppAsset::register($this);
     <!-- /.box -->
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title"> جزییات عملکرد اپراتور</h3>
+            <h3 class="box-title"> میانگین عملکرد اپراتور</h3>
             <!-- tools box -->
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -28,7 +28,7 @@ AppAsset::register($this);
             <!--/////////////////////////////////////////////////-->
 
             <div class="container" style="max-width: 500px;">
-                <?php ActiveForm::begin(['action'=>['operator-detail/grid'],'options'=>['method'=>'post']]); ?>
+                <?php ActiveForm::begin(['action'=>['operator-average/grid'],'options'=>['method'=>'post']]); ?>
                 <div class="form-group">
                     <div class="input-group">
                         <label for="startDate">از تاریخ</label>

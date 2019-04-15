@@ -45,9 +45,9 @@
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=archive-operator"><i class="fa fa-circle-o"></i>آرشیو اپراتور</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-detail"><i class="fa fa-circle-o"></i>جزئیات عملکرد اپراتور</a>
                         </li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-master"><i class="fa fa-circle-o"></i>میانگین عملکرد اپراتور</a>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-average"><i class="fa fa-circle-o"></i>میانگین عملکرد اپراتور</a>
                         </li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-master"><i class="fa fa-circle-o"></i>آمار کلی تماس ها</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=total-report"><i class="fa fa-circle-o"></i>آمار کلی تماس ها</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

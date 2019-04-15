@@ -6,7 +6,7 @@ use app\models\ArchiveCallSearch;
 use Yii;
 use yii\data\ArrayDataProvider;
 
-class OperatorDetailController extends \yii\web\Controller
+class OperatorAverageController extends \yii\web\Controller
 {
     public function actionIndex()
     {
@@ -39,19 +39,32 @@ group by opid; ");
     {
         $select_array = (array) Yii::$app->request->post('selection');
         $selection_str=$this->select($select_array);
-        var_dump($selection_str);
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("select *,operators.name as opname,callstates.name as state,
- city.name as cname from archivecalls
+        $command = $connection->createCommand("SELECT archivecalls.opnumber, count(archivecalls.opnumber) as 'all', 
+sum(talktime) as total,operators.name as name,operators.family as family,
+tmp.oral as oral,tmp.unrelated as unrelated,tmp.noinfo as noinfo,
+tmp.disturber as disturber FROM archiveCalls
 join operators on archivecalls.opid = operators.opid
 join city on archivecalls.cityId = city.id
-join callstates on callstates.Id = archivecalls.calllaststate
+join (SELECT opnumber,logindatetime,SUM(endcall7) as oral, SUM(endcall8) as unrelated,
+SUM(endcall9) as noinfo, SUM(endcall11) as disturber from archiveOperators 
+GROUP BY opnumber ) as tmp 
+on archivecalls.opnumber = tmp.opnumber 
+and tmp.logindatetime >= '2018-01-01 00:00:00'
+and tmp.logindatetime <='2020-01-01 00:00:00'
+
  WHERE  startdatetime >= '2018-01-01 00:00:00'  AND
-  startdatetime <= '2020-01-01 00:00:00' and archivecalls.opnumber in ($selection_str) ;
+  startdatetime <= '2020-01-01 00:00:00' and
+  calllaststate IN (301,304,203) and
+   archivecalls.opnumber in ($selection_str)
+    GROUP BY opnumber;
   ");
+        $model=
         $result = $command->queryAll();
         $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
-        return $this->render('operatorDetailReport',['dataProvider'=>$dataProvider
+        return $this->render('operatorAverageReport',[
+            'model' => $model,
+            'dataProvider'=>$dataProvider
         ]);
     }
 
