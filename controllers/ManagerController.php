@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ArchiveCallSearch;
 use Yii;
 use app\models\Manager;
 use app\models\ManagerSearch;
@@ -35,7 +36,7 @@ class ManagerController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ManagerSearch();
+        $searchModel = new ArchiveCallSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

@@ -1,5 +1,4 @@
 <?php
-use miloschuman\highcharts\Highcharts;
 ?>
 
 <!-- Small boxes (Stat box) -->
@@ -90,8 +89,6 @@ use miloschuman\highcharts\Highcharts;
             </div>
         </div>
     </section>
-
-    <!-- ./col -->
 </div>
 <!-- /.row -->
 
@@ -174,7 +171,7 @@ use miloschuman\highcharts\Highcharts;
 
         <!-- /.box (chat box) -->
 
-        <div id="chart2" style="width:100%; height:400px;">
+        <div id="chart4" style="width:100%; height:400px;">
 
             <script>
                 var mChart4;
@@ -188,7 +185,7 @@ use miloschuman\highcharts\Highcharts;
                         }
                     });
                     mChart4 =
-                        Highcharts.chart('chart2', {
+                        Highcharts.chart('chart4', {
                             chart: {
                                 type: 'pie',
                                 plotBackgroundColor: null,

@@ -35,7 +35,7 @@ AppAsset::register($this);
                                                 <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click" data-targetselector="#fromDate1" data-groupid="group1" data-fromdate="true" data-enabletimepicker="false" data-placement="left">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                 </div>
-                                            <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate']) ?>
+                                            <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate', 'value' => $startDatetime]) ?>
                                         </div>
 
                                         <div class="input-group">
@@ -43,13 +43,12 @@ AppAsset::register($this);
                                                 <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click" data-targetselector="#toDate1" data-groupid="group1" data-todate="true" data-enabletimepicker="true" data-placement="left">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                 </div>
-                                            <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate']) ?>
+                                            <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate', 'value' => $endDatetime]) ?>
                                         </div>
                                 </div>
 
                                 <div class="form-group" align="center">
                                     <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary']) ?>
-                                    <?= Html::resetButton(Yii::t('app', 'ریست'), ['class' => 'btn btn-default']) ?>
                                 </div>
                         </div>
 
@@ -65,23 +64,6 @@ AppAsset::register($this);
         <!-- /.box -->
         <!-- /.col -->
         <!-- /.box -->
-        <div class="box">
-                <div class="box-header">
-                        <h3 class="box-title">تماس ها</h3>
-                        <!-- tools box -->
-                        <div class="pull-left box-tools">
-                                <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
-                                </button>
-                        </div>
-                        <!-- /. tools -->
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body no-padding">
-                        <table class="table table-striped"></table>
-                </div>
-                <!-- /.box-body -->
-        </div>
         <!-- /.box -->
         <!-- /.col -->
 </div>

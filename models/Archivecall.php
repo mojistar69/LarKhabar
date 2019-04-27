@@ -88,10 +88,14 @@ class Archivecall extends \yii\db\ActiveRecord
 
     public function getName()
     {
+        if($this->operator !=null)
         return $this->operator->name;
+        else return 'نامعلوم';
     }
     public function getFamily()
     {
+        if($this->operator !=null)
         return $this->operator->family;
+        else return 'نامعلوم';
     }
 }

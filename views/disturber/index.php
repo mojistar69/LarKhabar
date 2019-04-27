@@ -11,17 +11,17 @@ AppAsset::register($this);
 
 <div class="row">
     <div class="box">
-        <div class="box-header bg-purple-gradient">
-            <h3 class="box-title"> کارکرداپراتورها</h3>
+        <div class="box-header bg-green-gradient">
+            <h3 class="box-title"> مزاحمین</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
                             class="fa fa-minus"></i>
                 </button>
             </div>
         </div>
-        <div class="box-body ">
+        <div class="box-body bg-green-gradient">
             <div class="container" style="max-width: 500px;">
-                <?php ActiveForm::begin(['action' => ['operator-master/grid'], 'options' => ['method' => 'post', 'data-pjax' => '']]); ?>
+                <?php ActiveForm::begin(['action' => ['disturber/grid'], 'options' => ['method' => 'post', 'data-pjax' => '']]); ?>
                 <div class="form-group">
                     <div class="input-group">
                         <label for="startDate">از تاریخ</label>
@@ -50,68 +50,40 @@ AppAsset::register($this);
             <?php ActiveForm::end(); ?>
             <?php
             if (isset($dataProvider)) {
-                ActiveForm::begin(['action' => ['operator-master/selected'], 'options' => ['method' => 'post']]);
-                ?>
-                <div class="form-group" align="center">
-                    <input type="hidden"   name="sdate" value="<?php echo $startDatetime?>">
-                    <input type="hidden"   name="edate" value="<?php echo $endDatetime?>">
-                    <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info']); ?>
-                </div>
-            <?php
 
                 echo GridView::widget(['dataProvider' => $dataProvider,
+
                     'summary' => '',
                     'columns' => [
                         [
-                            'class' => 'yii\grid\CheckboxColumn',
-                            'checkboxOptions' => function ($model, $key, $index, $widget) {
-                                return ['value' => $model['opnumber']];
-                            },
-                        ],
+                            'attribute' => 'callerid',
+                            'value'     => function ($model) {
 
-                        [
-                            'attribute' => 'calluid',
-                            'label' => 'calluid',
-                            'label' => 'شماره تماس'
+                                if ($model['callerid'] != 'unavailable') {
+                                    return $model['callerid'];
+                                } else {
+                                    return 'نامشخص';
+                                }
+                            },
+                            'label' => 'تماس گیرنده'
                         ],
                         [
-                            'attribute' => 'opid',
-                            'label' => 'شماره اپراتور'
+                            'attribute' => 'count',
+                            'value' => 'count',
+                            'label' => 'دفعات'
                         ],
                         [
                             'attribute' => 'name',
                             'value' => 'name',
-                            'label' => 'نام'
+                            'label' => 'شهر'
                         ],
-                        [
-                            'attribute' => 'family',
-                            'value' => 'family',
-                            'label' => ' نام خانوادگی اپراتور'
-                        ],
-                        [
-                            'attribute' => 'تاریخ',
-                            'format' => 'raw',
-                            'value' => function ($searchModel) {
-                                $date = new DateTime($searchModel['startdatetime']);
-                                return Yii::$app->jdate->date("o/n/d – H:i", (int)strtotime($date->format('Y-m-d H:i:s')));
-                            },
-                        ],
+
                     ],
                 ]);
 
-                ActiveForm::end();
             }
             ?>
         </div>
     </div>
 </div>
 
-<script>
-    $( document ).ready(function() {
-        var date='&startDate='+$("#startDate").val()+'&endDate='+$("#endDate").val();
-        $(".pagination li").each(function(){
-            if($(this).find('a').attr('href'))
-                $(this).find('a').attr('href',$(this).find('a').attr('href')+date);
-        });
-    });
-</script>

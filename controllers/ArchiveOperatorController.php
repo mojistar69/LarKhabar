@@ -10,7 +10,10 @@ class ArchiveOperatorController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-    return $this->render('index');
+        return $this->render('index',
+            ['startDatetime'=>'1397/01/01',
+                'endDatetime'=>'1398/01/01'
+            ]);
     }
 
     public function actionGrid()
@@ -27,7 +30,6 @@ where archiveOperators.logindatetime >= '2018-01-01 00:00:00'
 and archiveOperators.logindatetime <= '2020-01-01 00:00:00' 
 group by opid; ");
         $result = $command->queryAll();
-
         $archiveoperatorSearch= new ArchiveOperatorSearch();
         $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
         $dataProvider->pagination->pageSize=10;

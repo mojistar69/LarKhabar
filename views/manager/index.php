@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'name',
             'family',
-            'username',
+//            'username',
 //            'accessType',
             //'phoneNumber',
             //'mobileNumber',

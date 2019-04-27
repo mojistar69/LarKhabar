@@ -2,8 +2,8 @@
 use yii\grid\GridView;
 ?>
 <div class="box">
-    <div class="box-header">
-        <h3 class="box-title">گزارش کارکرد اپراتور</h3>
+    <div class="box-header bg-success">
+        <h3 class="box-title text-info">گزارش کارکرد اپراتور</h3>
         <!-- tools box -->
         <div class="pull-left box-tools">
             <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -13,10 +13,9 @@ use yii\grid\GridView;
         <!-- /. tools -->
     </div>
     <!-- /.box-header -->
-    <div class="box-body no-padding">
+    <div class="box-body no-padding bg-info ">
         <?php
         echo GridView::widget(['dataProvider'=>$dataProvider,
-
             'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => 'ندارد'],
             'summary' => '',
             'columns'=>[

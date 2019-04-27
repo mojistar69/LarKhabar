@@ -39,7 +39,6 @@ group by opid; ");
     {
         $select_array = (array) Yii::$app->request->post('selection');
         $selection_str=$this->select($select_array);
-        var_dump($selection_str);
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("select *,operators.name as opname,callstates.name as state,
  city.name as cname from archivecalls

@@ -49,7 +49,6 @@ AppAsset::register($this);
 
                 <div class="form-group" align="center">
                     <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary']) ?>
-                    <?= Html::resetButton(Yii::t('app', 'ریست'), ['class' => 'btn btn-default']) ?>
                 </div>
             </div>
 
