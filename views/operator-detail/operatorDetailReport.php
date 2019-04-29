@@ -1,9 +1,10 @@
 <?php
 use yii\grid\GridView;
+$title='جزئیات عملکرد اپراتور از '.$startdate.'  تا '.$enddate;
 ?>
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">گزارش جزئیات عملکرد اپراتور</h3>
+        <h3 class="box-title"><?php echo $title ?></h3>
         <!-- tools box -->
         <div class="pull-left box-tools">
             <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -13,7 +14,7 @@ use yii\grid\GridView;
         <!-- /. tools -->
     </div>
     <!-- /.box-header -->
-    <div class="box-body no-padding">
+    <div class="box-body no-padding bg-green-gradient">
          <?php
         echo GridView::widget(['dataProvider'=>$dataProvider,
         'summary' => '',

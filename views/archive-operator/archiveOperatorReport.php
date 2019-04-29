@@ -1,9 +1,13 @@
 <?php
 use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+$title='گزارش آرشیو اپراتور از '.$startdate.'  تا '.$enddate;
 ?>
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">گزارش آرشیو اپراتور</h3>
+        <h3 class="box-title"><?php echo $title ?></h3>
         <!-- tools box -->
         <div class="pull-left box-tools">
             <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -13,7 +17,7 @@ use yii\grid\GridView;
         <!-- /. tools -->
     </div>
     <!-- /.box-header -->
-    <div class="box-body no-padding">
+    <div class="box-body no-padding bg-info">
         <?php
         echo GridView::widget(['dataProvider'=>$dataProvider,
             'summary' => '',
@@ -63,11 +67,14 @@ use yii\grid\GridView;
                     'value'=>'cname',
                     'label'=>'نام شهر'
                 ],
-
-
             ],])
 
         ?>
+    </div>
+    <div align="center">
+        <?php ActiveForm::begin(['action' => ['archive-operator/index'], 'options' => ['method' => 'post', 'data-pjax' => '']]); ?>
+        <?php echo Html::submitButton('برگشت', ['class' => 'btn btn-info']); ?>
+        <?php ActiveForm::end(); ?>
     </div>
     <!-- /.box-body -->
 </div>

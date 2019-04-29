@@ -36,7 +36,7 @@ class ManagerController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ArchiveCallSearch();
+        $searchModel = new ManagerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

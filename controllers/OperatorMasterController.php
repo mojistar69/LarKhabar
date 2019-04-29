@@ -21,10 +21,41 @@ class OperatorMasterController extends \yii\web\Controller
 
     public function actionSelected()
     {
-        $select_array = (array)Yii::$app->request->post('selection');
-        $startDatetime=Yii::$app->request->post('sdate');
-        $endDatetime=Yii::$app->request->post('edate');
-        $operators = $this->select($select_array);
+        $startDate_Miladi='2017-01-01';
+        $endDate_Miladi ='2018-01-02';
+        $startDate_Shamsi='';
+        $endDate_Shamsi ='';
+        if (Yii::$app->request->post('sdate') != '') {
+            $startDate_Shamsi=Yii::$app->request->post('sdate');
+            $tmp1 = explode('/',$startDate_Shamsi );
+            $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+        }
+        if (Yii::$app->request->post('edate') != '') {
+            $endDate_Shamsi=Yii::$app->request->post('edate');
+            $tmp2 = explode('/', $endDate_Shamsi);
+            $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+        }
+        if (Yii::$app->request->post('selection') != '') {
+            $select_array = (array)Yii::$app->request->post('selection');
+            $operators = $this->select($select_array);
+        }
+        if (Yii::$app->request->get('startDate') != '') {
+            $startDate_Shamsi=Yii::$app->request->get('startDate');
+            $tmp1 = explode('/',$startDate_Shamsi );
+            $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+        }
+        if (Yii::$app->request->get('endDate') != '') {
+            $endDate_Shamsi=Yii::$app->request->get('endDate');
+            $tmp2 = explode('/', $endDate_Shamsi);
+            $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+        }
+
+        if (Yii::$app->request->get('selection') != '') {
+            $operators = Yii::$app->request->get('selection');
+        }
+        $startDatetime =  $startDate_Miladi . ' 00:00:00';
+        $endDatetime =  $endDate_Miladi . ' 00:00:00';
+
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call selectmaster(:operators,:startdate,:enddate)")
             ->bindValue(':operators', $operators)
@@ -33,7 +64,13 @@ class OperatorMasterController extends \yii\web\Controller
         $result = $command->queryAll();
 
         $dataProvider = new ArrayDataProvider(['allModels' => $result,]);
-        return $this->render('operatorMasterReport', ['dataProvider' => $dataProvider
+        $dataProvider->pagination->pageSize=10;
+        var_dump( $startDate_Shamsi);
+        return $this->render('operatorMasterReport',
+            ['dataProvider' => $dataProvider,
+                'startdate' => $startDate_Shamsi,
+                'enddate' => $endDate_Shamsi,
+                'selection_array' => $operators,
         ]);
     }
 
@@ -76,13 +113,19 @@ class OperatorMasterController extends \yii\web\Controller
         $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
         $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
 
-        $searchModel = new ArchiveCallSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize=10;
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("select *
+from archivecalls  
+join operators on archivecalls.opid = operators.opid 
+where archivecalls.startdatetime >= $startDatetime
+and archivecalls.enddatetime <= $endDatetime 
+");
+        $result = $command->queryAll();
+        $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
+        $dataProvider->pagination->pageSize=20;
 
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'startDatetime' => $startDate_Shamsi,
             'endDatetime' => $endDate_Shamsi,

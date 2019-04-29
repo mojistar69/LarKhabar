@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
-use yii\widgets\Pjax;
+
 
 AppAsset::register($this);
 ?>

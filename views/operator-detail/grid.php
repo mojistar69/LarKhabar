@@ -19,7 +19,6 @@ ActiveForm::begin(['action'=>['operator-detail/selected'],'options'=>['method'=>
     <div class="box-body no-padding">
         <?php
         echo GridView::widget(['dataProvider'=>$dataProvider,
-            'filterModel'=>$searchModel,
         'summary' => '',
         'columns'=>[
         [
