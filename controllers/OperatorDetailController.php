@@ -18,30 +18,26 @@ class OperatorDetailController extends \yii\web\Controller
 
     public function actionGrid()
     {
-        $startDate_Miladi='2017-01-01';
-        $endDate_Miladi ='2018-01-02';
         $startDate_Shamsi='';
         $endDate_Shamsi ='';
         if (Yii::$app->request->post('startDate') != '') {
             $startDate_Shamsi=Yii::$app->request->post('startDate');
-            $tmp1 = explode('/',$startDate_Shamsi );
-            $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         }
         if (Yii::$app->request->post('endDate') != '') {
             $endDate_Shamsi=Yii::$app->request->post('endDate');
-            $tmp2 = explode('/', $endDate_Shamsi);
-            $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
         }
         if (Yii::$app->request->get('startDate') != '') {
             $startDate_Shamsi=Yii::$app->request->get('startDate');
-            $tmp1 = explode('/',$startDate_Shamsi );
-            $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         }
         if (Yii::$app->request->get('endDate') != '') {
             $endDate_Shamsi=Yii::$app->request->get('endDate');
-            $tmp2 = explode('/', $endDate_Shamsi);
-            $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
         }
+
+        $tmp1 = explode('/',$startDate_Shamsi );
+        $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+        $tmp2 = explode('/', $endDate_Shamsi);
+        $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+
         $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
         $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
 
@@ -50,8 +46,8 @@ class OperatorDetailController extends \yii\web\Controller
 operators.opnumber as opnumber
 from archivecalls  
 join operators on archivecalls.opid = operators.opid 
-where archivecalls.startdatetime >= '2018-01-01 00:00:00'
-and archivecalls.enddatetime <= '2020-01-01 00:00:00' 
+where archivecalls.startdatetime >= $startDatetime
+and archivecalls.enddatetime <= $endDatetime 
 group by opid; ");
         $result = $command->queryAll();
         //
@@ -70,25 +66,52 @@ group by opid; ");
 
     public function actionSelected()
     {
-        $select_array = (array) Yii::$app->request->post('selection');
-        $startDatetime=Yii::$app->request->post('sdate');
-        $endDatetime=Yii::$app->request->post('edate');
-        $selection_str=$this->select($select_array);
+        $startDate_Shamsi = '';
+        $endDate_Shamsi = '';
+        if (Yii::$app->request->post('sdate') != '') {
+            $startDate_Shamsi = Yii::$app->request->post('sdate');
+        }
+        if (Yii::$app->request->post('edate') != '') {
+            $endDate_Shamsi = Yii::$app->request->post('edate');
+        }
+        if (Yii::$app->request->get('startDate') != '') {
+            $startDate_Shamsi = Yii::$app->request->get('startDate');
+        }
+        if (Yii::$app->request->get('endDate') != '') {
+            $endDate_Shamsi = Yii::$app->request->get('endDate');
+        }
+        if (Yii::$app->request->post('selection') != '') {
+            $select_array = (array)Yii::$app->request->post('selection');
+            $operators = $this->select($select_array);
+        }
+        if (Yii::$app->request->get('selection') != '') {
+            $operators = Yii::$app->request->get('selection');
+        }
+        $tmp1 = explode('/', $startDate_Shamsi);
+
+        $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+        $tmp2 = explode('/', $endDate_Shamsi);
+        $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+
+        $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
+        $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
+
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("select *,operators.name as opname,callstates.name as state,
  city.name as cname from archivecalls
 join operators on archivecalls.opid = operators.opid
 join city on archivecalls.cityId = city.id
 join callstates on callstates.Id = archivecalls.calllaststate
- WHERE  startdatetime >= '2018-01-01 00:00:00'  AND
-  startdatetime <= '2020-01-01 00:00:00' and archivecalls.opnumber in ($selection_str) ;
+ WHERE  startdatetime >= $startDatetime  AND
+  startdatetime <= $endDatetime and archivecalls.opnumber in ($operators) ;
   ");
         $result = $command->queryAll();
         $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
-//        return $this->render('operatorDetailReport',['dataProvider'=>$dataProvider,
-//            'startdate' => $startDatetime,
-//            'enddate' => $endDatetime,
-//        ]);
+        return $this->render('operatorDetailReport',['dataProvider'=>$dataProvider,
+            'startdate' => $startDate_Shamsi,
+            'enddate' => $endDate_Shamsi,
+            'selection_array' => $operators,
+        ]);
     }
 
     public function select($select_array)

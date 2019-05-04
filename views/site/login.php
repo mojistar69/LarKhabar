@@ -1,51 +1,95 @@
+<!DOCTYPE html>
 <?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
-
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\widgets\ActiveForm;
 use yii\captcha\Captcha;
-
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<head>
+    <link rel="icon" type="image/png" href="images/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/util.css">
+    <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/main.css">
+</head>
 
-    <p>Please fill out the following fields to login:</p>
+<body>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
-
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
-
-    <?= $form->field($model, 'captcha')->widget(Captcha::className()) ?>
+<?php if (Yii::$app->session->hasFlash('success')): ?>
+    <div class="alert alert-success alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <h4><i class="icon fa fa-check"></i>Complated!</h4>
+        <?= Yii::$app->session->getFlash('success') ?>
+    </div>
+<?php endif;
 
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
+?>
 
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+
+
+
+
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('images/bg2.png');">
+        <div class="wrap-login100">
+            <?php $form = ActiveForm::begin([
+
+            ]); ?>
+            <span class="login100-form-logo">
+						<!--<i class="zmdi zmdi-landscape"></i>-->
+						<img src="images/logo3.png" alt="Smiley face" width="110" height="100
+">
+
+					</span>
+            <br>
+            <span class="login100-form-title p-b-34 p-t-27">سیستم مدیریتی 118 استان فارس
+					</span>
+
+
+            <div class="wrap-input100 validate-input" data-validate = "Enter username">
+                <?= $form->field($model, 'username')->textInput(['maxlength' => true,'class'=>'input100','placeholder'=>'نام کاربری','dir'=>'rtl'])->label('') ?>
+
             </div>
+
+            <div class="wrap-input100 validate-input" data-validate="Enter password">
+                <?= $form->field($model, 'password')->passwordInput(['maxlength' => true,'class'=>'input100','placeholder'=>'رمز عبور','dir'=>'rtl'])->label('') ?>
+            </div>
+
+
+
+
+
+            <div class="container-login100-form-btn">
+
+                <?= Html::submitButton('ورود', ['class'=> 'login100-form-btn']); ?>
+
+
+            </div>
+
+            <br><br>
+
+            <?php ActiveForm::end(); ?>
         </div>
-
-    <?php ActiveForm::end(); ?>
-
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
     </div>
 </div>
+
+
+<div id="dropDownSelect1"></div>
+
+
+</body>

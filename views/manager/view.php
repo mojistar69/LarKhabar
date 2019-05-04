@@ -29,16 +29,12 @@ $this->title = $model->name;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'name',
             'family',
             'username',
-            'password',
+//            'password',
             'phoneNumber',
             'mobileNumber',
-            'accessType',
-            'zoneId',
-            'type',
         ],
     ]) ?>
 

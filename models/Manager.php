@@ -34,6 +34,7 @@ class Manager extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name','family','username','password'], 'required','message' => 'نمی تواند خالی باشد'],
             [['accessType', 'zoneId', 'type'], 'integer'],
             [['name', 'family', 'username', 'password'], 'string', 'max' => 45],
             [['phoneNumber', 'mobileNumber'], 'string', 'max' => 11],

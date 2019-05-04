@@ -10,46 +10,63 @@ class TotalReportController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $Parameter = [0, 0, 0, 0,
+            0, 0];
+        return $this->render('index',
+            ['startDatetime'=>'1397/01/01',
+                'endDatetime'=>'1398/01/01',
+                'Parameter'=>$Parameter
+            ]);
     }
 
     public function actionGrid()
     {
-        $startDate='2018-12-15';
-        if (Yii::$app->request->post('startDate')!='') {
-            $tmp1 = explode('/', Yii::$app->request->post('startDate'));
-            $startDate = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2],'-');
+        $startDate_Shamsi='';
+        $endDate_Shamsi ='';
+        if (Yii::$app->request->post('startDate') != '') {
+            $startDate_Shamsi=Yii::$app->request->post('startDate');
         }
-        $endDate='2018-12-15';
-        if (Yii::$app->request->post('endDate')!='') {
-            $tmp2 = explode('/', Yii::$app->request->post('endDate'));
-            $endDate = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2],'-');
+        if (Yii::$app->request->post('endDate') != '') {
+            $endDate_Shamsi=Yii::$app->request->post('endDate');
+        }
+        if (Yii::$app->request->get('startDate') != '') {
+            $startDate_Shamsi=Yii::$app->request->get('startDate');
+        }
+        if (Yii::$app->request->get('endDate') != '') {
+            $endDate_Shamsi=Yii::$app->request->get('endDate');
         }
 
-        $startDateTime1='2018-01-01 00:00:00';
-        $endDateTime1='2020-01-01 00:00:00';
+        $tmp1 = explode('/',$startDate_Shamsi );
+        $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+        $tmp2 = explode('/', $endDate_Shamsi);
+        $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+
+        $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
+        $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
+
+
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("SELECT count(*) as count FROM archiveCalls
-where `startdatetime` >= '$startDateTime1' AND `startdatetime`<= '$endDateTime1'");
+where `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime");
         $result = $command->queryAll();
         $countAll=$result[0]['count'];
 
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("SELECT count(*)as count FROM archivecalls where
- `startdatetime` >= '$startDateTime1' AND `startdatetime`<= '$endDateTime1' AND calllaststate > 300 AND calllaststate < 400");
+ `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime AND calllaststate > 300 AND calllaststate < 400");
         $result = $command->queryAll();
         $countConnectedToOperator=$result[0]['count'];
 
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("SELECT count(*)as count FROM archivecalls where 
- `startdatetime` >= '$startDateTime1' AND `startdatetime`<= '$endDateTime1'
+ `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime
  AND responses != ''");
         $result = $command->queryAll();
         $countResponed=$result[0]['count'];
 
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("SELECT count(*)as count FROM archivecalls where 
- `startdatetime` >= '$startDateTime1' AND `startdatetime`<= '$endDateTime1'
+ `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime
  AND responses != '' AND responses Not in ( SELECT distinct phoneNumber FROM phonenumber)");
         $result= $command->queryAll();
         $tmp=$result[0]['count'];
@@ -58,21 +75,27 @@ where `startdatetime` >= '$startDateTime1' AND `startdatetime`<= '$endDateTime1'
 
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("SELECT count(*)as count FROM archivecalls where 
- `startdatetime` >= '$startDateTime1' AND `startdatetime`<= '$endDateTime1'
+ `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime
  AND service = '-7'");
         $result = $command->queryAll();
         $countOralResponed=$result[0]['count'];
 
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("select AVG(talktime)as average from archivecalls where 
- `startdatetime` >= '$startDateTime1' AND `startdatetime`<= '$endDateTime1'");
+ `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime");
         $result = $command->queryAll();
         $averageTalkTime=$result[0]['average'];
+        if($averageTalkTime==null){
+            $averageTalkTime=0;
+        }
 
         $Parameter = [$countAll, $countConnectedToOperator, $countResponed, $countCmmercialResponed,
             $countOralResponed, $averageTalkTime];
-        var_dump($Parameter);
-        return $this->render('totalReport',['Parameter' => $Parameter]);
+;
+        return $this->render('index',['Parameter' => $Parameter,
+            'startDatetime' => $startDate_Shamsi,
+            'endDatetime' => $endDate_Shamsi,
+            ]);
     }
 
     function jalali_to_gregorian($jy,$jm,$jd,$mod=''){

@@ -33,9 +33,8 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
-//            [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6LcWpZYUAAAAAHzizuNndNVnsebFDCA54kNmIC1Z', 'uncheckedMessage' => 'Please confirm that you are not a bot.']
-            $rules[] = ['captcha', 'required'],
-            $rules[] = ['captcha', 'captcha'],
+//            $rules[] = ['captcha', 'required'],
+//            $rules[] = ['captcha', 'captcha'],
         ];
 
     }
@@ -78,9 +77,8 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = Buser::findByUsername($this->username);
+            $this->_user = User::findByUsername($this->username);
         }
-
         return $this->_user;
     }
 }

@@ -9,7 +9,14 @@ class OnlineTrafficController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+
+       return $this->render('index');
+
+    }
+
+    public function actionindex2($model)
+    {
+        var_dump($model);
     }
 
     public function actionRefreshData()
@@ -105,12 +112,17 @@ class OnlineTrafficController extends \yii\web\Controller
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsOperators_SelectCountByCityCodes(:cityIds)")
             ->bindValue(':cityIds', $cityIds);
+
         $allTodayOperatorsQuery = $command->queryAll();
-        $all = $allTodayOperatorsQuery[0]['count'];
+        $all = (int)$allTodayOperatorsQuery[0]['count'];
 
         //todayActive
-        //$TodayOperatorsQuery = DB::select('call spsOperators_SelectCountByCityCodes(?)', array($cityId));
-        $todayActive = 0;
+        $command =$connection->createCommand('call spsArchiveoperators_GetCountTodayOperator(:cityIds,:stoday,:stomorrow)')
+            ->bindValue(':cityIds', '1')
+            ->bindValue(':stoday', '2019-01-28 20:34:26')
+            ->bindValue(':stomorrow','2019-01-29 20:34:26');
+        $todayActiveQuery = $command->queryAll();
+        $todayActive = (int)$todayActiveQuery[0]['ActiveOperators'];
         //inactive
         $todayInactive = $all - $todayActive;
 //        ///////////////////////////
@@ -120,7 +132,7 @@ class OnlineTrafficController extends \yii\web\Controller
         $command = $connection->createCommand("call spsCurrentOperators_GetCountByCityCode(:cityIds)")
             ->bindValue(':cityIds', $cityIds);
         $currentActiveQuery = $command->queryAll();
-        $currentActive = $currentActiveQuery[0]['count'];
+        $currentActive = (int)$currentActiveQuery[0]['count'];
 
         //current Inactive
         $currentInactive = $all - $currentActive;
@@ -139,7 +151,7 @@ class OnlineTrafficController extends \yii\web\Controller
         if (count($NewCallQuery) == 0)
             $NewCall = 0;
         else
-            $NewCall = $NewCallQuery[0]['count'];
+            $NewCall = (int)$NewCallQuery[0]['count'];
 
         //Waiting
         $connection = Yii::$app->getDb();
@@ -149,7 +161,7 @@ class OnlineTrafficController extends \yii\web\Controller
         if (count($WaitingQuery) == 0)
             $Waiting = 0;
         else
-            $Waiting = $WaitingQuery[0]['count'];
+            $Waiting = (int)$WaitingQuery[0]['count'];
         //Talking
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Talking(:cityIds)")
@@ -158,7 +170,7 @@ class OnlineTrafficController extends \yii\web\Controller
         if (count($TalkingQuery) == 0)
             $Talking = 0;
         else
-            $Talking = $TalkingQuery[0]['count'];
+            $Talking = (int)$TalkingQuery[0]['count'];
         //Listening
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Listining(:cityIds)")
@@ -167,7 +179,7 @@ class OnlineTrafficController extends \yii\web\Controller
         if (count($ListeningQuery) == 0)
             $Listening = 0;
         else
-            $Listening = $ListeningQuery[0]['count'];
+            $Listening = (int)$ListeningQuery[0]['count'];
         $chartValues = [$NewCall, $Waiting, $Talking, $Listening];
         return $chartValues;
     }
@@ -236,8 +248,8 @@ class OnlineTrafficController extends \yii\web\Controller
             ['name' => 'مشغولی خطوط', 'y' => (int)$busyLines],
             ['name' => 'عدم در دسترس بودن کانال', 'y' => (int)$unAccessChannels],
             ['name' => 'وضعیت نامعلوم', 'y' => (int)$unknownStatus],
-            ['name' => 'پاسخ گویی توسط اپراتور', 'y' => (int)$answerWithOperators],
-            ['name' => 'قطع مشترک در حالت انتظار', 'y' => (int)$disconnectCommonInWaiting]];
+            ['name' => 'قطع مشترک در حالت انتظار', 'y' => (int)$disconnectCommonInWaiting],
+            ['name' => 'پاسخ گویی توسط اپراتور', 'y' => (int)$answerWithOperators]];
 
         return $listParameters;
 

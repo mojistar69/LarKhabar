@@ -1,22 +1,21 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
-/* @var $model app\models\Manager */
-/* @var $form yii\widgets\ActiveForm */
+
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 ?>
+<?php $form = ActiveForm::begin(); ?>
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-6">
+        <!-- general form elements -->
 
-<div class="manager-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-    <div class="box box-danger">
-        <div class="box-header with-border">
-            <h3 class="box-title">سطح دسترسی</h3>
-        </div>
-        <!-- /.box-header -->
-        <!-- form start -->
+        <div class="box box-danger ">
+            <div class="box-header with-border">
+                <h3 class="box-title">سطح دسترسی</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
 
             <div class="box-body">
                 <div class="form-group">
@@ -41,62 +40,104 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
 
-    </div>
-
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">مشخصات فردی</h3>
         </div>
-        <!-- /.box-header -->
-        <!-- form start -->
+        <!-- /.box -->
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">مشخصات کاربری</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
 
             <div class="box-body">
                 <div class="form-group">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'username')->textInput(['maxlength' => 30,'style'=>'width:200px',
+                        'placeholder'=>'نام کاربری']) ?>
                 </div>
 
                 <div class="form-group">
-                    <?= $form->field($model, 'family')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'password')->passwordInput(['maxlength' => 30,'style'=>'width:200px']) ?>
                 </div>
+
+                <div class="form-group field-manager-password">
+                    <label class="control-label" for="manager-password"> تکرار رمز عبور</label>
+                    <input type="password" id="manager-re-password" class="form-control" name="repassword"  maxlength="30"
+                    style="width: 200px">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="form-group">
+
+            </div>
+
+        </div>
+        <!-- Form Element sizes -->
+
+        <!-- /.box -->
+
+    </div>
+    <!--/.col (left) -->
+    <!-- right column -->
+    <div class="col-md-6">
+        <!-- Horizontal Form -->
+
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">مشخصات فردی</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+
+            <div class="box-body">
                 <div class="form-group">
-                    <?= $form->field($model, 'phoneNumber')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => 30,'style'=>'width:200px'
+                        ]) ?>
                 </div>
 
                 <div class="form-group">
-                    <?= $form->field($model, 'mobileNumber')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'family')->textInput(['maxlength' => 30,'style'=>'width:200px',
+                        'placeholder'=>'نام خانوادگی ']) ?>
+                </div>
+                <div class="form-group">
+                    <?= $form->field($model, 'phoneNumber')->textInput(['style'=>'width:160px','type'=>'number',
+                        'placeholder'=>'07152344744 مثال']) ?>
+                </div>
+
+                <div class="form-group">
+                <?= $form->field($model, 'mobileNumber')->textInput(['style'=>'width:160px','type'=>'number',
+                    'placeholder'=>'09332517700 مثال']) ?>
                 </div>
 
             </div>
             <!-- /.box-body -->
 
-    </div>
-
-    <div class="box box-success">
-        <div class="box-header with-border">
-            <h3 class="box-title">مشخصات کاربری</h3>
         </div>
-        <!-- /.box-header -->
-        <!-- form start -->
+        <div align="center">
+            <?= Html::submitButton('ذخیره', ['class' => 'btn btn-success',
+                'onClick'=>'validatePassword();']) ?>
+        </div>
 
-            <div class="box-body">
-                <div class="form-group">
-                    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-                </div>
-
-                <div class="form-group">
-                    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-                </div>
-
-                <div class="form-group field-manager-password">
-                    <label class="control-label" for="manager-password"> تکرار رمز عبور</label>
-                    <input type="password" id="manager-re-password" class="form-control" name="Manager[password]" maxlength="45">
-                    <div class="help-block"></div>
-                </div>
-            </div>
-    <div class="form-group">
-        <?= Html::submitButton('ذخیره', ['class' => 'btn btn-success']) ?>
+        <!-- /.box -->
     </div>
-    </div>
-    <?php ActiveForm::end(); ?>
-
+    <!--/.col (right) -->
 </div>
+<?php ActiveForm::end(); ?>
+
+<script>
+    function validatePassword() {
+
+        var pass = $('#password').val();
+        var repass = $('#confirmpassword').val();
+        if (pass.length >= 6 && repass.length>=6) {
+            if (pass == repass) {
+                alert('matched')
+            }
+            else {
+                alert('no')
+            }
+        }
+        else {
+            alert('less than 6 char')
+        }
+    }
+</script>

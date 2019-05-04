@@ -29,8 +29,6 @@ $this->title = $model->name;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'zoneid',
             'code',
             'name',
             'headernumber',

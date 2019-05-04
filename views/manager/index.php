@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('ایجاد مدیر', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= $dataProvider->pagination->pageSize=10;?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

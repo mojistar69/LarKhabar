@@ -1,7 +1,5 @@
 <?php
 use app\assets\AppAsset;
-use yii\widgets\ActiveForm;
-use yii\helpers\Html;
 use app\controllers\yii\helpers\Json;
 AppAsset::register($this);
 ?>

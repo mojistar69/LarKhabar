@@ -16,18 +16,28 @@ class DisturberController extends \yii\web\Controller
 
     public function actionGrid()
     {
-        $startDate='2019-01-01';
-        $endDate ='2019-01-02';
+        $startDate_Shamsi='';
+        $endDate_Shamsi ='';
         if (Yii::$app->request->post('startDate') != '') {
-            $tmp1 = explode('/', Yii::$app->request->post('startDate'));
-            $startDate = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+            $startDate_Shamsi=Yii::$app->request->post('startDate');
         }
         if (Yii::$app->request->post('endDate') != '') {
-            $tmp2 = explode('/', Yii::$app->request->post('endDate'));
-            $endDate = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+            $endDate_Shamsi=Yii::$app->request->post('endDate');
         }
-        $startDatetime =  $startDate . ' 00:00:00';
-        $endDatetime = $endDate . ' 00:00:00';
+        if (Yii::$app->request->get('startDate') != '') {
+            $startDate_Shamsi=Yii::$app->request->get('startDate');
+        }
+        if (Yii::$app->request->get('endDate') != '') {
+            $endDate_Shamsi=Yii::$app->request->get('endDate');
+        }
+
+        $tmp1 = explode('/',$startDate_Shamsi );
+        $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+        $tmp2 = explode('/', $endDate_Shamsi);
+        $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+
+        $startDatetime =  $startDate_Miladi . ' 00:00:00';
+        $endDatetime = $endDate_Miladi . ' 00:00:00';
 
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsDisturber_GetAllByCityCodesAndOpNumber(:startDateTime,:endDateTime,:callerId,
@@ -43,8 +53,8 @@ class DisturberController extends \yii\web\Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'startDatetime' => Yii::$app->request->post('startDate'),
-            'endDatetime' => Yii::$app->request->post('endDate'),
+            'startDatetime' => $startDate_Shamsi,
+            'endDatetime' => $endDate_Shamsi,
         ]);
 
 

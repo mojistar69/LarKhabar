@@ -27,9 +27,9 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-              <span class="hidden-xs"><?php 
-          
-echo 'مهمان';          
+              <span class="hidden-xs"><?php
+                  $identity=Yii::$app->user->identity;
+echo $identity->username;
 ?></span>
             </a>
             <ul class="dropdown-menu">
@@ -40,7 +40,7 @@ echo 'مهمان';
                 <p>
                   <?php 
           
-echo 'مهمان';          
+echo $identity->username;
 ?>
                  
                 </p>

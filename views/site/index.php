@@ -9,6 +9,8 @@ use app\widgets\Alert;
 /* @var $this yii\web\View */
 
 $this->title = 'سامانه 118';
+$identity=Yii::$app->user->identity;
+var_dump($identity);
 ?>
 
 

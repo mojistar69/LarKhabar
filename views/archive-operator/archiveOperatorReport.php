@@ -74,7 +74,20 @@ $title='گزارش آرشیو اپراتور از '.$startdate.'  تا '.$enddat
     <div align="center">
         <?php ActiveForm::begin(['action' => ['archive-operator/index'], 'options' => ['method' => 'post', 'data-pjax' => '']]); ?>
         <?php echo Html::submitButton('برگشت', ['class' => 'btn btn-info']); ?>
+        <input type="hidden"   name="sdate" id="startDate" value="<?php echo $startdate?>">
+        <input type="hidden"   id="endDate" value="<?php echo $enddate?>">
+        <input type="hidden"   id="selection" value="<?php echo $selection_array?>">
         <?php ActiveForm::end(); ?>
     </div>
     <!-- /.box-body -->
 </div>
+<script>
+    $( document ).ready(function() {
+        var params='&startDate='+$("#startDate").val()+'&endDate='+$("#endDate").val()+
+            '&selection='+$("#selection").val();
+        $(".pagination li").each(function(){
+            if($(this).find('a').attr('href'))
+                $(this).find('a').attr('href',$(this).find('a').attr('href')+params);
+        });
+    });
+</script>

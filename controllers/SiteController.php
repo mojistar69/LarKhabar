@@ -72,18 +72,15 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            var_dump('login mojtaba');
-            return $this->render('index', [
-                'model' => $model,
-            ]);
-        }
 
+            return $this->redirect(['online-traffic/index']);
+
+        }
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
@@ -98,8 +95,8 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
-        return $this->goHome();
+        return $this->redirect(['site/login']);
+//        return $this->goHome();
     }
 
     /**

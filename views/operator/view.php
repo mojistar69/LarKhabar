@@ -32,16 +32,24 @@ $this->title = $model->name;
 
             'opnumber',
 
-            'state',
+//            'state',
 
             'user',
 
-            'activate',
+//            'activate',
             'name',
             'family',
             'phone',
             'mobile',
-            'sex',
+            [
+                'attribute' => 'sex',
+                'value' => function ($Model) {
+                if ($Model['sex']==0)
+                    return 'زن' ;
+                else if ($Model['sex']==1)
+                      return 'مرد' ;
+                },
+            ],
 
         ],
     ]) ?>

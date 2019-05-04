@@ -13,7 +13,6 @@ $this->title = 'اپراتورها';
 <div class="operator-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('ایجاد اپراتور', ['create'], ['class' => 'btn btn-success']) ?>
@@ -33,7 +32,7 @@ $this->title = 'اپراتورها';
 //            'pass',
             //'citycode',
             //'cityid',
-            'activate',
+//            'activate',
 
 
             ['class' => 'yii\grid\ActionColumn'],

@@ -165,15 +165,26 @@ class OfflineTrafficController extends \yii\web\Controller
         $disconnectCommonInWaitingQuery = $command->queryAll();
         $disconnectCommonInWaiting = $disconnectCommonInWaitingQuery[0]['count'];
 
-        $listParameters = [['name' => 'تماس رد شده', 'y' => (int)$rejectedCalls],
+        $listParameters = [
+            ['name' => 'قطع مشترک در حالت انتظار', 'y' => (int)$disconnectCommonInWaiting],
+            ['name' => 'تماس رد شده', 'y' => (int)$rejectedCalls],
             ['name' => 'پاسخ بی تماس', 'y' => (int)$answerWithoutCall],
             ['name' => 'قطع تماس از طرف مشترک', 'y' => (int)$disconnectFromCommon],
             ['name' => 'مشکلات ارتباطی', 'y' => (int)$connectivityProblems],
+
             ['name' => 'مشغولی خطوط', 'y' => (int)$busyLines],
+
             ['name' => 'عدم در دسترس بودن کانال', 'y' => (int)$unAccessChannels],
+
             ['name' => 'وضعیت نامعلوم', 'y' => (int)$unknownStatus],
-            ['name' => 'پاسخ گویی توسط اپراتور', 'y' => (int)$answerWithOperators],
-            ['name' => 'قطع مشترک در حالت انتظار', 'y' => (int)$disconnectCommonInWaiting]];
+            ['name' => 'پاسخ گویی توسط اپراتور', 'y' => (int)$answerWithOperators]];
+
+        //no calls so get message
+        if((int)$rejectedCalls==0 && (int)$answerWithoutCall==0 && (int)$disconnectFromCommon==0
+            && (int)$connectivityProblems==0 &&  (int)$busyLines==0 && (int)$unAccessChannels==0
+            && (int)$unknownStatus==0 && (int)$answerWithOperators==0
+         && (int)$disconnectCommonInWaiting==0)
+        {$listParameters =[['name' => 'در این بازه تاریخی هیج تماسی ثبت نشده است. ', 'y' => 0.00001]];}
 
         return $listParameters;
 

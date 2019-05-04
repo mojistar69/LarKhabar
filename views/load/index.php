@@ -4,7 +4,7 @@ AppAsset::register($this);
 ?>
 <div class="row">
     <div class="box">
-        <div class="box-header">
+        <div class="box-header bg-orange-active">
             <h3 class="box-title"> اوج ترافیک</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i

@@ -53,10 +53,10 @@ $title='کارکرد اپراتور از '.$startdate.'  تا '.$enddate;
     </div>
 
     <div align="center">
-        <?php ActiveForm::begin(['action' => ['operator-master/index'], 'options' => ['method' => 'post', 'data-pjax' => '']]); ?>
+        <?php ActiveForm::begin(['action' => ['operator-master/grid'], 'method' => 'get']); ?>
         <?php echo Html::submitButton('برگشت', ['class' => 'btn btn-info']); ?>
-        <input type="hidden"   name="sdate" id="startDate" value="<?php echo $startdate?>">
-        <input type="hidden"   id="endDate" value="<?php echo $enddate?>">
+        <input type="hidden"   name="startDate" id="startDate" value="<?php echo $startdate?>">
+        <input type="hidden"   name="endDate" id="endDate" value="<?php echo $enddate?>">
         <input type="hidden"   id="selection" value="<?php echo $selection_array?>">
         <?php ActiveForm::end(); ?>
     </div>
@@ -72,4 +72,5 @@ $title='کارکرد اپراتور از '.$startdate.'  تا '.$enddate;
         });
     });
 </script>
+
 

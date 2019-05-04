@@ -19,7 +19,7 @@ AppAsset::register($this);
                 </button>
             </div>
         </div>
-        <div class="box-body bg-green-gradient">
+        <div class="box-body ">
             <div class="container" style="max-width: 500px;">
                 <?php ActiveForm::begin(['action' => ['disturber/grid'], 'options' => ['method' => 'post', 'data-pjax' => '']]); ?>
                 <div class="form-group">
@@ -87,3 +87,12 @@ AppAsset::register($this);
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        var date = '&startDate=' + $("#startDate").val() + '&endDate=' + $("#endDate").val();
+        $(".pagination li").each(function () {
+            if ($(this).find('a').attr('href'))
+                $(this).find('a').attr('href', $(this).find('a').attr('href') + date);
+        });
+    });
+</script>
