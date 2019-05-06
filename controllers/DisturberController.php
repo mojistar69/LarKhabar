@@ -18,17 +18,12 @@ class DisturberController extends \yii\web\Controller
     {
         $startDate_Shamsi='';
         $endDate_Shamsi ='';
-        if (Yii::$app->request->post('startDate') != '') {
-            $startDate_Shamsi=Yii::$app->request->post('startDate');
+
+        if (isset($_GET["startDate"])) {
+            $startDate_Shamsi = $_GET["startDate"];
         }
-        if (Yii::$app->request->post('endDate') != '') {
-            $endDate_Shamsi=Yii::$app->request->post('endDate');
-        }
-        if (Yii::$app->request->get('startDate') != '') {
-            $startDate_Shamsi=Yii::$app->request->get('startDate');
-        }
-        if (Yii::$app->request->get('endDate') != '') {
-            $endDate_Shamsi=Yii::$app->request->get('endDate');
+        if (isset($_GET["endDate"])) {
+            $endDate_Shamsi = $_GET["endDate"];
         }
 
         $tmp1 = explode('/',$startDate_Shamsi );
@@ -36,9 +31,19 @@ class DisturberController extends \yii\web\Controller
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
 
-        $startDatetime =  $startDate_Miladi . ' 00:00:00';
+        $startDatetime = $startDate_Miladi . ' 00:00:00';
         $endDatetime = $endDate_Miladi . ' 00:00:00';
+        $dataProvider=$this->doQuery($startDatetime,$endDatetime);
 
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'startDatetime' => $startDate_Shamsi,
+            'endDatetime' => $endDate_Shamsi,
+        ]);
+    }
+
+    public function doQuery($startDatetime,$endDatetime)
+    {
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsDisturber_GetAllByCityCodesAndOpNumber(:startDateTime,:endDateTime,:callerId,
         :cityCodes,:limit,:opNumber)")
@@ -50,20 +55,8 @@ class DisturberController extends \yii\web\Controller
             ->bindValue(':opNumber', '');
         $result = $command->queryAll();
         $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'startDatetime' => $startDate_Shamsi,
-            'endDatetime' => $endDate_Shamsi,
-        ]);
-
-
-
-
-
-
-
-
+        $dataProvider->pagination->pageSize=10;
+        return $dataProvider;
 
     }
 

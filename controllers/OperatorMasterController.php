@@ -1,8 +1,6 @@
 <?php
 
 namespace app\controllers;
-
-
 use app\models\ArchiveCallSearch;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -67,10 +65,7 @@ class OperatorMasterController extends \yii\web\Controller
             )) {
             $operators = Yii::$app->request->get('selection');
         }
-        if ($operators == ''){
-            $message = "wrong answer";
-            echo "<script type='text/javascript'>alert('$message');</script>";
-        }
+
         $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);

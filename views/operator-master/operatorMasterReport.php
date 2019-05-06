@@ -1,11 +1,45 @@
 <?php
-
-
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\export\ExportMenu;
 $title='کارکرد اپراتور از '.$startdate.'  تا '.$enddate;
+$gridColumns = [
+[
+        'attribute'=>'under10Byop',
+    'width'=>'5px',
+    'vAlign'=>'middle',
+        'label'=>'زیر 10 از طرف اپراتور'
+    ],
+
+    [
+        'attribute'=>'under10Bycu',
+        'label'=>'زیر 10 از طرف مشتری'
+    ],
+
+    [ 'attribute'=>'mechanized',
+        'label'=>'مکانیزه'
+    ],
+
+    [
+        'attribute'=>'cutfromcustomer',
+        'label'=>'قطع از طرف مشترک'
+    ]
+    ,[
+        'attribute'=>'family',
+        'label'=>'نام خانوادگی'
+    ],
+    [ 'attribute'=>'name',
+        'label'=>'نام'
+    ],
+    [
+        'attribute'=>'opid',
+        'label'=>'اپراتور',
+        'vAlign'=>'middle',
+        'width'=>'10px'
+    ]
+
+];
 ?>
 <div class="box">
     <div class="box-header bg-success">
@@ -20,6 +54,10 @@ $title='کارکرد اپراتور از '.$startdate.'  تا '.$enddate;
     <!-- /.box-header -->
     <div class="box-body no-padding bg-info ">
         <?php
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+        ]);
         echo GridView::widget(['dataProvider'=>$dataProvider,
             'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => 'ندارد'],
             'summary' => '',

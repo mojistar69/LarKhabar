@@ -1,17 +1,42 @@
 <?php
+
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
-use yii\widgets\Pjax;
+use kartik\export\ExportMenu;
+$gridColumns = [
+    [
+        'attribute' => 'name',
+        'value' => 'name',
+        'label' => 'شهر'
+    ],
 
+    [
+        'attribute' => 'callerid',
+        'value'     => function ($model) {
+
+            if ($model['callerid'] != 'unavailable') {
+                return $model['callerid'];
+            } else {
+                return 'نامشخص';
+            }
+        },
+        'label' => 'تماس گیرنده'
+    ],
+
+    [
+        'attribute' => 'count',
+        'value' => 'count',
+        'label' => 'دفعات'
+    ],
+];
 AppAsset::register($this);
 ?>
 
 <div class="row">
     <div class="box">
-        <div class="box-header bg-green-gradient">
+        <div class="box-header bg-purple-gradient">
             <h3 class="box-title"> مزاحمین</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -21,7 +46,6 @@ AppAsset::register($this);
         </div>
         <div class="box-body ">
             <div class="container" style="max-width: 500px;">
-                <?php ActiveForm::begin(['action' => ['disturber/grid'], 'options' => ['method' => 'post', 'data-pjax' => '']]); ?>
                 <div class="form-group">
                     <div class="input-group">
                         <label for="startDate">از تاریخ</label>
@@ -30,7 +54,8 @@ AppAsset::register($this);
                              data-enabletimepicker="false" data-placement="left">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </div>
-                        <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate', 'value' => $startDatetime]) ?>
+                        <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate',
+                            'value' => $startDatetime]) ?>
                     </div>
 
                     <div class="input-group">
@@ -44,47 +69,74 @@ AppAsset::register($this);
                     </div>
                 </div>
                 <div class="form-group" align="center">
-                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary'
+                        , 'id' => 'searchbtn']) ?>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
             <?php
             if (isset($dataProvider)) {
-
-                echo GridView::widget(['dataProvider' => $dataProvider,
-
-                    'summary' => '',
-                    'columns' => [
-                        [
-                            'attribute' => 'callerid',
-                            'value'     => function ($model) {
-
-                                if ($model['callerid'] != 'unavailable') {
-                                    return $model['callerid'];
-                                } else {
-                                    return 'نامشخص';
-                                }
-                            },
-                            'label' => 'تماس گیرنده'
-                        ],
-                        [
-                            'attribute' => 'count',
-                            'value' => 'count',
-                            'label' => 'دفعات'
-                        ],
-                        [
-                            'attribute' => 'name',
-                            'value' => 'name',
-                            'label' => 'شهر'
-                        ],
-
-                    ],
-                ]);
-
-            }
             ?>
+            <div class="form-group" align="center">
+                <div class="modal fade" id="noSelected" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">کاربر گرامی</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>موردی جهت گزارش گیری انتخاب نشده است!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
+                <input type="hidden" id="endDate" name="endDate" value="<?php echo $endDatetime ?>">
+
+            </div>
         </div>
+        <?php
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+        ]);
+        echo GridView::widget(['dataProvider' => $dataProvider,
+            'summary' => '',
+            'columns' => [
+                [
+                    'attribute' => 'callerid',
+                    'value'     => function ($model) {
+
+                        if ($model['callerid'] != 'unavailable') {
+                            return $model['callerid'];
+                        } else {
+                            return 'نامشخص';
+                        }
+                    },
+                    'label' => 'تماس گیرنده'
+                ],
+                [
+                    'attribute' => 'count',
+                    'value' => 'count',
+                    'label' => 'دفعات'
+                ],
+                [
+                    'attribute' => 'name',
+                    'value' => 'name',
+                    'label' => 'شهر'
+                ],
+            ],
+        ]);
+        }
+        ?>
     </div>
+</div>
 </div>
 
 <script>
@@ -94,5 +146,30 @@ AppAsset::register($this);
             if ($(this).find('a').attr('href'))
                 $(this).find('a').attr('href', $(this).find('a').attr('href') + date);
         });
+    });
+</script>
+<script type="text/javascript"></script>
+
+<script type="text/javascript">
+    $("#searchbtn").click(function () {
+        var start = $("#startDate").val()
+        var end = $("#endDate").val()
+        var email = /^[1-4]\d{3}\/((0[1-6]\/((3[0-1])|([1-2][0-9])|(0[1-9])))|((1[0-2]|(0[7-9]))\/(30|([1-2][0-9])|(0[1-9]))))$/;
+        if (email.test(start) && email.test(end)) {
+            var start_num = start.substring(0, 4) + start.substring(5, 7) + start.substring(8, 10);
+            var end_num = end.substring(0, 4) + end.substring(5, 7) + end.substring(8, 10);
+            if (parseInt(end_num) > parseInt(start_num)) {
+                var url2 = "<?= Yii::$app->homeUrl ?>?r=disturber/grid&startDate=" + start
+                    + "&endDate=" + end;
+                window.location = url2;
+            }
+
+            else {
+                alert("تاریخ شروع بزرگتر از تاریخ پایان است!")
+            }
+        }
+        else {
+            alert("فرمت تاریخ وارد شده صحیح نیست")
+        }
     });
 </script>

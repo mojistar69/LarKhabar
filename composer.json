@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "himiklab/yii2-recaptcha-widget": "*",
         "miloschuman/yii2-highcharts-widget": "^7.0",
-        "mohammad-mahdy/yii2-jdate": "*"
+        "mohammad-mahdy/yii2-jdate": "*",
+        "kartik-v/yii2-export": "@dev"
 
 
     },

@@ -46,7 +46,7 @@ class Operator extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['opnumber', 'pass', 'user', 'name', 'family'], 'required'],
+            [['opnumber', 'pass', 'user', 'name', 'family'], 'required','message' => 'نمی تواند خالی باشد'],
             [['opnumber', 'state', 'citycode', 'cityid', 'activate', 'sex', 'supervisorconfirm', 'showcallerid', 'showstatistics', 'serviceenabled', 'operationtype', 'opnumberpre'], 'integer'],
             [['currentcallid'], 'string', 'max' => 20],
             [['pass', 'user'], 'string', 'max' => 30],

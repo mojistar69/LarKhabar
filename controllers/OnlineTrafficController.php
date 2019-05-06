@@ -98,6 +98,7 @@ class OnlineTrafficController extends \yii\web\Controller
 
 
         $chart1_2 = $this->chart1($cityId);
+
         $chart3 = $this->chart3($cityId);
         $chart4 = $this->chart4($cityId);
 
@@ -117,10 +118,12 @@ class OnlineTrafficController extends \yii\web\Controller
         $all = (int)$allTodayOperatorsQuery[0]['count'];
 
         //todayActive
+        $stoday=date("Y/m/d").' 00:00:00';
+        $stomorrow=date("Y/m/d").' 23:59:59';
         $command =$connection->createCommand('call spsArchiveoperators_GetCountTodayOperator(:cityIds,:stoday,:stomorrow)')
-            ->bindValue(':cityIds', '1')
-            ->bindValue(':stoday', '2019-01-28 20:34:26')
-            ->bindValue(':stomorrow','2019-01-29 20:34:26');
+            ->bindValue(':cityIds', $cityIds)
+            ->bindValue(':stoday', $stoday)
+            ->bindValue(':stomorrow',$stomorrow);
         $todayActiveQuery = $command->queryAll();
         $todayActive = (int)$todayActiveQuery[0]['ActiveOperators'];
         //inactive

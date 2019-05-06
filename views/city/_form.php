@@ -1,26 +1,61 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
-/* @var $model app\models\City */
-/* @var $form yii\widgets\ActiveForm */
+
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 ?>
+<?php $form = ActiveForm::begin(); ?>
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">مشخصات کاربری</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
 
-<div class="city-form">
+            <div class="box-body">
+                <div class="form-group">
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => 30,'style'=>'width:200px',
+                        'placeholder'=>'نام شهر']) ?>
+                </div>
 
-    <?php $form = ActiveForm::begin(); ?>
+                <div class="form-group">
+                    <?= $form->field($model, 'code')->textInput(['maxlength' => 6,'type'=>'number',
+                        'style'=>'width:200px','placeholder'=>'مثال 712462']) ?>
+                </div>
 
+                <div class="form-group ">
+                    <?= $form->field($model, 'headernumber')->textInput(['maxlength' => 30,
+                        'style'=>'width:200px','placeholder'=>'مثال 1183542x']) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'code')->textInput() ?>
-    <?= $form->field($model, 'headernumber')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <div align="center">
+                    <?= Html::submitButton('ذخیره', ['class' => 'btn btn-success']) ?>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('ثبت', ['class' => 'btn btn-success']) ?>
+        </div>
+        <!-- Form Element sizes -->
+
+        <!-- /.box -->
+
     </div>
+    <!--/.col (left) -->
+    <!-- right column -->
+    <div class="col-md-6">
+        <!-- Horizontal Form -->
 
-    <?php ActiveForm::end(); ?>
 
+
+
+        <!-- /.box -->
+    </div>
+    <!--/.col (right) -->
 </div>
+<?php ActiveForm::end(); ?>
+

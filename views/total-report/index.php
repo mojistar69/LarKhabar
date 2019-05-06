@@ -28,7 +28,6 @@ AppAsset::register($this);
             <!--/////////////////////////////////////////////////-->
 
             <div class="container" style="max-width: 500px;">
-                <?php ActiveForm::begin(['action'=>['total-report/grid'],'options'=>['method'=>'post']]); ?>
                 <div class="form-group">
                     <div class="input-group">
                         <label for="startDate">از تاریخ</label>
@@ -48,12 +47,9 @@ AppAsset::register($this);
                 </div>
 
                 <div class="form-group" align="center">
-                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary' , 'id' => 'searchbtn']) ?>
                 </div>
             </div>
-
-            <?php ActiveForm::end(); ?>
-
         </div>
         <!-- /.box-body -->
     </div>
@@ -175,3 +171,26 @@ AppAsset::register($this);
     <!-- /.col -->
 </div>
 
+<script type="text/javascript">
+    $( "#searchbtn" ).click(function() {
+        var start = $( "#startDate" ).val()
+        var end = $( "#endDate" ).val()
+        var email = /^[1-4]\d{3}\/((0[1-6]\/((3[0-1])|([1-2][0-9])|(0[1-9])))|((1[0-2]|(0[7-9]))\/(30|([1-2][0-9])|(0[1-9]))))$/;
+        if (email.test(start) && email.test(end) ) {
+            var start_num=start.substring(0,4)+start.substring(5,7)+start.substring(8,10);
+            var end_num=end.substring(0,4)+end.substring(5,7)+end.substring(8,10);
+            if(parseInt(end_num)>parseInt(start_num)){
+                var url2 = "<?= Yii::$app->homeUrl ?>?r=total-report/grid&startDate="+start
+                    +"&endDate="+end;
+                window.location = url2;
+            }
+
+            else{
+                alert("تاریخ شروع بزرگتر از تاریخ پایان است!")
+            }
+        }
+        else {
+            alert("فرمت تاریخ وارد شده صحیح نیست")
+        }
+    });
+</script>

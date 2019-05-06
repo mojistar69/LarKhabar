@@ -10,7 +10,10 @@
                 </div>
                 <div class="pull-right info">
                     <p><?php
-                  echo $identity=Yii::$app->user->identity->username;
+                        $identity = Yii::$app->user->identity;
+                        if(isset($identity)) {
+                            echo $identity->username;
+                        }
                   ?></p>
                     <a href="#"><i class="fa fa-circle text-success"></i> آنلاین</a>
                 </div>
@@ -64,7 +67,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> تغییر کلمه عبور</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl?>?r=manager%2Fupdate&id=<?php if(isset($identity))echo ($identity->id)?>"><i class="fa fa-circle-o"></i> تغییر مشخصات 4</a></li>
 
                     </ul>
                 </li>

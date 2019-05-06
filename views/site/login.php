@@ -45,7 +45,7 @@ use yii\captcha\Captcha;
 
 
 <div class="limiter">
-    <div class="container-login100" style="background-image: url('images/bg2.png');">
+    <div class="container-login100" style="background-color: #f0f32f;">
         <div class="wrap-login100">
             <?php $form = ActiveForm::begin([
 

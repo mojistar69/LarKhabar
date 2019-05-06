@@ -4,7 +4,30 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
+use kartik\export\ExportMenu;
+$gridColumns = [
+    [
+        'attribute' => 'family',
+        'value' => 'family',
+        'headerOptions' => ['width' => '80'],
+        'label' => ' نام خانوادگی اپراتور'
+    ],
+    [
+        'attribute' => 'name',
+        'value' => 'name',
+        'label' => 'نام'
+    ],
 
+    [
+        'attribute' => 'opid',
+        'label' => 'شماره اپراتور'
+    ],
+    [
+        'attribute' => 'calluid',
+        'label' => 'calluid',
+        'label' => 'شماره تماس',
+    ],
+];
 
 AppAsset::register($this);
 ?>
@@ -75,13 +98,12 @@ AppAsset::register($this);
                     <input type="hidden" id="endDate"  name="endDate" value="<?php echo $endDatetime ?>">
                     <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info','id'=>'report']); ?>
                 </div>
-
-                    <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
-                    <input type="hidden" id="endDate"  name="endDate" value="<?php echo $endDatetime ?>">
-                    <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info','id'=>'report']); ?>
                 </div>
                 <?php
-
+                echo ExportMenu::widget([
+                    'dataProvider' => $dataProvider,
+                    'columns' => $gridColumns,
+                ]);
                 echo GridView::widget(['dataProvider' => $dataProvider,
                     'summary' => '',
                     'columns' => [
@@ -95,7 +117,7 @@ AppAsset::register($this);
                         [
                             'attribute' => 'calluid',
                             'label' => 'calluid',
-                            'label' => 'شماره تماس'
+                            'label' => 'شماره تماس',
                         ],
                         [
                             'attribute' => 'opid',
@@ -109,11 +131,15 @@ AppAsset::register($this);
                         [
                             'attribute' => 'family',
                             'value' => 'family',
+                            'headerOptions' => ['width' => '80'],
                             'label' => ' نام خانوادگی اپراتور'
                         ],
                         [
                             'attribute' => 'تاریخ',
                             'format' => 'raw',
+                            'contentOptions' => ['style' => 'max-width: 80px'],
+
+
                             'value' => function ($searchModel) {
                                 $date = new DateTime($searchModel['startdatetime']);
                                 return Yii::$app->jdate->date("o/n/d – H:i", (int)strtotime($date->format('Y-m-d H:i:s')));
@@ -178,7 +204,7 @@ AppAsset::register($this);
             }
         }
         else {
-           alert("موردی جهت گزارش گیری انتخاب نشده است!")
+            alert("فرمت تاریخ وارد شده صحیح نیست")
         }
     });
 </script>

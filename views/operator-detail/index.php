@@ -1,11 +1,26 @@
 <?php
+
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
-
-
+use kartik\export\ExportMenu;
+$gridColumns = [
+    [
+        'attribute'=>'family',
+        'value'=>'family',
+        'label'=>' نام خانوادگی اپراتور'
+    ],
+    [
+        'attribute'=>'name',
+        'value'=>'name',
+        'label'=>'نام'
+    ],
+    [
+        'attribute'=>'opnumber',
+        'label'=>'اپراتور'
+    ],
+];
 AppAsset::register($this);
 ?>
 
@@ -21,7 +36,6 @@ AppAsset::register($this);
         </div>
         <div class="box-body ">
             <div class="container" style="max-width: 500px;">
-                <?php ActiveForm::begin(['action' => ['operator-detail/grid'], 'options' => ['method' => 'post', 'data-pjax' => '']]); ?>
                 <div class="form-group">
                     <div class="input-group">
                         <label for="startDate">از تاریخ</label>
@@ -30,7 +44,8 @@ AppAsset::register($this);
                              data-enabletimepicker="false" data-placement="left">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </div>
-                        <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate', 'value' => $startDatetime]) ?>
+                        <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate',
+                            'value' => $startDatetime]) ?>
                     </div>
 
                     <div class="input-group">
@@ -44,64 +59,128 @@ AppAsset::register($this);
                     </div>
                 </div>
                 <div class="form-group" align="center">
-                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary'
+                        , 'id' => 'searchbtn']) ?>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
             <?php
             if (isset($dataProvider)) {
-                ActiveForm::begin(['action' => ['operator-detail/selected'], 'options' => ['method' => 'post']]);
-                ?>
-                <div class="form-group" align="center">
-                    <input type="hidden"   name="sdate" value="<?php echo $startDatetime?>">
-                    <input type="hidden"   name="edate" value="<?php echo $endDatetime?>">
-                    <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info']); ?>
-                </div>
-                <?php
-
-                echo GridView::widget(['dataProvider' => $dataProvider,
-                    'summary' => '',
-                    'columns' => [
-                            [
-                                'class' => 'yii\grid\CheckboxColumn',
-                                'checkboxOptions' => function($model, $key, $index, $widget) {
-                                    return ['value' => $model['opnumber'] ];
-                                },
-                            ],
-                            [
-                                'attribute'=>'opnumber',
-                                'label'=>'اپراتور'
-                            ],
-                            [
-                                'attribute'=>'name',
-                                'value'=>'name',
-                                'label'=>'نام'
-                            ],
-
-                            [
-                                'attribute'=>'family',
-                                'value'=>'family',
-                                'label'=>' نام خانوادگی اپراتور'
-                            ],
-
-                        ],
-
-
-                ]);
-
-                ActiveForm::end();
-            }
             ?>
+            <div class="form-group" align="center">
+                <div class="modal fade" id="noSelected" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">کاربر گرامی</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>موردی جهت گزارش گیری انتخاب نشده است!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
+                <input type="hidden" id="endDate" name="endDate" value="<?php echo $endDatetime ?>">
+                <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info', 'id' => 'report']); ?>
+            </div>
         </div>
+        <?php
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+        ]);
+        echo GridView::widget(['dataProvider' => $dataProvider,
+            'summary' => '',
+            'columns' => [
+                [
+                    'class' => 'yii\grid\CheckboxColumn',
+                    'checkboxOptions' => function ($model, $key, $index, $widget) {
+                        return ['value' => $model['opnumber']];
+                    },
+
+                ],
+                [
+                    'attribute' => 'opnumber',
+                    'label' => 'اپراتور',
+
+                ],
+                [
+                    'attribute' => 'name',
+                    'value' => 'name',
+                    'label' => 'نام',
+
+                ],
+                [
+                    'attribute' => 'family',
+                    'value' => 'family',
+                    'label' => ' نام خانوادگی اپراتور',
+
+                ],
+            ],
+        ]);
+        }
+        ?>
     </div>
+</div>
 </div>
 
 <script>
-    $( document ).ready(function() {
-        var date='&startDate='+$("#startDate").val()+'&endDate='+$("#endDate").val();
-        $(".pagination li").each(function(){
-            if($(this).find('a').attr('href'))
-                $(this).find('a').attr('href',$(this).find('a').attr('href')+date);
+    $(document).ready(function () {
+        var date = '&startDate=' + $("#startDate").val() + '&endDate=' + $("#endDate").val();
+        $(".pagination li").each(function () {
+            if ($(this).find('a').attr('href'))
+                $(this).find('a').attr('href', $(this).find('a').attr('href') + date);
         });
+    });
+</script>
+<script type="text/javascript">
+    $("#report").click(function () {
+        if ($('td > input[type=checkbox]:checked').length == 0) {
+            $("#noSelected").modal('show');
+        }
+
+        else {
+            var start = $('#startDate').val();
+            var end = $('#endDate').val();
+            var str = 0;
+            var array = $('td > input[type=checkbox]:checked').map(function () {
+                return $(this).val();
+            }).get();
+            var url = "<?= Yii::$app->homeUrl ?>?r=operator-detail/selected&startDate=" + start
+                + "&endDate=" + end + "&selection=" + array;
+            window.location = url;
+        }
+
+    });
+</script>
+
+<script type="text/javascript">
+    $("#searchbtn").click(function () {
+        var start = $("#startDate").val()
+        var end = $("#endDate").val()
+        var email = /^[1-4]\d{3}\/((0[1-6]\/((3[0-1])|([1-2][0-9])|(0[1-9])))|((1[0-2]|(0[7-9]))\/(30|([1-2][0-9])|(0[1-9]))))$/;
+        if (email.test(start) && email.test(end)) {
+            var start_num = start.substring(0, 4) + start.substring(5, 7) + start.substring(8, 10);
+            var end_num = end.substring(0, 4) + end.substring(5, 7) + end.substring(8, 10);
+            if (parseInt(end_num) > parseInt(start_num)) {
+                var url2 = "<?= Yii::$app->homeUrl ?>?r=operator-detail/grid&startDate=" + start
+                    + "&endDate=" + end;
+                window.location = url2;
+            }
+
+            else {
+                alert("تاریخ شروع بزرگتر از تاریخ پایان است!")
+            }
+        }
+        else {
+            alert("فرمت تاریخ وارد شده صحیح نیست")
+        }
     });
 </script>

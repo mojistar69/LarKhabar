@@ -20,17 +20,12 @@ class ArchiveOperatorController extends \yii\web\Controller
     {
         $startDate_Shamsi='';
         $endDate_Shamsi ='';
-        if (Yii::$app->request->post('startDate') != '') {
-            $startDate_Shamsi=Yii::$app->request->post('startDate');
+
+        if (isset($_GET["startDate"])) {
+            $startDate_Shamsi = $_GET["startDate"];
         }
-        if (Yii::$app->request->post('endDate') != '') {
-            $endDate_Shamsi=Yii::$app->request->post('endDate');
-        }
-        if (Yii::$app->request->get('startDate') != '') {
-            $startDate_Shamsi=Yii::$app->request->get('startDate');
-        }
-        if (Yii::$app->request->get('endDate') != '') {
-            $endDate_Shamsi=Yii::$app->request->get('endDate');
+        if (isset($_GET["endDate"])) {
+            $endDate_Shamsi = $_GET["endDate"];
         }
 
         $tmp1 = explode('/',$startDate_Shamsi );

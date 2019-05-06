@@ -1,11 +1,65 @@
 <?php
-
-
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\export\ExportMenu;
 $title='گزارش میانگین عملکرد اپراتور'.$startdate.'  تا '.$enddate;
+$gridColumns = [
+    [
+        'attribute' => Yii::t('app', 'مدت زمان کل'),
+        'format' => 'raw',
+        'value' => function ($model) {
+            $sum=$model['total'];
+            $h=(int)($sum/3600);
+            $m=(int)(($sum%3600)/60);
+            $s=(int)($sum%60);
+            return ''.$h.':'.$m.':'.$s;
+        },
+    ],
+    [
+        'attribute'=>'all',
+        'value'=>'all',
+        'label'=>'تعداد مکالمات'
+    ],
+    [
+        'attribute'=>'disturber',
+        'value'=>'disturber',
+        'label'=>'معرفی مزاحم'
+    ],
+    [
+        'attribute'=>'noinfo',
+        'value'=>'noinfo',
+        'label'=>'اعلام عدم موجود بودن شماره'
+    ],
+
+    [
+        'attribute'=>'unrelated',
+        'value'=>'unrelated',
+        'label'=>'سوال غیر مرتبط'
+    ],
+
+    [
+        'attribute'=>'oral',
+        'value'=>'oral',
+        'label'=>'پاسخ شفاهی'
+    ],
+
+    [
+        'attribute'=>'family',
+        'value'=>'family',
+        'label'=>'نام خانوادگی'
+    ],
+    [
+        'attribute'=>'name',
+        'value'=>'name',
+        'label'=>'نام'
+    ],
+    [
+        'attribute'=>'opnumber',
+        'value'=>'opnumber',
+        'label'=>'شماره اپراتور'
+    ],
+];
 ?>
 <div class="box">
     <div class="box-header bg-success">
@@ -20,6 +74,10 @@ $title='گزارش میانگین عملکرد اپراتور'.$startdate.'  ت�
     <!-- /.box-header -->
     <div class="box-body no-padding bg-info ">
         <?php
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+        ]);
         echo GridView::widget(['dataProvider'=>$dataProvider,
             'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => 'ندارد'],
             'summary' => '',
