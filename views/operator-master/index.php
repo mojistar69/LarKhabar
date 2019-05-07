@@ -44,61 +44,61 @@ AppAsset::register($this);
         </div>
         <div class="box-body ">
             <div class="container" style="max-width: 500px;">
-                <div class="form-group">
-                    <div class="input-group">
-                        <label for="startDate">از تاریخ</label>
-                        <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click"
-                             data-targetselector="#fromDate1" data-groupid="group1" data-fromdate="true"
-                             data-enabletimepicker="false" data-placement="left">
-                            <span class="glyphicon glyphicon-calendar"></span>
+                <div class="row">
+                    <div class="form-group col-md-8" >
+                        <div class="input-group">
+                            <label for="startDate">از تاریخ</label>
+                            <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click"
+                                 data-targetselector="#fromDate1" data-groupid="group1" data-fromdate="true"
+                                 data-enabletimepicker="false" data-placement="left">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </div>
+                            <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate',
+                                'value' => $startDatetime]) ?>
                         </div>
-                        <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate',
-                            'value' => $startDatetime]) ?>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="endDate">تا تاریخ</label>
-                        <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click"
-                             data-targetselector="#toDate1" data-groupid="group1" data-todate="true"
-                             data-enabletimepicker="true" data-placement="left">
-                            <span class="glyphicon glyphicon-calendar"></span>
+                        <div class="input-group">
+                            <label for="endDate">تا تاریخ</label>
+                            <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click"
+                                 data-targetselector="#toDate1" data-groupid="group1" data-todate="true"
+                                 data-enabletimepicker="true" data-placement="left">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </div>
+                            <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate', 'value' => $endDatetime]) ?>
                         </div>
-                        <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate', 'value' => $endDatetime]) ?>
                     </div>
-                </div>
-                <div class="form-group" align="center">
-                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary'
-                        , 'id' => 'searchbtn']) ?>
-                </div>
-            </div>
-            <?php
-            if (isset($dataProvider)) {
-                ?>
-                <div class="form-group" align="center">
-                    <div class="modal fade" id="noSelected" role="dialog">
-                        <div class="modal-dialog">
+                    <div class="form-group col-md-4" >
+                        <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary'
+                            , 'id' => 'searchbtn']) ?>
+                        <?php
+                        if (isset($dataProvider)) {
+                        ?>
+                        <div class="form-group" align="center">
+                            <div class="modal fade" id="noSelected" role="dialog">
+                                <div class="modal-dialog">
 
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">کاربر گرامی</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>موردی جهت گزارش گیری انتخاب نشده است!</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">کاربر گرامی</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>موردی جهت گزارش گیری انتخاب نشده است!</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-
                         </div>
+                        <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
+                        <input type="hidden" id="endDate"  name="endDate" value="<?php echo $endDatetime ?>">
+                        <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info','id'=>'report']); ?>
                     </div>
-                    <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
-                    <input type="hidden" id="endDate"  name="endDate" value="<?php echo $endDatetime ?>">
-                    <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info','id'=>'report']); ?>
                 </div>
-                </div>
+            </div>
                 <?php
                 echo ExportMenu::widget([
                     'dataProvider' => $dataProvider,
