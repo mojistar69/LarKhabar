@@ -7,8 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Manager */
 
 $this->title = $model->name;
-//$this->params['breadcrumbs'][] = ['label' => 'Managers', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'مدیر', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="manager-view">

@@ -8,6 +8,8 @@ use yii\widgets\DetailView;
 /* @var $model app\models\City */
 
 $this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'منطقه', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 
 \yii\web\YiiAsset::register($this);
 ?>

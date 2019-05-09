@@ -80,22 +80,8 @@ class Archivecall extends \yii\db\ActiveRecord
             'service' => 'Service',
         ];
     }
-
     public function getOperator()
     {
-        return $this->hasOne(Operator::className(),['opid'=>'opid']);
-    }
-
-    public function getName()
-    {
-        if($this->operator !=null)
-        return $this->operator->name;
-        else return 'نامعلوم';
-    }
-    public function getFamily()
-    {
-        if($this->operator !=null)
-        return $this->operator->family;
-        else return 'نامعلوم';
+        return $this->hasOne(Operator::className(), ['opid' => 'opid']);
     }
 }

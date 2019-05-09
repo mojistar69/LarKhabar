@@ -6,6 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\City */
 
 $this->title = 'ویرایش ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'شهر', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'ویرایش';
 
 ?>
 <div class="city-update">

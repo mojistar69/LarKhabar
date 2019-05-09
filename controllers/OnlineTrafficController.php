@@ -9,15 +9,9 @@ class OnlineTrafficController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-
        return $this->render('index');
-
     }
 
-    public function actionindex2($model)
-    {
-        var_dump($model);
-    }
 
     public function actionRefreshData()
     {
@@ -108,7 +102,6 @@ class OnlineTrafficController extends \yii\web\Controller
 
     public function chart1($cityIds)
     {
-
         //allTodayOperators
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsOperators_SelectCountByCityCodes(:cityIds)")

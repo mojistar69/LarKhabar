@@ -1,32 +1,47 @@
 <?php
+
 use yii\grid\GridView;
 use yii\helpers\Html;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
 use kartik\export\ExportMenu;
-$this->title = 'کارکرد اپراتور';
-$this->params['breadcrumbs'][] = $this->title;
 $gridColumns = [
     [
-        'attribute' => 'family',
-        'value' => 'family',
+        'attribute' => 'calluid',
+        'label' => 'calluid',
+        'label' => 'شناسه تماس',
+    ],
+    [
+        'attribute' => 'callerid',
+        'label' => 'callerid',
+        'label' => 'شماره تماس گیرنده',
+    ],
+    [
+        'attribute' => 'operator_id',
+        'label' => 'شماره اپراتور',
+        'value' => 'operator.opid'
+    ],
+    [
+        'attribute' => 'name',
+        'value' => 'operator.name',
+        'label' => 'نام اپراتور'
+    ],
+    [
+        'attribute' => 'operator_family',
+        'value' => 'operator.family',
         'headerOptions' => ['width' => '80'],
         'label' => ' نام خانوادگی اپراتور'
     ],
     [
-        'attribute' => 'name',
-        'value' => 'name',
-        'label' => 'نام'
-    ],
+        'attribute' => 'تاریخ',
+        'format' => 'raw',
+        'contentOptions' => ['style' => 'max-width: 80px'],
 
-    [
-        'attribute' => 'opid',
-        'label' => 'شماره اپراتور'
-    ],
-    [
-        'attribute' => 'calluid',
-        'label' => 'calluid',
-        'label' => 'شماره تماس',
+
+        'value' => function ($searchModel) {
+            $date = new DateTime($searchModel['startdatetime']);
+            return Yii::$app->jdate->date("o/n/d – H:i", (int)strtotime($date->format('Y-m-d H:i:s')));
+        },
     ],
 ];
 
@@ -36,10 +51,10 @@ AppAsset::register($this);
 <div class="row">
     <div class="box">
         <div class="box-header bg-purple-gradient">
-            <h3 class="box-title"> کارکرداپراتورها</h3>
+            <h3 class="box-title"> آرشیو تماس ها</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
-                            class="fa fa-minus"></i>
+                        class="fa fa-minus"></i>
                 </button>
             </div>
         </div>
@@ -96,58 +111,60 @@ AppAsset::register($this);
                         </div>
                         <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
                         <input type="hidden" id="endDate"  name="endDate" value="<?php echo $endDatetime ?>">
-                        <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info','id'=>'report']); ?>
                     </div>
                 </div>
             </div>
-                <?php
-                echo ExportMenu::widget([
-                    'dataProvider' => $dataProvider,
-                    'columns' => $gridColumns,
-                ]);
-                echo GridView::widget(['dataProvider' => $dataProvider,
-                    'summary' => '',
-                    'columns' => [
-                        [
-                            'class' => 'yii\grid\CheckboxColumn',
-                            'checkboxOptions' => function ($model, $key, $index, $widget) {
-                                return ['value' => $model['opnumber']];
-                            },
-                        ],
+            <?php
+            echo ExportMenu::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => $gridColumns,
+            ]);
+            echo  GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'calluid',
+                'label' => 'calluid',
+                'label' => 'شناسه تماس',
+            ],
+            [
+                'attribute' => 'callerid',
+                'label' => 'callerid',
+                'label' => 'شماره تماس گیرنده',
+            ],
+            [
+                'attribute' => 'operator_id',
+                'label' => 'شماره اپراتور',
+                'value' => 'operator.opid'
+            ],
+            [
+                'attribute' => 'name',
+                'value' => 'operator.name',
+                'label' => 'نام اپراتور'
+            ],
+            [
+                'attribute' => 'operator_family',
+                'value' => 'operator.family',
+                'headerOptions' => ['width' => '80'],
+                'label' => ' نام خانوادگی اپراتور'
+            ],
+            [
+                'attribute' => 'تاریخ',
+                'format' => 'raw',
+                'contentOptions' => ['style' => 'max-width: 80px'],
 
-                        [
-                            'attribute' => 'calluid',
-                            'label' => 'calluid',
-                            'label' => 'شماره تماس',
-                        ],
-                        [
-                            'attribute' => 'opid',
-                            'label' => 'شماره اپراتور'
-                        ],
-                        [
-                            'attribute' => 'name',
-                            'value' => 'name',
-                            'label' => 'نام'
-                        ],
-                        [
-                            'attribute' => 'family',
-                            'value' => 'family',
-                            'headerOptions' => ['width' => '80'],
-                            'label' => ' نام خانوادگی اپراتور'
-                        ],
-                        [
-                            'attribute' => 'تاریخ',
-                            'format' => 'raw',
-                            'contentOptions' => ['style' => 'max-width: 80px'],
+
+                'value' => function ($searchModel) {
+                    $date = new DateTime($searchModel['startdatetime']);
+                    return Yii::$app->jdate->date("o/n/d – H:i", (int)strtotime($date->format('Y-m-d H:i:s')));
+                },
+            ],
 
 
-                            'value' => function ($searchModel) {
-                                $date = new DateTime($searchModel['startdatetime']);
-                                return Yii::$app->jdate->date("o/n/d – H:i", (int)strtotime($date->format('Y-m-d H:i:s')));
-                            },
-                        ],
-                    ],
-                ]);
+        ],
+    ]);
 
             }
             ?>
@@ -164,27 +181,7 @@ AppAsset::register($this);
         });
     });
 </script>
-<script type="text/javascript">
-    $( "#report" ).click(function() {
-        if($('td > input[type=checkbox]:checked').length == 0) {
-            $("#noSelected").modal('show');
-        }
 
-        else{
-            var start=$('#startDate').val();
-            var end=$('#endDate').val();
-            var str=0;
-            var array=$('td > input[type=checkbox]:checked').map(function()
-            {
-                return $(this).val();
-            }).get();
-            var url = "<?= Yii::$app->homeUrl ?>?r=operator-master/selected&startDate="+start
-                +"&endDate="+end+"&selection="+array;
-            window.location = url;
-        }
-
-    });
-</script>
 
 <script type="text/javascript">
     $( "#searchbtn" ).click(function() {
@@ -195,7 +192,7 @@ AppAsset::register($this);
             var start_num=start.substring(0,4)+start.substring(5,7)+start.substring(8,10);
             var end_num=end.substring(0,4)+end.substring(5,7)+end.substring(8,10);
             if(parseInt(end_num)>parseInt(start_num)){
-                var url2 = "<?= Yii::$app->homeUrl ?>?r=operator-master/grid&startDate="+start
+                var url2 = "<?= Yii::$app->homeUrl ?>?r=archivecall/grid&startDate="+start
                     +"&endDate="+end;
                 window.location = url2;
             }

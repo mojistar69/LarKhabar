@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Zone */
 
-$this->title = 'Create Zone';
-$this->params['breadcrumbs'][] = ['label' => 'Zones', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'ایجاد منطقه';
+$this->params['breadcrumbs'][] = ['label' => 'منطقه', 'url' => ['index']];
+$this->params['breadcrumbs'][] =$this->title ;
 ?>
 <div class="zone-create">
 

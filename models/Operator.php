@@ -85,4 +85,8 @@ class Operator extends \yii\db\ActiveRecord
             'vPass' => 'V Pass',
         ];
     }
+    public function getArchivecall()
+    {
+        return $this->hasmany(Archivecall::className(), ['opid' => 'opid']);
+    }
 }

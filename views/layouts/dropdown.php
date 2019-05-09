@@ -73,20 +73,20 @@ use app\models\Zone;
             console.log(data);
             //txtCountOp
             $('span[name="txtCountOp"]').empty();
-            $('span[name="txtCountOp"]').append('<span name="txtCountOp" class="badge bg-red">' + data[0] + '</span>');
+            $('span[name="txtCountOp"]').append('<span name="txtCountOp" class="badge bg-green">' + data[0] + '</span>');
 
             //txtCountActiveOp
             $('span[name="txtCountActiveOp"]').empty();
-            $('span[name="txtCountActiveOp"]').append('<span name="txtCountActiveOp" class="badge bg-yellow">' + data[1] + '</span>');
+            $('span[name="txtCountActiveOp"]').append('<span name="txtCountActiveOp" class="badge bg-green">' + data[1] + '</span>');
             //UnLocal
             $('span[name="txtUnLocal"]').empty();
             $('span[name="txtUnLocal"]').append('<span name="txtUnLocal" class="badge bg-green">' + data[2] + '</span>');
             //TotalTime
             $('span[name="txtTotalTime"]').empty();
-            $('span[name="txtTotalTime"]').append('<span name="txtTotalTime" class="badge bg-blue">' + data[3] + '</span>');
+            $('span[name="txtTotalTime"]').append('<span name="txtTotalTime" class="badge bg-green">' + data[3] + '</span>');
             //txtAvgTime
             $('span[name="txtAvgTime"]').empty();
-            $('span[name="txtAvgTime"]').append('<span name="txtAvgTime" class="badge bg-orange">' + data[4] + '</span>');
+            $('span[name="txtAvgTime"]').append('<span name="txtAvgTime" class="badge bg-green">' + data[4] + '</span>');
 
             //////////////////////////////////////
             ////////////////////////////////////
@@ -96,16 +96,16 @@ use app\models\Zone;
 
             //txt401402
             $('span[name="txt401402"]').empty();
-            $('span[name="txt401402"]').append('<span name="txt401402" class="badge bg-yellow">' + data[6] + '</span>');
+            $('span[name="txt401402"]').append('<span name="txt401402" class="badge bg-red">' + data[6] + '</span>');
             //txt301304219
             $('span[name="txt301304219"]').empty();
-            $('span[name="txt301304219"]').append('<span name="txt301304219" class="badge bg-green">' + data[7] + '</span>');
+            $('span[name="txt301304219"]').append('<span name="txt301304219" class="badge bg-red">' + data[7] + '</span>');
             //txt203
             $('span[name="txt203"]').empty();
-            $('span[name="txt203"]').append('<span name="txt203" class="badge bg-blue">' + data[8] + '</span>');
+            $('span[name="txt203"]').append('<span name="txt203" class="badge bg-red">' + data[8] + '</span>');
             //txtDisturber
             $('span[name="txtDisturber"]').empty();
-            $('span[name="txtDisturber"]').append('<span name="txtDisturber" class="badge bg-orange">' + data[9] + '</span>');
+            $('span[name="txtDisturber"]').append('<span name="txtDisturber" class="badge bg-red">' + data[9] + '</span>');
 
             ///////////////////////////
             //////////////////////////

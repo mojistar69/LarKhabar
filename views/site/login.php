@@ -70,15 +70,17 @@ use yii\captcha\Captcha;
                 <?= $form->field($model, 'password')->passwordInput(['maxlength' => true,'class'=>'input100','placeholder'=>'رمز عبور','dir'=>'rtl'])->label('') ?>
             </div>
 
+            <div class="wrap-input100 validate-input" data-validate = "Enter captcha">
+                <?= $form->field($model, 'captcha')->widget(Captcha::className()) ?>
+            </div>
+
+
 
 
 
 
             <div class="container-login100-form-btn">
-
                 <?= Html::submitButton('ورود', ['class'=> 'login100-form-btn']); ?>
-
-
             </div>
 
             <br><br>

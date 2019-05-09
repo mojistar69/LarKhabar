@@ -20,6 +20,7 @@ body {
 body {
   font-family: 'Vazir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
+  font-size: 14px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -1734,7 +1735,7 @@ a:focus {
 .box-header > .ion,
 .box-header .box-title {
   display: inline-block;
-  font-size: 18px;
+  font-size: 16px;
   margin: 0;
   line-height: 1;
 }

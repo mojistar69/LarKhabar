@@ -7,6 +7,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'شهر';
+$this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="city-index">
@@ -14,7 +15,7 @@ $this->title = 'شهر';
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('ثبت شهر', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(' ثبت شهر ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= $dataProvider->pagination->pageSize=10;?>

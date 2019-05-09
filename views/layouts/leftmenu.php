@@ -6,7 +6,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-right image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="../dist/img/a1.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-right info">
                     <p><?php
@@ -67,7 +67,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="<?= Yii::$app->homeUrl?>?r=manager%2Fupdate&id=<?php if(isset($identity))echo ($identity->id)?>"><i class="fa fa-circle-o"></i> تغییر مشخصات 4</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl?>?r=manager%2Fupdate&id=<?php if(isset($identity))echo ($identity->id)?>"><i class="fa fa-circle-o"></i> تغییر مشخصات </a></li>
 
                     </ul>
                 </li>

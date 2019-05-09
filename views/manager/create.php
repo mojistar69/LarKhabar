@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Manager */
 
 $this->title = 'ایجاد مدیر';
-//$this->params['breadcrumbs'][] = ['label' => 'Managers', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'مدیر', 'url' => ['index']];
+$this->params['breadcrumbs'][] =$this->title ;
 ?>
 <div class="manager-create">
 

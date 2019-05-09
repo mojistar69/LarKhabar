@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Operator */
 
 $this->title = 'ویرایش اپراتور ' . $model->name;
-//$this->params['breadcrumbs'][] = ['label' => 'Operators', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->opid]];
-//$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = ['label' => 'اپراتور', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'ویرایش';
 ?>
 <div class="operator-update">
 

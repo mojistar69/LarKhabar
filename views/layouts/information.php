@@ -30,15 +30,15 @@
                 <tr>
 
                     <td align="center">
-                        <span name="txtCountOp" class="badge bg-red">0</span></td>
+                        <span name="txtCountOp" class="badge bg-green">0</span></td>
                     <td align="center">
-                        <span name="txtCountActiveOp" class="badge bg-yellow">0</span></td>
+                        <span name="txtCountActiveOp" class="badge bg-green">0</span></td>
                     <td align="center">
                         <span name="txtUnLocal" class="badge bg-green">0</span></td>
                     <td align="center">
-                        <span name="txtTotalTime" class="badge bg-blue">00:00:00</span></td>
+                        <span name="txtTotalTime" class="badge bg-green">00:00:00</span></td>
                     <td align="center">
-                        <span name="txtAvgTime" class="badge bg-orange">00:00:00</span></td>
+                        <span name="txtAvgTime" class="badge bg-green">00:00:00</span></td>
                 </tr>
                 </tbody>
             </table>
@@ -74,13 +74,13 @@
                     <td align="center">
                         <span name="txtEnteredCall" class="badge bg-red">0</span></td>
                     <td align="center">
-                        <span name="txt401402" class="badge bg-yellow">0</span></td>
+                        <span name="txt401402" class="badge bg-red">0</span></td>
                     <td align="center">
-                        <span name="txt301304219" class="badge bg-green">0</span></td>
+                        <span name="txt301304219" class="badge bg-red">0</span></td>
                     <td align="center">
-                        <span name="txt203" class="badge bg-blue">0</span></td>
+                        <span name="txt203" class="badge bg-red">0</span></td>
                     <td align="center">
-                        <span name="txtDisturber" class="badge bg-orange">0</span></td>
+                        <span name="txtDisturber" class="badge bg-red">0</span></td>
                 </tr>
                 <tr>
 

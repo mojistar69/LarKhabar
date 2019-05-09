@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\archivecall */
+/* @var $model app\models\Archivecall */
 
 $this->title = 'Create Archivecall';
 $this->params['breadcrumbs'][] = ['label' => 'Archivecalls', 'url' => ['index']];

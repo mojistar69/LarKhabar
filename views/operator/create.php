@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Operator */
 
 $this->title = 'ایجاد اپراتور';
-//$this->params['breadcrumbs'][] = ['label' => 'Operators', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'اپراتور', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="operator-create">
 

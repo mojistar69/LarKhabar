@@ -11,8 +11,7 @@ class ArchiveOperatorController extends \yii\web\Controller
     public function actionIndex()
     {
         return $this->render('index',
-            ['startDatetime'=>'1397/01/01',
-                'endDatetime'=>'1398/01/01'
+            ['startDatetime'=>'1397/01/01', 'endDatetime'=>'1398/01/01'
             ]);
     }
 

@@ -33,8 +33,8 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
-//            $rules[] = ['captcha', 'required'],
-//            $rules[] = ['captcha', 'captcha'],
+            $rules[] = ['captcha', 'required','message' => 'نمی تواند خالی باشد'],
+            $rules[] = ['captcha', 'captcha','message' => 'دوباره سعی کنید'],
         ];
 
     }

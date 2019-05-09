@@ -7,8 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Operator */
 
 $this->title = $model->name;
-//$this->params['breadcrumbs'][] = ['label' => 'Operators', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'اپراتور', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="operator-view">
