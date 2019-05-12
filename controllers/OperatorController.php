@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Operator;
 use app\models\OperatorSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,12 +15,25 @@ use yii\filters\VerbFilter;
  */
 class OperatorController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','view','create','update','delete','lists'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','view','create','update','delete','lists'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','view','create','update','delete','lists'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -28,11 +42,6 @@ class OperatorController extends Controller
             ],
         ];
     }
-
-    /**
-     * Lists all Operator models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new OperatorSearch();

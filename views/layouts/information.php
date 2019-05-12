@@ -17,7 +17,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
-            <table class="table table-condensed">
+            <table class="table table-condensed OperatorInfo">
                 <tbody>
                 <tr>
 
@@ -61,7 +61,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
-            <table class="table table-striped">
+            <table class="table table-striped OperatorInfo">
                 <tbody>
                 <tr>
                     <td align="center">تماس های وارده</td>

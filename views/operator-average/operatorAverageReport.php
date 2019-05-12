@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\export\ExportMenu;
 $title='گزارش میانگین عملکرد اپراتور'.$startdate.'  تا '.$enddate;
+$this->params['breadcrumbs'][] = ['label' => 'میانگین عملکرد اپراتور ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'گزارش دهی';
 $gridColumns = [
     [
         'attribute' => Yii::t('app', 'مدت زمان کل'),

@@ -8,6 +8,28 @@ use yii\data\ArrayDataProvider;
 
 class OperatorDetailController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','grid','selected'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
     public function actionIndex()
     {
         return $this->render('index',

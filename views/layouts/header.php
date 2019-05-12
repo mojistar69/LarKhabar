@@ -18,7 +18,6 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
-
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
@@ -48,7 +47,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="<?= Yii::$app->homeUrl?>?r=manager%2Fview&id=<?php if(isset($identity)) $identity->id?>" class="btn btn-default btn-flat">مشخصات</a>
+                                <a href="<?= Yii::$app->homeUrl?>?r=manager%2Fview&id=<?php if(isset($identity)) echo $identity->id?>" class="btn btn-default btn-flat">مشخصات</a>
                             </div>
                             <div class="pull-right">
                                 <a href="<?= Yii::$app->homeUrl?>?r=site/logout" data-method="post" class="btn btn-default btn-flat">خروج</a>
@@ -59,9 +58,7 @@
 
             </ul>
         </div>
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-        </a>
+
 
     </nav>
 </header>

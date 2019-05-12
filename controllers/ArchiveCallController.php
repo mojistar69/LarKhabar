@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Archivecall;
 use app\models\ArchivecallSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,25 +15,28 @@ use yii\filters\VerbFilter;
  */
 class ArchivecallController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','grid','selected'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['?'],
+                    ],
                 ],
             ],
+
         ];
     }
-
-    /**
-     * Lists all Archivecall models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new ArchivecallSearch();

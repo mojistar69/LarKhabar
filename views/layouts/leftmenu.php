@@ -49,7 +49,7 @@
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=offline-traffic"><i class="fa fa-circle-o"></i>ترافیک آفلاین</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=load"><i class="fa fa-circle-o"></i>اوج ترافیک</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=disturber"><i class="fa fa-circle-o"></i>مزاحمین</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-master"><i class="fa fa-circle-o"></i>کارکرد اپراتور</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=archivecall"><i class="fa fa-circle-o"></i>آرشیو تماس ها</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=archive-operator"><i class="fa fa-circle-o"></i>آرشیو اپراتور</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=operator-detail"><i class="fa fa-circle-o"></i>جزئیات عملکرد اپراتور</a>
                         </li>

@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
 use kartik\export\ExportMenu;
+$this->title = 'مزاحمین';
+$this->params['breadcrumbs'][] = $this->title;
 $gridColumns = [
     [
         'attribute' => 'name',

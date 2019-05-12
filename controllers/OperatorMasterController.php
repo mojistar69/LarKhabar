@@ -4,10 +4,33 @@ namespace app\controllers;
 use app\models\ArchiveCallSearch;
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
 
 
 class OperatorMasterController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','grid','selected'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
     public function actionIndex()
     {
 
@@ -16,7 +39,6 @@ class OperatorMasterController extends \yii\web\Controller
             'endDatetime'=>'1398/01/01'
             ]);
     }
-
     public function actionGrid()
     {
         $startDate_Shamsi='';
@@ -25,9 +47,13 @@ class OperatorMasterController extends \yii\web\Controller
         if (isset($_GET["startDate"])) {
             $startDate_Shamsi = $_GET["startDate"];
         }
+        else
+            return;
         if (isset($_GET["endDate"])) {
             $endDate_Shamsi = $_GET["endDate"];
         }
+        else
+            return;
 
         $tmp1 = explode('/',$startDate_Shamsi );
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
@@ -81,7 +107,6 @@ class OperatorMasterController extends \yii\web\Controller
                 'selection_array' => $operators,
         ]);
     }
-
     public function doQuerySelected($operators,$startDatetime,$endDatetime)
     {
         $connection = Yii::$app->getDb();

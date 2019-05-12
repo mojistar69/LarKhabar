@@ -11,7 +11,7 @@ use yii\helpers\Html;
         <!-- general form elements -->
         <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title">مشخصات کاربری</h3>
+                <h3 class="box-title">مشخصات </h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->

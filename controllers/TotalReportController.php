@@ -5,9 +5,32 @@ namespace app\controllers;
 use app\models\ArchiveCallSearch;
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
 
 class TotalReportController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','grid','selected'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','grid'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','grid'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
     public function actionIndex()
     {
         $Parameter = [0, 0, 0, 0,
@@ -18,7 +41,6 @@ class TotalReportController extends \yii\web\Controller
                 'Parameter'=>$Parameter
             ]);
     }
-
     public function actionGrid()
     {
         $startDate_Shamsi='';
@@ -92,7 +114,6 @@ where `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime");
             'endDatetime' => $endDate_Shamsi,
             ]);
     }
-
     function jalali_to_gregorian($jy,$jm,$jd,$mod=''){
         if($jy>979){
             $gy=1600;

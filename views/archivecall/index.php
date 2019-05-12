@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
 use kartik\export\ExportMenu;
+$this->title = 'آرشیو تماس ها';
+$this->params['breadcrumbs'][] = $this->title;
 $gridColumns = [
     [
         'attribute' => 'calluid',
@@ -126,13 +128,15 @@ AppAsset::register($this);
                     ['class' => 'yii\grid\SerialColumn'],
                     [
                         'attribute' => 'calluid',
-                        'label' => 'calluid',
                         'label' => 'شناسه تماس',
+                        'value' => 'calluid'
+
                     ],
                     [
                         'attribute' => 'callerid',
-                        'label' => 'callerid',
                         'label' => 'شماره تماس گیرنده',
+                        'value' => 'callerid',
+
                     ],
                     [
                         'attribute' => 'operator_id',

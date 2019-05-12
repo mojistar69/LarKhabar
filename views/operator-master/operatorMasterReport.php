@@ -4,21 +4,23 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\export\ExportMenu;
 $title='کارکرد اپراتور از '.$startdate.'  تا '.$enddate;
+$this->params['breadcrumbs'][] = ['label' => 'کارکرد اپراتور ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'گزارش دهی';
 $gridColumns = [
 [
         'attribute'=>'under10Byop',
     'width'=>'5px',
     'vAlign'=>'middle',
-        'label'=>'زیر 10 از طرف اپراتور'
+        'label'=>'قطع زیر 10  ثانیه از طرف اپراتور'
     ],
 
     [
         'attribute'=>'under10Bycu',
-        'label'=>'زیر 10 از طرف مشتری'
+        'label'=>'قطع زیر 10  ثانیه از طرف مشترک'
     ],
 
     [ 'attribute'=>'mechanized',
-        'label'=>'مکانیزه'
+        'label'=>'اعلام نتایج'
     ],
 
     [
@@ -77,13 +79,13 @@ $gridColumns = [
                     'attribute'=>'cutfromcustomer',
                     'label'=>'قطع از طرف مشترک'
                 ],[ 'attribute'=>'mechanized',
-                    'label'=>'مکانیزه'
+                    'label'=>'اعلام نتایج'
                 ],[
                     'attribute'=>'under10Bycu',
-                    'label'=>'زیر 10 از طرف مشتری'
+                    'label'=>'قطع زیر 10  ثانیه از طرف مشتری'
                 ],[
                     'attribute'=>'under10Byop',
-                    'label'=>'زیر 10 از طرف اپراتور'
+                    'label'=>'قطع زیر 10  ثانیه از طرف اپراتور'
                 ],
 
             ],])

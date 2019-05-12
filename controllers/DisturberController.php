@@ -6,6 +6,28 @@ use Yii;
 use yii\data\ArrayDataProvider;
 class DisturberController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','grid'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','grid'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','grid'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
     public function actionIndex()
     {
         return $this->render('index',

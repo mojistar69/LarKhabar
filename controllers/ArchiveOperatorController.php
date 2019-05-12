@@ -2,19 +2,41 @@
 
 namespace app\controllers;
 
-use app\models\ArchiveOperatorSearch;
+
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
 
 class ArchiveOperatorController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','grid','selected'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
     public function actionIndex()
     {
         return $this->render('index',
             ['startDatetime'=>'1397/01/01', 'endDatetime'=>'1398/01/01'
             ]);
     }
-
     public function actionGrid()
     {
         $startDate_Shamsi='';

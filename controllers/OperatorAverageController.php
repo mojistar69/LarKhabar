@@ -5,9 +5,32 @@ namespace app\controllers;
 use app\models\ArchiveCallSearch;
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
 
 class OperatorAverageController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','grid','selected'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','grid','selected'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
     public function actionIndex()
     {
         return $this->render('index',

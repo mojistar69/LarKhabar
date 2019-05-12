@@ -6,6 +6,8 @@ use app\models\ArchiveCallSearch;
 use Yii;
 use app\models\Manager;
 use app\models\ManagerSearch;
+use yii\filters\AccessControl;
+use yii\web;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -15,12 +17,25 @@ use yii\filters\VerbFilter;
  */
 class ManagerController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','view','create','update','delete'],
+                'rules' => [
+                    [
+                    'allow' => true,
+                    'actions' => ['create','delete','update','view','index'],
+                    'roles' => ['admin'],
+                ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','view','create','update','delete','lists'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -29,11 +44,6 @@ class ManagerController extends Controller
             ],
         ];
     }
-
-    /**
-     * Lists all Manager models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new ManagerSearch();
@@ -87,23 +97,15 @@ class ManagerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            return $this->render('update', [
+                'model' => $model,
+            ]);
     }
 
-    /**
-     * Deletes an existing Manager model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();

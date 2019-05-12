@@ -1,6 +1,7 @@
 <?php
 use app\assets\AppAsset;
-use app\controllers\yii\helpers\Json;
+use app\controllers\yii\helpers\Json;$this->title = 'ترافیک آفلاین';
+$this->params['breadcrumbs'][] = $this->title;
 AppAsset::register($this);
 ?>
 <div class="row">

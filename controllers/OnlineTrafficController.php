@@ -3,18 +3,42 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
 
 class OnlineTrafficController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','refreshdata'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','refreshdata'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
+
     public function actionIndex()
     {
        return $this->render('index');
     }
-
-
     public function actionRefreshData()
     {
+        if(!isset($_GET['zoneId']))
+            return;
         $zoneId = $_GET['zoneId'];
         //array of all cities in the selected zoneId
         $listCityId = '1';
@@ -99,7 +123,6 @@ class OnlineTrafficController extends \yii\web\Controller
         $updateParameter = [$Channel, $EnterCall, $Waiting, $Talking, $Listening, $chart1_2, $chart3, $chart4];
         echo Json::encode($updateParameter);
     }
-
     public function chart1($cityIds)
     {
         //allTodayOperators
@@ -136,12 +159,11 @@ class OnlineTrafficController extends \yii\web\Controller
             [$all, $todayActive, $todayInactive]];  //Today
         return $chartsValues;
     }
-
     public function chart3($cityIds)
     {
         //NewCall
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_NewCall(:cityIds)")
+        $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Waiting_or_NewCall(:cityIds)")
             ->bindValue(':cityIds', $cityIds);
         $NewCallQuery = $command->queryAll();
         if (count($NewCallQuery) == 0)
@@ -150,14 +172,14 @@ class OnlineTrafficController extends \yii\web\Controller
             $NewCall = (int)$NewCallQuery[0]['count'];
 
         //Waiting
-        $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Waiting(:cityIds)")
-            ->bindValue(':cityIds', $cityIds);
-        $WaitingQuery = $command->queryAll();
-        if (count($WaitingQuery) == 0)
-            $Waiting = 0;
-        else
-            $Waiting = (int)$WaitingQuery[0]['count'];
+//        $connection = Yii::$app->getDb();
+//        $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Waiting(:cityIds)")
+//            ->bindValue(':cityIds', $cityIds);
+//        $WaitingQuery = $command->queryAll();
+//        if (count($WaitingQuery) == 0)
+//            $Waiting = 0;
+//        else
+//            $Waiting = (int)$WaitingQuery[0]['count'];
         //Talking
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Talking(:cityIds)")
@@ -176,11 +198,9 @@ class OnlineTrafficController extends \yii\web\Controller
             $Listening = 0;
         else
             $Listening = (int)$ListeningQuery[0]['count'];
-        $chartValues = [$NewCall, $Waiting, $Talking, $Listening];
+        $chartValues = [$NewCall,$Talking, $Listening];
         return $chartValues;
     }
-
-
     public function chart4($cityIds)
     {
         //RejectedCalls
@@ -250,7 +270,6 @@ class OnlineTrafficController extends \yii\web\Controller
         return $listParameters;
 
     }
-
     public function getAllCities()
     {
         $connection = Yii::$app->getDb();
@@ -259,7 +278,6 @@ class OnlineTrafficController extends \yii\web\Controller
         $listCityId = $this->concatCityIds($citiesId);
         return $listCityId;
     }
-
     public function concatCityIds($cityRows)
     {
         $stringIds = "";
@@ -269,5 +287,4 @@ class OnlineTrafficController extends \yii\web\Controller
         $stringIds = substr($stringIds, 0, strlen($stringIds) - 1);
         return $stringIds;
     }
-
 }

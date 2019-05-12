@@ -59,12 +59,12 @@ use yii\helpers\Html;
                     <?= $form->field($model, 'password')->passwordInput(['maxlength' => 30,'style'=>'width:200px']) ?>
                 </div>
 
-                <div class="form-group field-manager-password">
-                    <label class="control-label" for="manager-password"> تکرار رمز عبور</label>
-                    <input type="password" id="manager-re-password" class="form-control" name="repassword"  maxlength="30"
-                    style="width: 200px">
-                    <div class="help-block"></div>
-                </div>
+<!--                <div class="form-group field-manager-password">-->
+<!--                    <label class="control-label" for="manager-password"> تکرار رمز عبور</label>-->
+<!--                    <input type="password" id="manager-re-password" class="form-control" name="repassword"  maxlength="30"-->
+<!--                    style="width: 200px">-->
+<!--                    <div class="help-block"></div>-->
+<!--                </div>-->
             </div>
             <div class="form-group">
 

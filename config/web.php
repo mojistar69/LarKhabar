@@ -13,6 +13,14 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+
+//        'authManager'=>[
+//          'class' => 'yii/rbac/DbManager',
+//        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
+
         'jdate' => [
             'class' => 'jDate\DateTime'
         ],
@@ -34,12 +42,7 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-//        'ControllerMap'=>[
-//            'article'=>[
-//                'class' =>'App\controllers\PostController',
-//                'enableCsrfValidation'=>false,
-//            ],
-//        ],
+
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,

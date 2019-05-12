@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use kartik\export\ExportMenu;
 
 $title='جزئیات عملکرد اپراتور از '.$startdate.'  تا '.$enddate;
+$this->params['breadcrumbs'][] = ['label' => 'جزئیات عملکرد اپراتور ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'گزارش دهی';
 $gridColumns = [
 
     [

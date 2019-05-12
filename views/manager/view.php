@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('بروزرسانی', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('ویرایش', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('حذف', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -32,7 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'family',
             'username',
-//            'password',
+            [
+                'attribute' => 'accessType',
+                'value' => function ($Model) {
+                    if ($Model['accessType']==1)
+                        return 'مدیر ناحیه' ;
+                    else if ($Model['accessType']==2)
+                        return 'مدیر ارشد' ;
+                    else if ($Model['accessType']==3)
+                        return 'مدیر کل' ;
+
+                },
+            ],
             'phoneNumber',
             'mobileNumber',
         ],

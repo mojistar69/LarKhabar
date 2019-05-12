@@ -6,6 +6,8 @@ use kartik\export\ExportMenu;
 
 
 $title='گزارش آرشیو اپراتور از '.$startdate.'  تا '.$enddate;
+$this->params['breadcrumbs'][] = ['label' => 'آرشیو اپراتور ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'گزارش دهی';
 $gridColumns = [
     [
         'attribute'=>'cname',

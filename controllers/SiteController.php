@@ -20,11 +20,16 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['login', 'logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -125,5 +130,51 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+
+    public function actionInit()
+    {
+        $auth=Yii::$app->authManager;
+        $create_manager=$auth->createPermission('create_manager');
+        $create_manager->description='user can access to create manager';
+        $auth->add($create_manager);
+
+        $delete_manager=$auth->createPermission('delete_manager');
+        $delete_manager->description='user can access to delete manager';
+        $auth->add($delete_manager);
+
+        $update_manager=$auth->createPermission('update_manager');
+        $update_manager->description='user can access to update manager';
+        $auth->add($update_manager);
+
+        $admin=$auth->createRole('admin');
+        $auth->add($admin);
+        $manager=$auth->createRole('manager');
+        $auth->add($manager);
+
+        $auth->addChild($admin,$create_manager);
+        $auth->addChild($admin,$delete_manager);
+        $auth->addChild($admin,$update_manager);
+
+        $auth->addChild($manager,$create_manager);
+        $auth->addChild($manager,$delete_manager);
+        $auth->addChild($manager,$update_manager);
+
+
+        $auth->assign($admin,1);
+        $auth->assign($manager,2);
+
+        $rule= new  component\ManagerRule;
+        $auth->add($rule);
+
+        $updateOwnManager=$auth->createPermission('updateOwnManager');
+        $updateOwnManager->description='manager can update own Manager Profile';
+        $updateOwnManager->ruleName=$rule->name;
+        $auth->add($updateOwnManager);
+
+        $auth->addChild($updateOwnManager,$update_manager);
+        $auth->addChild($manager,$updateOwnManager);
+
     }
 }

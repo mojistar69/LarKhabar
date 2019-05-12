@@ -3,10 +3,33 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
 
 class LoadController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','refreshdata'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','refreshdata'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','refreshdata'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
     public function actionIndex()
     {
         return $this->render('index',

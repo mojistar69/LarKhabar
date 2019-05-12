@@ -6,6 +6,7 @@ use faravaghi\jalaliDatePicker\jalaliDatePicker;
 use kartik\export\ExportMenu;
 $this->title = 'کارکرد اپراتور';
 $this->params['breadcrumbs'][] = $this->title;
+
 $gridColumns = [
     [
         'attribute' => 'family',

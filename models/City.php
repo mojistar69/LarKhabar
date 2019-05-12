@@ -32,6 +32,7 @@ class City extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name','code'], 'required'],
             [['zoneid', 'code', 'priority'], 'integer'],
             [['name'], 'string', 'max' => 45],
             [['headernumber', 'newheadernumber'], 'string', 'max' => 10],

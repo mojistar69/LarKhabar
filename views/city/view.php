@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\City */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'منطقه', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'شهرها', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 \yii\web\YiiAsset::register($this);
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('بروزرسانی', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('ویرایش', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('حذف', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
