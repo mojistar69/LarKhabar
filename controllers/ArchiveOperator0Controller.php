@@ -7,7 +7,7 @@ use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 
-class OperatorDetailController extends \yii\web\Controller
+class ArchiveOperator0Controller extends \yii\web\Controller
 {
     public function behaviors()
     {
@@ -34,11 +34,9 @@ class OperatorDetailController extends \yii\web\Controller
     public function actionIndex()
     {
         return $this->render('index',
-            ['startDatetime'=>'1397/01/01',
-                'endDatetime'=>'1398/01/01'
+            ['startDatetime'=>'1397/01/01', 'endDatetime'=>'1398/01/01'
             ]);
     }
-
     public function actionGrid()
     {
         $startDate_Shamsi='';
@@ -58,89 +56,87 @@ class OperatorDetailController extends \yii\web\Controller
 
         $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
         $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
-
-        $dataProvider=$this->doQuery($startDatetime,$endDatetime);
+       $dataProvider=$this->doQueryGrid($startDatetime,$endDatetime);
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'startDatetime' => $startDate_Shamsi,
             'endDatetime' => $endDate_Shamsi,
         ]);
-
     }
 
-    public function doQuery($startDatetime,$endDatetime)
+    public function doQueryGrid($startDatetime,$endDatetime)
     {
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("select operators.cityid,operators.opid,operators.name as name,operators.family as family,
-operators.opnumber as opnumber
-from archivecalls  
-join operators on archivecalls.opid = operators.opid 
-where archivecalls.startdatetime >= $startDatetime
-and archivecalls.enddatetime <= $endDatetime 
+        $command = $connection->createCommand("select id,operators.cityid,operators.opid,operators.name as name,operators.family as family,
+operators.opnumber as opnumber,archiveOperators.logindatetime as logindatetime,
+SUM(archiveOperators.rcvcall) as rcvcall
+,SUM(archiveOperators.anscall) as anscall
+,count(*) as logcount
+from archiveOperators  
+join operators on archiveOperators.opid = operators.opid 
+where archiveOperators.logindatetime >= $startDatetime
+and archiveOperators.logindatetime <= $endDatetime 
 group by opid; ");
         $result = $command->queryAll();
         $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
         $dataProvider->pagination->pageSize=10;
         return $dataProvider;
-    }
-
+}
     public function actionSelected()
     {
         $startDate_Shamsi = '';
         $endDate_Shamsi = '';
-        $operators = '';
-
-        if (isset($_GET["startDate"])) {
-            $startDate_Shamsi = $_GET["startDate"];
+        if (Yii::$app->request->post('sdate') != '') {
+            $startDate_Shamsi = Yii::$app->request->post('sdate');
         }
-        if (isset($_GET["endDate"])) {
-            $endDate_Shamsi = $_GET["endDate"];
+        if (Yii::$app->request->post('edate') != '') {
+            $endDate_Shamsi = Yii::$app->request->post('edate');
         }
-        if (isset($_GET["selection"])&& is_array($_GET["selection"])) {
-            $select_array = (array)$_GET["selection"];
+        if (Yii::$app->request->get('startDate') != '') {
+            $startDate_Shamsi = Yii::$app->request->get('startDate');
+        }
+        if (Yii::$app->request->get('endDate') != '') {
+            $endDate_Shamsi = Yii::$app->request->get('endDate');
+        }
+        if (Yii::$app->request->post('selection') != '') {
+            $select_array = (array)Yii::$app->request->post('selection');
             $operators = $this->select($select_array);
         }
-        if (isset($_GET["selection"]) && !is_array($_GET["selection"]
-            )) {
+        if (Yii::$app->request->get('selection') != '') {
             $operators = Yii::$app->request->get('selection');
-        }
-        if ($operators == ''){
-            $message = "wrong answer";
-            echo "<script type='text/javascript'>alert('$message');</script>";
         }
         $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
-        $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
-        $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
 
+        $startDatetime =  '\''.$startDate_Miladi . ' 00:00:00'.'\'';
+        $endDatetime =  '\''.$endDate_Miladi . ' 00:00:00'.'\'';
         $dataProvider=$this->doQuerySelected($operators,$startDatetime,$endDatetime);
-        return $this->render('operatorDetailReport',
-            ['dataProvider' => $dataProvider,
-                'startdate' => $startDate_Shamsi,
-                'enddate' => $endDate_Shamsi,
-                'selection_array' => $operators,
-            ]);
-    }
 
+        return $this->render('archiveOperatorReport',['dataProvider'=>$dataProvider,
+            'startdate' => $startDate_Shamsi,
+            'enddate' => $endDate_Shamsi,
+            'selection_array' => $operators,
+        ]);
+
+    }
     public function doQuerySelected($operators,$startDatetime,$endDatetime)
     {
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("select *,operators.name as opname,callstates.name as state,
- city.name as cname from archivecalls
-join operators on archivecalls.opid = operators.opid
-join city on archivecalls.cityId = city.id
-join callstates on callstates.Id = archivecalls.calllaststate
- WHERE  startdatetime >= $startDatetime  AND
-  startdatetime <= $endDatetime and archivecalls.opnumber in ($operators) ;
+        $command = $connection->createCommand("select *,timediff(logoffdatetime,logindatetime) as term
+,time(logoffdatetime) as logofftime,operators.name as opname, city.name as cname,archiveOperators.logindatetime as datetime,
+time(logindatetime) logintime from archiveOperators
+join operators on archiveOperators.opid = operators.opid
+join city on archiveOperators.cityId = city.id
+ WHERE  logindatetime >= $startDatetime  AND
+  logindatetime <= $endDatetime and archiveOperators.opnumber in ($operators) ;
   ");
         $result = $command->queryAll();
         $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
+        $dataProvider->pagination->pageSize=10;
         return $dataProvider;
-
-    }
-
+}
     public function select($select_array)
     {
         $selection_str='';
@@ -150,7 +146,6 @@ join callstates on callstates.Id = archivecalls.calllaststate
         $selection_str=substr($selection_str,1,strlen($selection_str));
         return $selection_str;
     }
-
     function jalali_to_gregorian($jy, $jm, $jd, $mod = '')
     {
         if ($jy > 979) {
@@ -180,4 +175,5 @@ join callstates on callstates.Id = archivecalls.calllaststate
         }
         return ($mod == '') ? array($gy, $gm, $gd) : $gy . $mod . $gm . $mod . $gd;
     }
+
 }

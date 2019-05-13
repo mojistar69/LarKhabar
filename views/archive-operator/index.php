@@ -5,53 +5,43 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
 use kartik\export\ExportMenu;
-$this->title = 'آرشیو اپراتور';
+$this->title = 'آرشیو اپراتورها';
 $this->params['breadcrumbs'][] = $this->title;
 $gridColumns = [
+
     [
-        'attribute'=>'rcvcall',
-        'label'=>'دریافتی بومی'
+        'attribute' => 'cname',
+        'value' => 'city.name',
+        'label' => ' نام شهر'
     ],
     [
-        'attribute'=>'logcount',
-        'label'=>' تعداد خروج'
+        'attribute' => 'ofamily',
+        'value' => 'operator.family',
+        'headerOptions' => ['width' => '80'],
+        'label' => ' نام خانوادگی اپراتور'
     ],
     [
-        'attribute' => Yii::t('app', 'تاریخ'),
-        'format' => 'raw',
-        'value' => function ($searchModel) {
-            $date = new DateTime($searchModel['logindatetime']);
-            return Yii::$app->jdate->date("o/n/d – H:i", (int) strtotime($date->format('Y-m-d H:i:s')));
-        },
-    ],
-    [
-        'attribute'=>'anscall',
-        'label'=>'قطع از طرف اپراتور'
-    ],
-    [
-        'attribute'=>'family',
-        'value'=>'family',
-        'label'=>' نام خانوادگی اپراتور'
-    ],
-    [
-        'attribute'=>'name',
-        'value'=>'name',
-        'label'=>'نام'
+        'attribute' => 'oname',
+        'value' => 'operator.name',
+        'label' => 'نام اپراتور'
     ],
 
     [
-        'attribute'=>'opnumber',
-        'label'=>'اپراتور'
+        'attribute' => 'oopid',
+        'label' => 'شماره اپراتور',
+        'value' => 'operator.opid'
     ],
 
+    ['class' => 'yii\grid\SerialColumn'],
 ];
+
 AppAsset::register($this);
 ?>
 
 <div class="row">
     <div class="box">
         <div class="box-header bg-purple-gradient">
-            <h3 class="box-title">آرشیو اپراتور</h3>
+            <h3 class="box-title"> آرشیو اپراتور ها</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
                             class="fa fa-minus"></i>
@@ -83,7 +73,7 @@ AppAsset::register($this);
                         </div>
                     </div>
                     <div class="form-group col-md-4" >
-                        <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary'
+                        <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-warning'
                             , 'id' => 'searchbtn']) ?>
                         <?php
                         if (isset($dataProvider)) {
@@ -115,68 +105,55 @@ AppAsset::register($this);
                     </div>
                 </div>
             </div>
-        <?php
-        echo ExportMenu::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => $gridColumns,
-        ]);
-        echo GridView::widget(['dataProvider' => $dataProvider,
-            'summary' => '',
-            'columns' => [
-                [
-                    'class' => 'yii\grid\CheckboxColumn',
-                    'checkboxOptions' => function($model, $key, $index, $widget) {
-                        return ['value' => $model['opnumber'] ];
-                    },
-                ],
+            <?php
+            echo ExportMenu::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => $gridColumns,
+            ]);
+            echo  GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
 
-                [
-                    'attribute'=>'opnumber',
-                    'label'=>'اپراتور'
-                ],
+                    [
+                        'class' => 'yii\grid\CheckboxColumn',
+                        'checkboxOptions' => function($model, $key, $index, $widget) {
+                            return ['value' => $model['opnumber'] ];
+                        },
+                    ],
+                    ['class' => 'yii\grid\SerialColumn'],
 
-                [
-                    'attribute'=>'name',
-                    'value'=>'name',
-                    'label'=>'نام'
-                ],
+                    [
+                        'attribute' => 'oopid',
+                        'label' => 'شماره اپراتور',
+                        'value' => 'operator.opid'
+                    ],
+                    [
+                        'attribute' => 'oname',
+                        'value' => 'operator.name',
+                        'label' => 'نام اپراتور'
+                    ],
+                    [
+                        'attribute' => 'ofamily',
+                        'value' => 'operator.family',
+                        'headerOptions' => ['width' => '80'],
+                        'label' => ' نام خانوادگی اپراتور'
+                    ],
 
-                [
-                    'attribute'=>'family',
-                    'value'=>'family',
-                    'label'=>' نام خانوادگی اپراتور'
-                ],
-
-                [
-                    'attribute'=>'logcount',
-                    'label'=>' تعداد خروج'
-                ],
+                    [
+                        'attribute' => 'cname',
+                        'value' => 'city.name',
+                        'label' => ' نام شهر'
+                    ],
 
 
-                [
-                    'attribute'=>'anscall',
-                    'label'=>'قطع از طرف اپراتور'
                 ],
-                [
-                    'attribute'=>'rcvcall',
-                    'label'=>'دریافتی بومی'
-                ],
+            ]);
 
-                [
-                    'attribute' => Yii::t('app', 'تاریخ'),
-                    'format' => 'raw',
-                    'value' => function ($searchModel) {
-                        $date = new DateTime($searchModel['logindatetime']);
-                        return Yii::$app->jdate->date("o/n/d – H:i", (int) strtotime($date->format('Y-m-d H:i:s')));
-                    },
-                ],
-            ],
-        ]);
-
-        }
-        ?>
+            }
+            ?>
+        </div>
     </div>
-</div>
 </div>
 
 <script>
@@ -188,6 +165,7 @@ AppAsset::register($this);
         });
     });
 </script>
+
 <script type="text/javascript">
     $( "#report" ).click(function() {
         if($('td > input[type=checkbox]:checked').length == 0) {
@@ -209,7 +187,6 @@ AppAsset::register($this);
 
     });
 </script>
-
 <script type="text/javascript">
     $( "#searchbtn" ).click(function() {
         var start = $( "#startDate" ).val()
@@ -229,7 +206,7 @@ AppAsset::register($this);
             }
         }
         else {
-            alert("فرمت تاریخ وارد شده صحیح نیست!")
+            alert("فرمت تاریخ وارد شده صحیح نیست")
         }
     });
 </script>

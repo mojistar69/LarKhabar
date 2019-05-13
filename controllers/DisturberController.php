@@ -4,6 +4,8 @@ namespace app\controllers;
 use app\models\ArchiveCallSearch;
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
+
 class DisturberController extends \yii\web\Controller
 {
     public function behaviors()

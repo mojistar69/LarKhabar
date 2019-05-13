@@ -55,6 +55,7 @@ class ArchivecallController extends Controller
         $tmp['enddate']=$endDatetime;
 
         $dataProvider = $searchModel->search($tmp);
+
         return $this->render('index', [
             'startDatetime'=>'1397/01/01',
             'endDatetime'=>'1398/01/01',
@@ -96,25 +97,13 @@ class ArchivecallController extends Controller
         ]);
 
 }
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
 
 
 
 
 
-    protected function findModel($id)
-    {
-        if (($model = Archivecall::findOne($id)) !== null) {
-            return $model;
-        }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
+
     function jalali_to_gregorian($jy, $jm, $jd, $mod = '')
     {
         if ($jy > 979) {

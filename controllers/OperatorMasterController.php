@@ -123,7 +123,7 @@ class OperatorMasterController extends \yii\web\Controller
     {
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("select *
-from archivecalls  
+from archivecalls 
 join operators on archivecalls.opid = operators.opid 
 where archivecalls.startdatetime >= $startDatetime
 and archivecalls.enddatetime <= $endDatetime 

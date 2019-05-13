@@ -4,21 +4,23 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Archiveoperators;
+use app\models\Archiveoperator;
 
 /**
- * ArchiveOperatorSearch represents the model behind the search form of `app\models\Archiveoperators`.
+ * ArchiveOperatorSearch represents the model behind the search form of `app\models\Archiveoperator`.
  */
-class ArchiveOperatorSearch extends Archiveoperators
+class ArchiveOperatorSearch extends Archiveoperator
 {
-    /**
-     * {@inheritdoc}
-     */
+    public $oopid;
+    public $oname;
+    public $ofamily;
+    public $cname;
+
     public function rules()
     {
         return [
             [['id', 'rcvcall', 'anscall', 'nanscalls', 'opnumber', 'opid', 'cityId', 'operatorrequest', 'supervisorconfirm', 'endcall7', 'endcall8', 'endcall9', 'endcall11'], 'integer'],
-            [['logindatetime', 'logoffdatetime', 'localip'], 'safe'],
+            [['logindatetime', 'logoffdatetime', 'localip','oopid','oname','ofamily','cname'], 'safe'],
         ];
     }
 
@@ -40,7 +42,13 @@ class ArchiveOperatorSearch extends Archiveoperators
      */
     public function search($params)
     {
-        $query = Archiveoperators::find();
+        $startdate=$params['startdate'];
+        $enddate=$params['enddate'];
+        $query = Archiveoperator::find();
+        $query->joinWith('operator');
+        $query->joinWith('city');
+        $query->andwhere('logindatetime >='.$startdate);
+        $query->andwhere('logindatetime <= '.$enddate);
 
         // add conditions that should always apply here
 
@@ -75,8 +83,11 @@ class ArchiveOperatorSearch extends Archiveoperators
             'endcall11' => $this->endcall11,
         ]);
 
-        $query->andFilterWhere(['like', 'localip', $this->localip]);
 
+        $query->andFilterWhere(['like', 'operators.opid', $this->oopid]);
+        $query->andFilterWhere(['like', 'operators.name', $this->oname]);
+        $query->andFilterWhere(['like', 'operators.family', $this->ofamily]);
+        $query->andFilterWhere(['like', 'city.name', $this->cname]);
         return $dataProvider;
     }
 }
