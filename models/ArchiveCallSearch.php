@@ -12,8 +12,9 @@ use app\models\Archivecall;
 class ArchivecallSearch extends Archivecall
 {
     public $name;
-    public $operator_id;
+    public $operator_number;
     public $operator_family;
+    public $cityname;
     /**
      * {@inheritdoc}
      */
@@ -22,7 +23,7 @@ class ArchivecallSearch extends Archivecall
         return [
             [['calluid', 'calllaststate', 'cityid', 'zoneid', 'talktime', 'opnumber', 'opid', 'serverid', 'record', 'service'], 'integer'],
             [['lastcallid', 'operatorchain', 'startdatetime', 'enddatetime', 'callerid', 'callednumber', 'channel', 'responses',
-                'name','operator_id','operator_family'], 'safe'],
+                'name','operator_number','operator_family','cityname'], 'safe'],
         ];
     }
     public function attributes()
@@ -57,6 +58,7 @@ class ArchivecallSearch extends Archivecall
         $enddate=$params['enddate'];
         $query = Archivecall::find();
         $query->joinWith('operator');
+        $query->joinWith('city');
         $query->andwhere('startdatetime >='.$startdate);
         $query->andwhere('enddatetime <= '.$enddate);
 
@@ -64,6 +66,7 @@ class ArchivecallSearch extends Archivecall
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' =>false
         ]);
 
         $this->load($params);
@@ -97,8 +100,10 @@ class ArchivecallSearch extends Archivecall
             ->andFilterWhere(['like', 'channel', $this->channel])
             ->andFilterWhere(['like', 'responses', $this->responses]);
             $query->andFilterWhere(['like', 'operators.name', $this->name]);
-            $query->andFilterWhere(['like', 'operators.opid', $this->operator_id]);
+            $query->andFilterWhere(['like', 'operators.opnumber', $this->operator_number]);
             $query->andFilterWhere(['like', 'operators.family', $this->operator_family]);
+            $query->andFilterWhere(['like', 'operators.family', $this->operator_family]);
+            $query->andFilterWhere(['like', 'city.name', $this->cityname]);
 
         return $dataProvider;
     }

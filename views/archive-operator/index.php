@@ -40,7 +40,7 @@ AppAsset::register($this);
 
 <div class="row">
     <div class="box">
-        <div class="box-header bg-purple-gradient">
+        <div class="box-header bg-orange-active">
             <h3 class="box-title"> آرشیو اپراتور ها</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -48,7 +48,7 @@ AppAsset::register($this);
                 </button>
             </div>
         </div>
-        <div class="box-body ">
+        <div class="box-body bg-gray-light text-black">
             <div class="container" style="max-width: 500px;">
                 <div class="row">
                     <div class="form-group col-md-8" >
@@ -73,8 +73,7 @@ AppAsset::register($this);
                         </div>
                     </div>
                     <div class="form-group col-md-4" >
-                        <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-warning'
-                            , 'id' => 'searchbtn']) ?>
+                        <button id="searchbtn" class="btn btn-warning btn-lg">جستجو <i class="fa fa-search"></i></button>
                         <?php
                         if (isset($dataProvider)) {
                         ?>
@@ -101,7 +100,7 @@ AppAsset::register($this);
                         </div>
                         <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
                         <input type="hidden" id="endDate"  name="endDate" value="<?php echo $endDatetime ?>">
-                        <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info','id'=>'report']); ?>
+                        <button id="report" class="btn btn-info btn-lg">گزارش   <i class="fa fa-refresh"></i></button>
                     </div>
                 </div>
             </div>
@@ -124,9 +123,10 @@ AppAsset::register($this);
                     ['class' => 'yii\grid\SerialColumn'],
 
                     [
+
                         'attribute' => 'oopid',
                         'label' => 'شماره اپراتور',
-                        'value' => 'operator.opid'
+                        'value' => 'operator.opnumber'
                     ],
                     [
                         'attribute' => 'oname',
@@ -136,7 +136,7 @@ AppAsset::register($this);
                     [
                         'attribute' => 'ofamily',
                         'value' => 'operator.family',
-                        'headerOptions' => ['width' => '80'],
+                        'headerOptions' => ['width' => '180'],
                         'label' => ' نام خانوادگی اپراتور'
                     ],
 

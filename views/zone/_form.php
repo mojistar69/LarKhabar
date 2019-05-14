@@ -22,11 +22,6 @@ use yii\helpers\Html;
                         'placeholder'=>'نام منطقه']) ?>
                 </div>
 
-                <div class="form-group">
-                    <?= $form->field($model, 'defaultCityCode')->textInput(['maxlength' => 6,'type'=>'number',
-                        'style'=>'width:200px','placeholder'=>'مثال 712462']) ?>
-                </div>
-
             </div>
             <div class="form-group">
                 <div align="center">

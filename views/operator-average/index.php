@@ -93,7 +93,7 @@ AppAsset::register($this);
                         </div>
                         <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
                         <input type="hidden" id="endDate"  name="endDate" value="<?php echo $endDatetime ?>">
-                        <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info','id'=>'report']); ?>
+                        <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-warning','id'=>'report']); ?>
                     </div>
                 </div>
             </div>

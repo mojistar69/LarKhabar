@@ -2,13 +2,11 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Zone */
 
-$this->title = 'ویرایش منطقه ' . $model->name;
+$this->title = '  ویرایش منطقه ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'منطقه', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'ویرایش';
+$this->params['breadcrumbs'][] = 'ویرایش ';
 ?>
 <div class="zone-update">
 

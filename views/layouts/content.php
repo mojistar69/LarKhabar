@@ -5,10 +5,9 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use app\models\City;
 use app\models\Zone;
-
 ?>
-<div class="content-wrapper">
-    <section class="content-header">
+<div class="content-wrapper bg-primary">
+    <section class="content-header ">
 
         <?=
         Breadcrumbs::widget(
@@ -21,8 +20,6 @@ use app\models\Zone;
     <section class="content">
         <?= $this->render('dropdown.php') ?>
         <?= $this->render('information.php') ?>
-
-
         <?= $content ?>
     </section>
 </div>

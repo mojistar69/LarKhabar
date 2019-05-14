@@ -84,4 +84,9 @@ class Archivecall extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Operator::className(), ['opid' => 'opid']);
     }
+
+    public function getCity()
+    {
+        return $this->hasOne(City::className(), ['id' => 'cityid']);
+    }
 }

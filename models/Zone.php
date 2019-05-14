@@ -30,7 +30,7 @@ class Zone extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name','defaultCityCode'], 'required'],
             [['defaultCityCode', 'waitingTime', 'waitingDeviation', 'defaultCityId'], 'integer'],
             [['name'], 'string', 'max' => 45],
         ];
@@ -42,8 +42,8 @@ class Zone extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'شناسه منطقه',
-            'name' => 'نام منطقه',
+            'id' => 'شناسه',
+            'name' => 'نام',
             'defaultCityCode' => 'کد شهر پیش فرض',
             'waitingTime' => 'زمان انتظار',
             'waitingDeviation' => 'Waiting Deviation',

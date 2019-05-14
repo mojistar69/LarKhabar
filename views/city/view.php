@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Zone;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -31,9 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'code',
             'name',
-            'headernumber',
+            [
+                'attribute' => 'منطقه',
+                'value' => function ($Model) {
+                        $zonemodel=Zone::findone($Model['zoneid']);
+                    return $zonemodel['name'];
+                },
+            ],
         ],
     ]) ?>
 

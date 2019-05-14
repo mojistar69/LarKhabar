@@ -44,7 +44,7 @@ $gridColumns = [
     [
         'attribute'=>'oral',
         'value'=>'oral',
-        'label'=>'پاسخ شفاهی'
+        'label'=>'پاسخ شفاهی توسط اپراتور'
     ],
 
     [
@@ -87,8 +87,8 @@ $gridColumns = [
             'columns'=>[
 
                 [
-                    'attribute'=>'opid',
-                    'label'=>'شناسه اپراتور '
+                    'attribute'=>'opnumber',
+                    'label'=>'شماره اپراتور '
                 ],[ 'attribute'=>'name',
                     'label'=>'نام'
                 ],[
@@ -124,7 +124,7 @@ $gridColumns = [
                 ],
                 [
                     'attribute'=>'oral',
-                    'label'=>'پاسخ شفاهی'
+                    'label'=>'پاسخ شفاهی توسط اپراتور'
                 ],
                 [
                     'attribute'=>'unrelated',

@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'ایجاد منطقه';
 $this->params['breadcrumbs'][] = ['label' => 'منطقه', 'url' => ['index']];
-$this->params['breadcrumbs'][] =$this->title ;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="zone-create">
 

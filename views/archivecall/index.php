@@ -52,7 +52,7 @@ AppAsset::register($this);
 
 <div class="row">
     <div class="box">
-        <div class="box-header bg-purple-gradient">
+        <div class="box-header bg-orange-active">
             <h3 class="box-title"> آرشیو تماس ها</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -60,12 +60,12 @@ AppAsset::register($this);
                 </button>
             </div>
         </div>
-        <div class="box-body ">
+        <div class="box-body bg-gray-light text-black">
             <div class="container" style="max-width: 500px;">
                 <div class="row">
                     <div class="form-group col-md-8" >
                         <div class="input-group">
-                            <label for="startDate">از تاریخ</label>
+                            <label  for="startDate">از تاریخ</label>
                             <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click"
                                  data-targetselector="#fromDate1" data-groupid="group1" data-fromdate="true"
                                  data-enabletimepicker="false" data-placement="left">
@@ -75,7 +75,7 @@ AppAsset::register($this);
                                 'value' => $startDatetime]) ?>
                         </div>
                         <div class="input-group">
-                            <label for="endDate">تا تاریخ</label>
+                            <label  for="endDate">تا تاریخ</label>
                             <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click"
                                  data-targetselector="#toDate1" data-groupid="group1" data-todate="true"
                                  data-enabletimepicker="true" data-placement="left">
@@ -85,8 +85,7 @@ AppAsset::register($this);
                         </div>
                     </div>
                     <div class="form-group col-md-4" >
-                        <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-warning'
-                            , 'id' => 'searchbtn']) ?>
+                        <button id="searchbtn" class="btn btn-warning btn-lg">جستجو <i class="fa fa-search"></i></button>
                         <?php
                         if (isset($dataProvider)) {
                         ?>
@@ -124,6 +123,9 @@ AppAsset::register($this);
             echo  GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+                'options' => [
+                    'class' => 'YourCustomTableClass',
+                ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -139,9 +141,9 @@ AppAsset::register($this);
 
                     ],
                     [
-                        'attribute' => 'operator_id',
+                        'attribute' => 'operator_number',
                         'label' => 'شماره اپراتور',
-                        'value' => 'operator.opid'
+                        'value' => 'operator.opnumber'
                     ],
                     [
                         'attribute' => 'name',
@@ -151,12 +153,18 @@ AppAsset::register($this);
                     [
                         'attribute' => 'operator_family',
                         'value' => 'operator.family',
-                        'headerOptions' => ['width' => '80'],
+                        'headerOptions' => ['width' => '180'],
                         'label' => ' نام خانوادگی اپراتور'
+                    ],
+                    [
+                        'attribute' => 'cityname',
+                        'value' => 'city.name',
+                        'label' => 'شهر'
                     ],
                     [
                         'attribute' => 'تاریخ',
                         'format' => 'raw',
+                        'headerOptions' => ['width' => '180'],
                         'contentOptions' => ['style' => 'max-width: 80px'],
 
 

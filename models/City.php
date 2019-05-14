@@ -18,21 +18,16 @@ use Yii;
  */
 class City extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public static function tableName()
     {
         return 'city';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
-            [['name','code'], 'required'],
+            [['name'], 'required'],
             [['zoneid', 'code', 'priority'], 'integer'],
             [['name'], 'string', 'max' => 45],
             [['headernumber', 'newheadernumber'], 'string', 'max' => 10],

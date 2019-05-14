@@ -3,39 +3,60 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\OperatorSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'اپراتورها';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="operator-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('ایجاد اپراتور', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= $dataProvider->pagination->pageSize=10;?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'summary' => '',
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'name',
-            'family',
-            'user',
+<div class="row">
+    <!-- /.box -->
+    <div class="box">
+        <div class="box-header bg-orange-active">
+            <h1 class="box-title " > اپراتور</h1>
+            <!-- tools box -->
+            <div class="pull-left box-tools">
+                <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
+                            class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /. tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body bg-gray-light text-black">
+            <!--/////////////////////////////////////////////////-->
+
+            <div class="operator-index">
+
+
+                <p>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=operator%2Fcreate" class="btn btn-primary btn-lg">
+                        ایجاد اپراتور  <i class="fa fa-plus"></i>
+                    </a>
+                </p>
+
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'summary' => '',
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        'name',
+                        'family',
+                        'user',
 //            'opnumber',
 //            'state',
 //            'pass',
-            //'citycode',
-            //'cityid',
+                        //'citycode',
+                        //'cityid',
 //            'activate',
 
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                        ['class' => 'yii\grid\ActionColumn'],
+                    ],
+                ]); ?>
+            </div>
+
+        </div>
+    </div>
 </div>

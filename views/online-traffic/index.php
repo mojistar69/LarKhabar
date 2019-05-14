@@ -133,8 +133,8 @@
             },
             tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} نفر</b></td></tr>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0;font-size:10px">{series.name}: </td>' +
+                    '<td style="padding:0;font-size:10px"><b>{point.y} نفر</b></td></tr>',
                 footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -200,8 +200,8 @@
                             },
                             tooltip: {
                                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                    '<td style="padding:0"><b>{point.percentage:.1f}%</b> ({point.y:,.0f} تماس)</td></tr>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0;font-size:10px">{series.name}: </td>' +
+                                    '<td style="padding:0";font-size:10px><b>{point.percentage:.1f}%</b>{point.y:,.0f}</td></tr>',
                                 footerFormat: '</table>',
                                 shared: true,
                                 useHTML: true
@@ -280,8 +280,8 @@
                                 },
                                 tooltip: {
                                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                        '<td style="padding:0"><b>{point.y:.1f} نفر</b></td></tr>',
+                                    pointFormat: '<tr><td style="color:{series.color};padding:0;font-size:10px">{series.name}</td>' +
+                                        '<td style="padding:0"><b>{point.y}</b></td></tr>',
                                     footerFormat: '</table>',
                                     shared: true,
                                     useHTML: true

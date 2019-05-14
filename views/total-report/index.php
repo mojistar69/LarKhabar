@@ -14,7 +14,7 @@ AppAsset::register($this);
 <div class="row">
     <!-- /.box -->
     <div class="box">
-        <div class="box-header bg-yellow-gradient">
+        <div class="box-header bg-orange-active">
             <h3 class="box-title"> آمار کلی تماس ها</h3>
             <!-- tools box -->
             <div class="pull-left box-tools">
@@ -25,9 +25,8 @@ AppAsset::register($this);
             <!-- /. tools -->
         </div>
         <!-- /.box-header -->
-        <div class="box-body no-padding">
+        <div class="box-body bg-gray-light text-black">
             <!--/////////////////////////////////////////////////-->
-
             <div class="container" style="max-width: 500px;">
                 <div class="form-group">
                     <div class="input-group">
@@ -48,19 +47,13 @@ AppAsset::register($this);
                 </div>
 
                 <div class="form-group" align="center">
-                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary' , 'id' => 'searchbtn']) ?>
+                    <button id="searchbtn" class="btn btn-warning btn-lg">جستجو <i class="fa fa-search"></i></button>
                 </div>
             </div>
         </div>
-        <!-- /.box-body -->
     </div>
-    <!-- /.box -->
-    <!-- /.col -->
-    <!-- /.box -->
-
-    <!-- /.box -->
-    <!-- /.col -->
 </div>
+
 <div class="row">
     <!-- /.box -->
     <div class="box">

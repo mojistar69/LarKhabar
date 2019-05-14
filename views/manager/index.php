@@ -10,32 +10,46 @@ use yii\grid\GridView;
 $this->title = 'مدیران';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="manager-index">
+<div class="row">
+    <!-- /.box -->
+    <div class="box">
+        <div class="box-header bg-orange-active">
+            <h1 class="box-title " > مدیر</h1>
+            <!-- tools box -->
+            <div class="pull-left box-tools">
+                <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
+                            class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /. tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body bg-gray-light text-black">
+            <!--/////////////////////////////////////////////////-->
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <div class="manager-index">
+                <p>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=manager%2Fcreate" class="btn btn-primary btn-lg">
+                        ایجاد مدیر  <i class="fa fa-plus"></i>
+                    </a>
+                </p>
 
-    <p>
-        <?= Html::a('ایجاد مدیر', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'summary' => '',
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        'name',
+                        'family',
+                        'username',
+                        ['class' => 'yii\grid\ActionColumn'],
+                    ],
+                ]); ?>
+            </div>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'summary' => '',
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'name',
-            'family',
-            'username',
-//            'accessType',
-            //'phoneNumber',
-            //'mobileNumber',
-
-            //'zoneId',
-            //'type',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+        </div>
+    </div>
 </div>
+
+

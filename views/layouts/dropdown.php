@@ -8,7 +8,7 @@ use app\models\Zone;
 ?>
 
 
-<div class="box-body no-padding">
+<div class="box-body no-padding ">
 
     <div style="height:40px; width:200px;" class="form-group">
         <table width="400">

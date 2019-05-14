@@ -6,15 +6,15 @@ AppAsset::register($this);
 ?>
 <div class="row">
     <div class="box">
-        <div class="box-header bg-green-gradient">
-            <h3 class="box-title"> ترافیک آفلاین</h3>
+        <div class="box-header bg-orange-active">
+            <h3 class="box-title text-white"> ترافیک آفلاین</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
                             class="fa fa-minus"></i>
                 </button>
             </div>
         </div>
-        <div class="box-body no-padding bg-green-gradient">
+        <div class="box-body  bg-gray-light text-black">
             <div class="container" style="max-width: 500px;">
                 <div class="form-group">
                     <div class="input-group">
@@ -37,145 +37,149 @@ AppAsset::register($this);
                         <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate', 'value' => $endDatetime]) ?>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="nav-tabs-custom " style="cursor: move;" align="center">
+
+                        <div id="chart1" style="width:60%; height:400px;">
+                            <script>
+                                var mChart1;
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    Highcharts.setOptions({
+                                        chart: {
+                                            style: {
+                                                fontFamily: 'Vazir',
+                                            },
+                                        }
+                                    });
+                                    mChart1 =
+                                        Highcharts.chart('chart1', {
+                                            chart: {
+                                                type: 'column'
+                                            },
+                                            title: {
+                                                text: 'تعداد اپراتورها'
+                                            },
+                                            subtitle: {
+                                                text: ''
+                                            },
+                                            xAxis: {
+                                                categories: [
+                                                    'همه اپراتورها',
+                                                    'فعال',
+                                                    'غیرفعال',
+                                                ],
+                                                crosshair: true
+                                            },
+                                            yAxis: {
+                                                min: 0,
+                                                title: {
+                                                    text: 'اپراتور'
+                                                }
+                                            },
+                                            tooltip: {
+                                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                                    '<td style="padding:0"><b>{point.y} اپراتور</b></td></tr>',
+                                                footerFormat: '</table>',
+                                                shared: true,
+                                                useHTML: true
+                                            },
+                                            plotOptions: {
+                                                column: {
+                                                    pointPadding: 0.2,
+                                                    borderWidth: 0
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'وضعیت اپراتورها',
+                                                data: [0, 0, 0]
+                                            }]
+                                        });
+                                });
+                            </script>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="nav-tabs-custom" style="cursor: move;" align="center">
+                        <div id="chart4" style="width:100%; height:400px;">
+                            <script>
+                                var mChart4;
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    Highcharts.setOptions({
+                                        chart: {
+                                            style: {
+                                                fontFamily: 'Vazir',
+
+                                            },
+                                        }
+                                    });
+                                    mChart4 =
+                                        Highcharts.chart('chart4', {
+                                            chart: {
+                                                type: 'pie',
+                                                plotBackgroundColor: null,
+                                                plotBorderWidth: null,
+                                                plotShadow: false,
+                                            },
+                                            title: {
+                                                text: 'وضعیت تماس ها'
+                                            },
+                                            subtitle: {
+                                                text: 'تعداد'
+                                            },
+                                            tooltip: {
+                                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                                pointFormat: '<tr><td style="color:{series.color};padding:0"> </td>' +
+                                                    '<td style="padding:0"><b>{point.percentage:.1f}%</b>  نفر{point.y:,.0f}</td></tr>',
+                                                footerFormat: '</table>',
+                                                shared: true,
+                                                useHTML: true
+                                            },
+                                            plotOptions: {
+                                                pie: {
+                                                    dataLabels: {
+                                                        enabled: false
+                                                    },
+                                                    stacking: 'percent',
+                                                    showInLegend: true
+                                                }
+                                            },
+
+                                            series: [{
+                                                name: 'تماسهای امروز ',
+                                                data: [1]
+                                            }],
+                                            legend: {
+                                                labelFormatter: function () {
+                                                    return this.name + ' ' + (this.y ? this.y : 0)
+                                                }
+                                            }
+                                        });
+
+
+                                });
+                            </script>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="nav-tabs-custom " style="cursor: move;" align="center">
-
-        <div id="chart1" style="width:60%; height:400px;">
-            <script>
-                var mChart1;
-                document.addEventListener('DOMContentLoaded', function () {
-                    Highcharts.setOptions({
-                        chart: {
-                            style: {
-                                fontFamily: 'Vazir',
-                            },
-                        }
-                    });
-                    mChart1 =
-                        Highcharts.chart('chart1', {
-                            chart: {
-                                type: 'column'
-                            },
-                            title: {
-                                text: 'تعداد اپراتورها'
-                            },
-                            subtitle: {
-                                text: ''
-                            },
-                            xAxis: {
-                                categories: [
-                                    'همه اپراتورها',
-                                    'فعال',
-                                    'غیرفعال',
-                                ],
-                                crosshair: true
-                            },
-                            yAxis: {
-                                min: 0,
-                                title: {
-                                    text: 'اپراتور'
-                                }
-                            },
-                            tooltip: {
-                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                    '<td style="padding:0"><b>{point.y:.1f} اپراتور</b></td></tr>',
-                                footerFormat: '</table>',
-                                shared: true,
-                                useHTML: true
-                            },
-                            plotOptions: {
-                                column: {
-                                    pointPadding: 0.2,
-                                    borderWidth: 0
-                                }
-                            },
-                            series: [{
-                                name: 'وضعیت اپراتورها',
-                                data: [0, 0, 0]
-                            }]
-                        });
-                });
-            </script>
-        </div>
-
-    </div>
-
-</div>
 
 
-<div class="row">
-    <div class="nav-tabs-custom" style="cursor: move;" align="center">
-
-        <div id="chart4" style="width:100%; height:400px;">
-
-            <script>
-                var mChart4;
-                document.addEventListener('DOMContentLoaded', function () {
-                    Highcharts.setOptions({
-                        chart: {
-                            style: {
-                                fontFamily: 'Vazir',
-
-                            },
-                        }
-                    });
-                    mChart4 =
-                        Highcharts.chart('chart4', {
-                            chart: {
-                                type: 'pie',
-                                plotBackgroundColor: null,
-                                plotBorderWidth: null,
-                                plotShadow: false,
-                            },
-                            title: {
-                                text: 'وضعیت تماس ها'
-                            },
-                            subtitle: {
-                                text: 'تعداد'
-                            },
-                            tooltip: {
-                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                    '<td style="padding:0"><b>{point.percentage:.1f}%</b> ({point.y:,.0f} تماس)</td></tr>',
-                                footerFormat: '</table>',
-                                shared: true,
-                                useHTML: true
-                            },
-                            plotOptions: {
-                                pie: {
-                                    dataLabels: {
-                                        enabled: false
-                                    },
-                                    stacking: 'percent',
-                                    showInLegend: true
-                                }
-                            },
-
-                            series: [{
-                                name: 'تماسهای امروز ',
-                                data: [1]
-                            }],
-                            legend: {
-                                labelFormatter: function () {
-                                    return this.name + ' ' + (this.y ? this.y : 0)
-                                }
-                            }
-                        });
 
 
-                });
-            </script>
-
-        </div>
-
-    </div>
-</div>
 <!-- /.row (main row) -->
 
 

@@ -14,7 +14,7 @@ AppAsset::register($this);
                 </button>
             </div>
         </div>
-        <div class="box-body no-padding">
+        <div class="box-body  bg-gray-light text-black">
             <div class="container" style="max-width: 500px;">
 
                 <div class="form-group">
@@ -38,206 +38,213 @@ AppAsset::register($this);
                         <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate', 'value' => $endDatetime]) ?>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="nav-tabs-custom" style="cursor: move;" align="center">
+                        <div id="chart1" style="width:110%; height:400px;">
+                            <script>
+                                var mChart1;
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    Highcharts.setOptions({
+                                        chart: {
+                                            style: {
+                                                fontFamily: 'Vazir',
+                                            },
+                                        }
+                                    });
+                                    mChart1 =
+                                        Highcharts.chart('chart1', {
+                                            chart: {
+                                                type: 'line'
+                                            },
+                                            title: {
+                                                text: 'نمودار اوج ترافیک بر اساس تماس ها'
+                                            },
+                                            subtitle: {
+                                                text: ''
+                                            },
+                                            xAxis: {
+                                                categories: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11','12','13',
+                                                    '14','15','16','17','18','19','20','21','22','23']
+                                            },
+                                            yAxis: {
+                                                title: {
+                                                    text: 'تعداد تماس'
+                                                }
+                                            },
+                                            plotOptions: {
+                                                line: {
+                                                    dataLabels: {
+                                                        enabled: true
+                                                    },
+                                                    enableMouseTracking: false
+                                                }
+                                            },
+                                            tooltip: {
+                                                headerFormat: '<span style="font-size:10px"></span><table>',
+                                                pointFormat: '<tr><td style="color:{series.color};padding:0"> </td>' +
+                                                    '<td style="padding:0"><b>{point.y} تماس</b></td></tr>',
+                                                footerFormat: '</table>',
+                                                shared: true,
+                                                useHTML: true
+                                            },
+                                            plotOptions: {
+                                                column: {
+                                                    pointPadding: 0.2,
+                                                    borderWidth: 0
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'ساعت',
+                                            }]
+                                        });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="nav-tabs-custom" style="cursor: move;" align="center">
+                        <div id="chart2" style="width:110%; height:400px;">
+                            <script>
+                                var mChart2;
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    Highcharts.setOptions({
+                                        chart: {
+                                            style: {
+                                                fontFamily: 'Vazir',
+                                            },
+                                        }
+                                    });
+                                    mChart2 =
+                                        Highcharts.chart('chart2', {
+                                            chart: {
+                                                type: 'line'
+                                            },
+                                            title: {
+                                                text: 'نمودار اوج ترافیک بر اساس اپراتور ها'
+                                            },
+                                            subtitle: {
+                                                text: ''
+                                            },
+                                            xAxis: {
+                                                categories: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11','12','13',
+                                                    '14','15','16','17','18','19','20','21','22','23']
+                                            },
+                                            yAxis: {
+                                                title: {
+                                                    text: 'تعداد اپراتورها'
+                                                }
+                                            },
+                                            plotOptions: {
+                                                line: {
+                                                    dataLabels: {
+                                                        enabled: true
+                                                    },
+                                                    enableMouseTracking: false
+                                                }
+                                            },
+                                            tooltip: {
+                                                headerFormat: '<span style="font-size:10px"></span><table>',
+                                                pointFormat: '<tr><td style="color:{series.color};padding:0"> </td>' +
+                                                    '<td style="padding:0"><b>{point.y} اپراتور</b></td></tr>',
+                                                footerFormat: '</table>',
+                                                shared: true,
+                                                useHTML: true
+                                            },
+                                            plotOptions: {
+                                                column: {
+                                                    pointPadding: 0.2,
+                                                    borderWidth: 0
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'ساعت',
+                                            }]
+                                        });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="nav-tabs-custom" style="cursor: move;" align="center">
+                        <div id="chart3" style="width:550px; height:400px;">
+                            <script>
+                                var mChart3;
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    Highcharts.setOptions({
+                                        chart: {
+                                            style: {
+                                                fontFamily: 'Vazir',
+                                            },
+                                        }
+                                    });
+                                    mChart3 =
+                                        Highcharts.chart('chart3', {
+                                            chart: {
+                                                type: 'line'
+                                            },
+                                            title: {
+                                                text: 'نمودار حدااکثر تعداد افراد در لیست انتظار'
+                                            },
+                                            subtitle: {
+                                                text: ''
+                                            },
+                                            xAxis: {
+                                                categories: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11','12','13',
+                                                    '14','15','16','17','18','19','20','21','22','23']
+                                            },
+                                            yAxis: {
+                                                title: {
+                                                    text: 'تعداد افراد در لیست انتظار'
+                                                }
+                                            },
+                                            plotOptions: {
+                                                line: {
+                                                    dataLabels: {
+                                                        enabled: true
+                                                    },
+                                                    enableMouseTracking: false
+                                                }
+                                            },
+                                            tooltip: {
+                                                headerFormat: '<span style="font-size:10px"></span><table>',
+                                                pointFormat: '<tr><td style="color:{series.color};padding:0"> </td>' +
+                                                    '<td style="padding:0"><b>{point.y} افراد</b></td></tr>',
+                                                footerFormat: '</table>',
+                                                shared: true,
+                                                useHTML: true
+                                            },
+                                            plotOptions: {
+                                                column: {
+                                                    pointPadding: 0.2,
+                                                    borderWidth: 0
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'ساعت',
+                                            }]
+                                        });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="nav-tabs-custom" style="cursor: move;" align="center">
-<div id="chart1" style="width:60%; height:400px;">
-    <script>
-        var mChart1;
-        document.addEventListener('DOMContentLoaded', function () {
-            Highcharts.setOptions({
-                chart: {
-                    style: {
-                        fontFamily: 'Vazir',
-                    },
-                }
-            });
-            mChart1 =
-                Highcharts.chart('chart1', {
-                    chart: {
-                        type: 'line'
-                    },
-                    title: {
-                        text: 'نمودار اوج ترافیک بر اساس تماس ها'
-                    },
-                    subtitle: {
-                        text: ''
-                    },
-                    xAxis: {
-                        categories: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11','12','13',
-                            '14','15','16','17','18','19','20','21','22','23']
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'تعداد تماس'
-                        }
-                    },
-                    plotOptions: {
-                        line: {
-                            dataLabels: {
-                                enabled: true
-                            },
-                            enableMouseTracking: false
-                        }
-                    },
-                    tooltip: {
-                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                            '<td style="padding:0"><b>{point.y:.1f} تماس</b></td></tr>',
-                        footerFormat: '</table>',
-                        shared: true,
-                        useHTML: true
-                    },
-                    plotOptions: {
-                        column: {
-                            pointPadding: 0.2,
-                            borderWidth: 0
-                        }
-                    },
-                    series: [{
-                        name: 'ساعت',
-                    }]
-                });
-        });
-    </script>
-</div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="nav-tabs-custom" style="cursor: move;" align="center">
-        <div id="chart2" style="width:60%; height:400px;">
-            <script>
-                var mChart2;
-                document.addEventListener('DOMContentLoaded', function () {
-                    Highcharts.setOptions({
-                        chart: {
-                            style: {
-                                fontFamily: 'Vazir',
-                            },
-                        }
-                    });
-                    mChart2 =
-                        Highcharts.chart('chart2', {
-                            chart: {
-                                type: 'line'
-                            },
-                            title: {
-                                text: 'نمودار اوج ترافیک بر اساس اپراتور ها'
-                            },
-                            subtitle: {
-                                text: ''
-                            },
-                            xAxis: {
-                                categories: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11','12','13',
-                                    '14','15','16','17','18','19','20','21','22','23']
-                            },
-                            yAxis: {
-                                title: {
-                                    text: 'تعداد اپراتورها'
-                                }
-                            },
-                            plotOptions: {
-                                line: {
-                                    dataLabels: {
-                                        enabled: true
-                                    },
-                                    enableMouseTracking: false
-                                }
-                            },
-                            tooltip: {
-                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                    '<td style="padding:0"><b>{point.y:.1f} اپراتور</b></td></tr>',
-                                footerFormat: '</table>',
-                                shared: true,
-                                useHTML: true
-                            },
-                            plotOptions: {
-                                column: {
-                                    pointPadding: 0.2,
-                                    borderWidth: 0
-                                }
-                            },
-                            series: [{
-                                name: 'ساعت',
-                            }]
-                        });
-                });
-            </script>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="nav-tabs-custom" style="cursor: move;" align="center">
-        <div id="chart3" style="width:60%; height:400px;">
-            <script>
-                var mChart3;
-                document.addEventListener('DOMContentLoaded', function () {
-                    Highcharts.setOptions({
-                        chart: {
-                            style: {
-                                fontFamily: 'Vazir',
-                            },
-                        }
-                    });
-                    mChart3 =
-                        Highcharts.chart('chart3', {
-                            chart: {
-                                type: 'line'
-                            },
-                            title: {
-                                text: 'نمودار حدااکثر تعداد افراد در لیست انتظار'
-                            },
-                            subtitle: {
-                                text: ''
-                            },
-                            xAxis: {
-                                categories: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11','12','13',
-                                    '14','15','16','17','18','19','20','21','22','23']
-                            },
-                            yAxis: {
-                                title: {
-                                    text: 'تعداد افراد در لیست انتظار'
-                                }
-                            },
-                            plotOptions: {
-                                line: {
-                                    dataLabels: {
-                                        enabled: true
-                                    },
-                                    enableMouseTracking: false
-                                }
-                            },
-                            tooltip: {
-                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                    '<td style="padding:0"><b>{point.y:.1f} افراد</b></td></tr>',
-                                footerFormat: '</table>',
-                                shared: true,
-                                useHTML: true
-                            },
-                            plotOptions: {
-                                column: {
-                                    pointPadding: 0.2,
-                                    borderWidth: 0
-                                }
-                            },
-                            series: [{
-                                name: 'ساعت',
-                            }]
-                        });
-                });
-            </script>
-        </div>
-    </div>
-</div>
+
+
+
 
 
 

@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 
+use app\models\Zone;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 ?>
@@ -23,15 +25,16 @@ use yii\helpers\Html;
                 </div>
 
                 <div class="form-group">
-                    <?= $form->field($model, 'code')->textInput(['maxlength' => 6,'type'=>'number',
-                        'style'=>'width:200px','placeholder'=>'مثال 712462']) ?>
+                    <?php
+                    $zones = ArrayHelper::map(Zone::find()->all(), 'id', 'name');
+                    ?>
+                    <label> &nbsp;&nbsp;منطقه</label>
+                    <?= Html::dropDownList("City[zoneid]", null, $zones, ['prompt' => 'انتخاب', 'id' => 'zoneId', 'class' => 'form-control','options' => [$model->zoneid => ['Selected'=>'selected']]]) ?>
                 </div>
 
-                <div class="form-group ">
-                    <?= $form->field($model, 'headernumber')->textInput(['maxlength' => 30,
-                        'style'=>'width:200px','placeholder'=>'مثال 1183542x']) ?>
 
-                </div>
+
+
             </div>
             <div class="form-group">
                 <div align="center">
