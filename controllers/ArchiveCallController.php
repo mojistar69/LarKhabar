@@ -1,7 +1,6 @@
 <?php
 
 namespace app\controllers;
-
 use Yii;
 use app\models\Archivecall;
 use app\models\ArchivecallSearch;
@@ -9,10 +8,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
-/**
- * ArchivecallController implements the CRUD actions for Archivecall model.
- */
 class ArchivecallController extends Controller
 {
     public function behaviors()
@@ -42,20 +37,17 @@ class ArchivecallController extends Controller
         $searchModel = new ArchivecallSearch();
         $startDate_Shamsi='1397/01/01';
         $endDate_Shamsi ='1398/01/01';
-
+        //change shamsi to miladi
         $tmp1 = explode('/',$startDate_Shamsi );
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
-
         $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
         $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
         $tmp=Yii::$app->request->queryParams;
         $tmp['startdate']=$startDatetime;
         $tmp['enddate']=$endDatetime;
-
         $dataProvider = $searchModel->search($tmp);
-
         return $this->render('index', [
             'startDatetime'=>'1397/01/01',
             'endDatetime'=>'1398/01/01',
@@ -63,31 +55,27 @@ class ArchivecallController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
     public function actionGrid()
     {
         $searchModel = new ArchivecallSearch();
         $startDate_Shamsi='';
         $endDate_Shamsi ='';
-
         if (isset($_GET["startDate"])) {
             $startDate_Shamsi = $_GET["startDate"];
         }
         if (isset($_GET["endDate"])) {
             $endDate_Shamsi = $_GET["endDate"];
         }
-
+        //change shamsi to miladi
         $tmp1 = explode('/',$startDate_Shamsi );
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
-
         $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
         $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
         $tmp=Yii::$app->request->queryParams;
         $tmp['startdate']=$startDatetime;
         $tmp['enddate']=$endDatetime;
-
         $dataProvider = $searchModel->search($tmp);
         return $this->render('index', [
             'startDatetime'=>$startDate_Shamsi,
@@ -95,15 +83,8 @@ class ArchivecallController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-
 }
-
-
-
-
-
-
-
+//change shmasi to miladi
     function jalali_to_gregorian($jy, $jm, $jd, $mod = '')
     {
         if ($jy > 979) {

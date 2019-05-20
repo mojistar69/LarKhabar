@@ -1,7 +1,6 @@
 <?php
 
 namespace app\controllers;
-
 use Yii;
 use app\models\Archiveoperator;
 use app\models\ArchiveOperatorSearch;
@@ -10,11 +9,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
-
 class ArchiveOperatorController extends Controller
 {
-
     public function behaviors()
     {
         return [
@@ -42,20 +38,17 @@ class ArchiveOperatorController extends Controller
         $searchModel = new ArchiveOperatorSearch();
         $startDate_Shamsi = '1397/01/01';
         $endDate_Shamsi = '1398/01/01';
-
+        //change shamsi to miladi
         $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
-
         $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
         $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
         $tmp = Yii::$app->request->queryParams;
         $tmp['startdate'] = $startDatetime;
         $tmp['enddate'] = $endDatetime;
-
         $dataProvider = $searchModel->search($tmp);
-
         return $this->render('index', [
             'startDatetime' => $startDate_Shamsi,
             'endDatetime' => $endDate_Shamsi,
@@ -72,6 +65,7 @@ class ArchiveOperatorController extends Controller
         if (isset($_GET["endDate"])) {
             $endDate_Shamsi = $_GET["endDate"];
         }
+        //change shamsi to miladi
         $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
@@ -98,7 +92,6 @@ class ArchiveOperatorController extends Controller
         $startDate_Shamsi = '';
         $endDate_Shamsi = '';
         $operators = '';
-
         if (isset($_GET["startDate"])) {
             $startDate_Shamsi = $_GET["startDate"];
         }
@@ -113,14 +106,14 @@ class ArchiveOperatorController extends Controller
             )) {
             $operators = Yii::$app->request->get('selection');
         }
-
+        //change shamsi to miladi
         $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
         $startDatetime = $startDate_Miladi . ' 00:00:00';
         $endDatetime = $endDate_Miladi . ' 00:00:00';
-
+        //execute query with selected operators and startdate and enddate
         $dataProvider=$this->doQuerySelected($operators,$startDatetime,$endDatetime);
         return $this->render('operatorMasterReport',
             ['dataProvider' => $dataProvider,
@@ -141,6 +134,7 @@ class ArchiveOperatorController extends Controller
         $dataProvider->pagination->pageSize=10;
         return $dataProvider;
     }
+    //change shamsi to miladi
     function jalali_to_gregorian($jy, $jm, $jd, $mod = '')
     {
         if ($jy > 979) {

@@ -33,7 +33,8 @@ use app\models\Zone;
                     <?php $form = ActiveForm::begin();
                     $cities = ArrayHelper::map(City::find()->all(), 'id', 'name');
                     ?>
-                    <?= Html::dropDownList("cityId", null, $cities, ['prompt' => 'انتخاب', 'id' => 'cityId', 'class' => 'form-control']) ?>
+                    <?= Html::dropDownList("cityId", null, $cities, ['prompt' => 'انتخاب', 'id' => 'cityId', 'class' => 'form-control',
+                    'onchange' => 'chartdetails();']) ?>
                     <?php ActiveForm::end(); ?>
                 </td>
             </tr>

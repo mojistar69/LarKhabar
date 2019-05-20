@@ -37,6 +37,7 @@ class OnlineTrafficController extends \yii\web\Controller
     }
     public function actionRefreshData()
     {
+
         if(!isset($_GET['zoneId']))
             return;
         $zoneId = $_GET['zoneId'];
@@ -54,7 +55,9 @@ class OnlineTrafficController extends \yii\web\Controller
             $listCityId = $this->concatCityIds($citiesId);
 
         } else  //was not select a certain zone so select all cities by default
+
             $listCityId = $this->getAllCities();
+
 
         //was not select a city
         if ($_GET['cityId'] === '0') {
@@ -62,7 +65,6 @@ class OnlineTrafficController extends \yii\web\Controller
         } else {
             //selected cityId
             $cityId = $_GET['cityId'];
-
         }
 
 
@@ -76,14 +78,14 @@ class OnlineTrafficController extends \yii\web\Controller
         $Channel = $Channel_Query[0]['gatewayProNo'];
 
 
-//        //EnterCall
+      //EnterCall
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_EnterCall(:cityId)")
             ->bindValue(':cityId', $cityId);
         $EnterCallQuery = $command->queryAll();
         $EnterCall = $EnterCallQuery[0]['count'];
 
-//        //Waiting
+      //Waiting
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Waiting(:cityId)")
             ->bindValue(':cityId', $cityId);
@@ -94,7 +96,8 @@ class OnlineTrafficController extends \yii\web\Controller
             $Waiting = $WaitingQuery[0]['count'];
 
 
-//        //Talking
+
+       //Talking
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Talking(:cityId)")
             ->bindValue(':cityId', $cityId);
@@ -104,7 +107,8 @@ class OnlineTrafficController extends \yii\web\Controller
         else
             $Talking = $TalkingQuery[0]['count'];
 
-//        //Listening
+
+       //Listening
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Listining(:cityId)")
             ->bindValue(':cityId', $cityId);
@@ -114,9 +118,7 @@ class OnlineTrafficController extends \yii\web\Controller
         else
             $Listening = $ListeningQuery[0]['count'];
 
-
         $chart1_2 = $this->chart1($cityId);
-
         $chart3 = $this->chart3($cityId);
         $chart4 = $this->chart4($cityId);
 
@@ -132,6 +134,7 @@ class OnlineTrafficController extends \yii\web\Controller
 
         $allTodayOperatorsQuery = $command->queryAll();
         $all = (int)$allTodayOperatorsQuery[0]['count'];
+
 
         //todayActive
         $stoday=date("Y/m/d").' 00:00:00';
@@ -171,6 +174,7 @@ class OnlineTrafficController extends \yii\web\Controller
         else
             $NewCall = (int)$NewCallQuery[0]['count'];
 
+
         //Waiting
 //        $connection = Yii::$app->getDb();
 //        $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Waiting(:cityIds)")
@@ -189,6 +193,7 @@ class OnlineTrafficController extends \yii\web\Controller
             $Talking = 0;
         else
             $Talking = (int)$TalkingQuery[0]['count'];
+
         //Listening
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Listining(:cityIds)")
@@ -209,6 +214,7 @@ class OnlineTrafficController extends \yii\web\Controller
             ->bindValue(':cityIds', $cityIds);
         $rejectedCallsQuery = $command->queryAll();
         $rejectedCalls = $rejectedCallsQuery[0]['count'];
+
         //AnswerWithoutCall
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsArchiveCallsNew_GetCount202(:cityIds)")
@@ -221,6 +227,7 @@ class OnlineTrafficController extends \yii\web\Controller
             ->bindValue(':cityIds', $cityIds);
         $disconnectFromCommonQuery = $command->queryAll();
         $disconnectFromCommon = $disconnectFromCommonQuery[0]['count'];
+
         //ConnectivityProblems
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsArchiveCallsNew_GetCount204(:cityIds)")
@@ -266,7 +273,6 @@ class OnlineTrafficController extends \yii\web\Controller
             ['name' => 'وضعیت نامعلوم', 'y' => (int)$unknownStatus],
             ['name' => 'قطع مشترک در حالت انتظار', 'y' => (int)$disconnectCommonInWaiting],
             ['name' => 'پاسخ گویی توسط اپراتور', 'y' => (int)$answerWithOperators]];
-
         return $listParameters;
 
     }
