@@ -5,34 +5,10 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
 use kartik\export\ExportMenu;
-$this->title = 'آرشیو اپراتورها';
+$this->title = 'لاگ اپراتورها';
 $this->params['breadcrumbs'][] = $this->title;
 $gridColumns = [
 
-    [
-        'attribute' => 'cname',
-        'value' => 'city.name',
-        'label' => ' نام شهر'
-    ],
-    [
-        'attribute' => 'ofamily',
-        'value' => 'operator.family',
-        'headerOptions' => ['width' => '80'],
-        'label' => ' نام خانوادگی اپراتور'
-    ],
-    [
-        'attribute' => 'oname',
-        'value' => 'operator.name',
-        'label' => 'نام اپراتور'
-    ],
-
-    [
-        'attribute' => 'oopid',
-        'label' => 'شماره اپراتور',
-        'value' => 'operator.opid'
-    ],
-
-    ['class' => 'yii\grid\SerialColumn'],
 ];
 
 AppAsset::register($this);
@@ -41,7 +17,7 @@ AppAsset::register($this);
 <div class="row">
     <div class="box">
         <div class="box-header bg-orange-active">
-            <h3 class="box-title"> آرشیو اپراتور ها</h3>
+            <h3 class="box-title"> لاگ اپراتور ها</h3>
             <div class="pull-left box-tools">
                 <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
                             class="fa fa-minus"></i>
@@ -117,7 +93,7 @@ AppAsset::register($this);
                     [
                         'class' => 'yii\grid\CheckboxColumn',
                         'checkboxOptions' => function($model, $key, $index, $widget) {
-                            return ['value' => $model['opid'] ];
+                            return ['value' => $model['opnumber'] ];
                         },
                     ],
                     ['class' => 'yii\grid\SerialColumn'],
@@ -180,7 +156,7 @@ AppAsset::register($this);
             {
                 return $(this).val();
             }).get();
-            var url = "<?= Yii::$app->homeUrl ?>?r=archive-operator/selected&startDate="+start
+            var url = "<?= Yii::$app->homeUrl ?>?r=log-operators/selected&startDate="+start
                 +"&endDate="+end+"&selection="+array;
             window.location = url;
         }
@@ -196,7 +172,7 @@ AppAsset::register($this);
             var start_num=start.substring(0,4)+start.substring(5,7)+start.substring(8,10);
             var end_num=end.substring(0,4)+end.substring(5,7)+end.substring(8,10);
             if(parseInt(end_num)>=parseInt(start_num)){
-                var url2 = "<?= Yii::$app->homeUrl ?>?r=archive-operator/grid&startDate="+start
+                var url2 = "<?= Yii::$app->homeUrl ?>?r=log-operators/grid&startDate="+start
                     +"&endDate="+end;
                 window.location = url2;
             }

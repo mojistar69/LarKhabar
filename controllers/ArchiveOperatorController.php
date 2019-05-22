@@ -2,13 +2,10 @@
 
 namespace app\controllers;
 use Yii;
-use app\models\Archiveoperator;
 use app\models\ArchiveOperatorSearch;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 class ArchiveOperatorController extends Controller
 {
     public function behaviors()
@@ -163,6 +160,15 @@ class ArchiveOperatorController extends Controller
             $gd -= $v;
         }
         return ($mod == '') ? array($gy, $gm, $gd) : $gy . $mod . $gm . $mod . $gd;
+    }
+    public function select($select_array)
+    {
+        $selection_str = '';
+        foreach ($select_array as $s) {
+            $selection_str = $selection_str . ',' . $s;
+        }
+        $selection_str = substr($selection_str, 1, strlen($selection_str));
+        return $selection_str;
     }
 }
 

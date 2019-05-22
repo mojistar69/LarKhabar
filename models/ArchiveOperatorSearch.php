@@ -11,7 +11,7 @@ use app\models\Archiveoperator;
  */
 class ArchiveOperatorSearch extends Archiveoperator
 {
-    public $oopid;
+    public $oopnumber;
     public $oname;
     public $ofamily;
     public $cname;
@@ -20,7 +20,7 @@ class ArchiveOperatorSearch extends Archiveoperator
     {
         return [
             [['id', 'rcvcall', 'anscall', 'nanscalls', 'opnumber', 'opid', 'cityId', 'operatorrequest', 'supervisorconfirm', 'endcall7', 'endcall8', 'endcall9', 'endcall11'], 'integer'],
-            [['logindatetime', 'logoffdatetime', 'localip','oopid','oname','ofamily','cname'], 'safe'],
+            [['logindatetime', 'logoffdatetime', 'localip','oopnumber','oname','ofamily','cname'], 'safe'],
         ];
     }
 
@@ -47,6 +47,7 @@ class ArchiveOperatorSearch extends Archiveoperator
         $query = Archiveoperator::find();
         $query->joinWith('operator');
         $query->joinWith('city');
+        $query->groupBy('opid');
         $query->andwhere('logindatetime >='.$startdate);
         $query->andwhere('logindatetime <= '.$enddate);
 
@@ -84,7 +85,7 @@ class ArchiveOperatorSearch extends Archiveoperator
         ]);
 
 
-        $query->andFilterWhere(['like', 'operators.opid', $this->oopid]);
+        $query->andFilterWhere(['like', 'operators.opnumber', $this->oopnumber]);
         $query->andFilterWhere(['like', 'operators.name', $this->oname]);
         $query->andFilterWhere(['like', 'operators.family', $this->ofamily]);
         $query->andFilterWhere(['like', 'city.name', $this->cname]);

@@ -73,10 +73,10 @@ class DisturberController extends \yii\web\Controller
         :cityCodes,:limit,:opNumber)")
             ->bindValue(':startDateTime', $startDatetime)
             ->bindValue(':endDateTime', $endDatetime)
-            ->bindValue(':callerId', '')
+            ->bindValue(':callerId', '0')
             ->bindValue(':cityCodes', '')
-            ->bindValue(':limit', '')
-            ->bindValue(':opNumber', '');
+            ->bindValue(':limit', '0')
+            ->bindValue(':opNumber', '0');
         $result = $command->queryAll();
         $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
         $dataProvider->pagination->pageSize=10;

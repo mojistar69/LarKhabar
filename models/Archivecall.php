@@ -33,7 +33,7 @@ class Archivecall extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'archivecalls';
+        return 'federated_archivecalls';
     }
 
     /**

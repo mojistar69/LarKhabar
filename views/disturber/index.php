@@ -108,7 +108,7 @@ AppAsset::register($this);
             'columns' => $gridColumns,
         ]);
         echo GridView::widget(['dataProvider' => $dataProvider,
-            'summary' => '',
+//            'summary' => '',
             'columns' => [
                 [
                     'attribute' => 'callerid',

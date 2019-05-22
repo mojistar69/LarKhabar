@@ -1,13 +1,12 @@
 <?php
 
 namespace app\controllers;
-
-
 use Yii;
+use app\models\ArchiveOperatorSearch;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
-
-class OperatorDetailController extends \yii\web\Controller
+use yii\web\Controller;
+class LogOperatorsController extends \yii\web\Controller
 {
     public function behaviors()
     {
@@ -33,63 +32,63 @@ class OperatorDetailController extends \yii\web\Controller
     }
     public function actionIndex()
     {
-        return $this->render('index',
-            ['startDatetime'=>'1397/01/01',
-                'endDatetime'=>'1398/01/01'
-            ]);
+        $searchModel = new ArchiveOperatorSearch();
+        $startDate_Shamsi = '1397/01/01';
+        $endDate_Shamsi = '1398/01/01';
+        //change shamsi to miladi
+        $tmp1 = explode('/', $startDate_Shamsi);
+        $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+        $tmp2 = explode('/', $endDate_Shamsi);
+        $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+        $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
+        $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
+        $tmp = Yii::$app->request->queryParams;
+        $tmp['startdate'] = $startDatetime;
+        $tmp['enddate'] = $endDatetime;
+        $dataProvider = $searchModel->search($tmp);
+        return $this->render('index', [
+            'startDatetime' => $startDate_Shamsi,
+            'endDatetime' => $endDate_Shamsi,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
-
     public function actionGrid()
     {
-        $startDate_Shamsi='';
-        $endDate_Shamsi ='';
-
+        $searchModel = new ArchiveOperatorSearch();
         if (isset($_GET["startDate"])) {
             $startDate_Shamsi = $_GET["startDate"];
         }
         if (isset($_GET["endDate"])) {
             $endDate_Shamsi = $_GET["endDate"];
         }
-
-        $tmp1 = explode('/',$startDate_Shamsi );
+        //change shamsi to miladi
+        $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
 
         $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
         $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
+        $tmp = Yii::$app->request->queryParams;
+        $tmp['startdate'] = $startDatetime;
+        $tmp['enddate'] = $endDatetime;
 
-        $dataProvider=$this->doQuery($startDatetime,$endDatetime);
+        $dataProvider = $searchModel->search($tmp);
+
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
             'startDatetime' => $startDate_Shamsi,
             'endDatetime' => $endDate_Shamsi,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
 
     }
-
-    public function doQuery($startDatetime,$endDatetime)
-    {
-        $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("select operators.cityid,operators.opid,operators.name as name,operators.family as family,
-operators.opnumber as opnumber
-from archivecalls  
-join operators on archivecalls.opid = operators.opid 
-where archivecalls.startdatetime >= $startDatetime
-and archivecalls.enddatetime <= $endDatetime 
-group by opid; ");
-        $result = $command->queryAll();
-        $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
-        $dataProvider->pagination->pageSize=10;
-        return $dataProvider;
-    }
-
     public function actionSelected()
     {
         $startDate_Shamsi = '';
         $endDate_Shamsi = '';
         $operators = '';
-
         if (isset($_GET["startDate"])) {
             $startDate_Shamsi = $_GET["startDate"];
         }
@@ -104,53 +103,38 @@ group by opid; ");
             )) {
             $operators = Yii::$app->request->get('selection');
         }
-        if ($operators == ''){
-            $message = "wrong answer";
-            echo "<script type='text/javascript'>alert('$message');</script>";
-        }
+        //change shamsi to miladi
         $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
         $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
         $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
-
+        //execute query with selected operators and startdate and enddate
         $dataProvider=$this->doQuerySelected($operators,$startDatetime,$endDatetime);
-        return $this->render('operatorDetailReport',
+        return $this->render('operatorLogReport',
             ['dataProvider' => $dataProvider,
                 'startdate' => $startDate_Shamsi,
                 'enddate' => $endDate_Shamsi,
                 'selection_array' => $operators,
             ]);
     }
-
     public function doQuerySelected($operators,$startDatetime,$endDatetime)
     {
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("select *,operators.name as opname,callstates.name as state,
- city.name as cname from archivecalls
-join operators on archivecalls.opid = operators.opid
-join city on archivecalls.cityId = city.id
-join callstates on callstates.Id = archivecalls.calllaststate
- WHERE  startdatetime >= $startDatetime  AND
-  startdatetime <= $endDatetime and archivecalls.opnumber in ($operators) ;
+        $command = $connection->createCommand("select federated_archiveoperators.opnumber,
+federated_archiveoperators.logindatetime,
+federated_archiveoperators.logoffdatetime
+from federated_archiveoperators
+ WHERE  logindatetime >= $startDatetime  AND
+  logoffdatetime <= $endDatetime And federated_archiveoperators.opnumber in ($operators) ;
   ");
         $result = $command->queryAll();
         $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
+        $dataProvider->pagination->pageSize=10;
         return $dataProvider;
-
     }
-
-    public function select($select_array)
-    {
-        $selection_str='';
-        foreach ($select_array as $s ){
-            $selection_str=$selection_str.','.$s;
-        }
-        $selection_str=substr($selection_str,1,strlen($selection_str));
-        return $selection_str;
-    }
-
+    //change shamsi to miladi
     function jalali_to_gregorian($jy, $jm, $jd, $mod = '')
     {
         if ($jy > 979) {
@@ -180,4 +164,14 @@ join callstates on callstates.Id = archivecalls.calllaststate
         }
         return ($mod == '') ? array($gy, $gm, $gd) : $gy . $mod . $gm . $mod . $gd;
     }
+    public function select($select_array)
+    {
+        $selection_str = '';
+        foreach ($select_array as $s) {
+            $selection_str = $selection_str . ',' . $s;
+        }
+        $selection_str = substr($selection_str, 1, strlen($selection_str));
+        return $selection_str;
+    }
+
 }

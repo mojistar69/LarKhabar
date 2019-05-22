@@ -31,7 +31,7 @@ class Archiveoperator extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'archiveoperators';
+        return 'federated_archiveoperators';
     }
 
     /**
