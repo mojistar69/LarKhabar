@@ -33,13 +33,40 @@ class LoadController extends \yii\web\Controller
     public function actionIndex()
     {
         return $this->render('index',
-            ['startDatetime'=>'1397/01/01',
-                'endDatetime'=>'1398/01/01'
+            ['startDatetime'=>'1398/03/01',
+                'endDatetime'=>'1398/03/02'
             ]);
     }
 
     public function actionRefreshData()
     {
+
+        //////////////////prepare zone and city to do query
+        if(!isset($_GET['zoneId']))
+            return;
+        $zoneId = $_GET['zoneId'];
+        //array of all cities in the selected zoneId
+        $listCityId = '1';
+        //was selected a zone
+        if ($zoneId != '0') {
+            //query of all cities of  selected zone
+            $connection = Yii::$app->getDb();
+            $command = $connection->createCommand("call spsCities_Id_GetByZoneId(:zoneId)")
+                ->bindValue(':zoneId', $zoneId);
+            $citiesId = $command->queryAll();
+            //list of all cities of selected zone and concat CitiesIds
+            $listCityId = $this->concatCityIds($citiesId);
+        } else  //was not select a certain zone so select all cities by default
+            $listCityId = $this->getAllCities();
+        //was not select a city
+        if ($_GET['cityId'] === '0') {
+            $cityId = $listCityId;
+        } else {
+            //selected cityId
+            $cityId = $_GET['cityId'];
+        }
+
+        //////////////////////////////////////////////////////////////////////////
 
         $startDate='2018-01-01';
         $endDate ='2018-01-02';
@@ -56,20 +83,20 @@ class LoadController extends \yii\web\Controller
         $endDatetime =  $endDate . ' 00:00:00';
 
 //        ***********************************************************
-        $chart1 = $this->chart1($startDatetime,$endDatetime);
-        $chart2 = $this->chart2($startDatetime,$endDatetime);
-        $chart3 = $this->chart3($startDatetime,$endDatetime);
+        $chart1 = $this->chart1($startDatetime,$endDatetime,$cityId);
+        $chart2 = $this->chart2($startDatetime,$endDatetime,$cityId);
+        $chart3 = $this->chart3($startDatetime,$endDatetime,$cityId);
         $updateParameter = [$chart1,$chart2,$chart3];
         echo Json::encode($updateParameter);
     }
 
-    public function chart1($startDatetime,$endDatetime)
+    public function chart1($startDatetime,$endDatetime,$cityId)
     {
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call LoadOfCalls(:startDateTime,:endDateTime,:cityId)")
             ->bindValue(':startDateTime', $startDatetime)
             ->bindValue(':endDateTime', $endDatetime)
-            ->bindValue(':cityId', '');
+            ->bindValue(':cityId', $cityId);
         $loadQuery = $command->queryAll();
         $array = array_fill(0, 24,0);
         if (count($loadQuery)>0) {
@@ -80,13 +107,13 @@ class LoadController extends \yii\web\Controller
         }
         return $array;
     }
-    public function chart2($startDatetime,$endDatetime)
+    public function chart2($startDatetime,$endDatetime,$cityId)
     {
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call LoadOfCalls(:startDateTime,:endDateTime,:cityId)")
             ->bindValue(':startDateTime', $startDatetime)
             ->bindValue(':endDateTime', $endDatetime)
-            ->bindValue(':cityId', '');
+            ->bindValue(':cityId', $cityId);
         $loadQuery = $command->queryAll();
         $array = array_fill(0, 24,0);
         if (count($loadQuery)>0) {
@@ -97,13 +124,13 @@ class LoadController extends \yii\web\Controller
         }
         return $array;
     }
-    public function chart3($startDatetime,$endDatetime)
+    public function chart3($startDatetime,$endDatetime,$cityId)
     {
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call LoadOfCalls_Waitting(:startDateTime,:endDateTime,:cityId)")
             ->bindValue(':startDateTime', $startDatetime)
             ->bindValue(':endDateTime', $endDatetime)
-            ->bindValue(':cityId', '');
+            ->bindValue(':cityId', $cityId);
         $loadQuery = $command->queryAll();
         $array = array_fill(0, 24,0);
         if (count($loadQuery)>0) {

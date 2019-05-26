@@ -25,10 +25,17 @@ class ManagerController extends Controller
                 'only' => ['index','view','create','update','delete'],
                 'rules' => [
                     [
-                    'allow' => true,
-                    'actions' => ['create','delete','update','view','index'],
-                    'roles' => ['admin'],
-                ],
+                        'allow' => true,
+                        'actions' => ['create','delete','update','view','index'],
+                        'roles' => ['admin'],
+                    ],
+
+                    [
+                        'allow' => true,
+                        'actions' => ['update','view'],
+                        'roles' => ['manager'],
+                    ],
+
                     [
                         'allow' => false,
                         'actions' => ['index','view','create','update','delete','lists'],

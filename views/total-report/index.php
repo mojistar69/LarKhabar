@@ -143,7 +143,7 @@ AppAsset::register($this);
                     <div class="small-box bg-red">
                         <div class="inner">
                             <h3><span name="listiningResult"> <?php echo $Parameter[5] ?> </span></h3>
-                            <p>میانگین زمان مکالمه</p>
+                            <p>میانگین زمان مکالمه (ثانیه)</p>
                         </div>
                         <div class="icon">
                             <i class="ion-android-volume-up"></i>

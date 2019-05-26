@@ -184,7 +184,7 @@ AppAsset::register($this);
 
 
 <script>
-    setInterval(function () { OfflineTrafficChartdetails(); }, 3000);
+    setInterval(function () { OfflineTrafficChartdetails(); }, 10000);
 </script>
 
 <script type="text/javascript">

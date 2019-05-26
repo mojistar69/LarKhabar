@@ -6,7 +6,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-right image">
-                    <img src="../dist/img/a1.jpg" class="img-circle" alt="User Image">
+                    <img src="dist/img/a1.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-right info">
                     <p><?php
@@ -31,7 +31,6 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="active"><a href="<?= Yii::$app->homeUrl ?>?r=city"><i class="fa fa-circle-o"></i> شهر</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=zone"><i class="fa fa-circle-o"></i> منطقه</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=manager"><i class="fa fa-circle-o"></i> مدیر</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=operator"><i class="fa fa-circle-o"></i> اپراتور</a></li>
                     </ul>
@@ -50,8 +49,8 @@
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=offline-traffic"><i class="fa fa-circle-o"></i>ترافیک آفلاین</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=load"><i class="fa fa-circle-o"></i>اوج ترافیک</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=disturber"><i class="fa fa-circle-o"></i>مزاحمین</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=archivecall"><i class="fa fa-circle-o"></i>آرشیو تماس ها</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=archive-operator"><i class="fa fa-circle-o"></i>آرشیو اپراتور</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=log-operators"><i class="fa fa-circle-o"></i>گزارش ورورد و خروج اپراتور</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=total-report"><i class="fa fa-circle-o"></i>آمار کلی تماس ها</a></li>
                     </ul>
                 </li>

@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
+            'headernumber',
             [
                 'attribute' => 'منطقه',
                 'value' => function ($Model) {

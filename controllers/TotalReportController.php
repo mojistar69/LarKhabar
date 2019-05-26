@@ -63,26 +63,26 @@ class TotalReportController extends \yii\web\Controller
 
 
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("SELECT count(*) as count FROM archiveCalls
+        $command = $connection->createCommand("SELECT count(*) as count FROM federated_archivecalls
 where `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime");
         $result = $command->queryAll();
         $countAll=$result[0]['count'];
 
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("SELECT count(*)as count FROM archivecalls where
+        $command = $connection->createCommand("SELECT count(*)as count FROM federated_archivecalls where
  `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime AND calllaststate > 300 AND calllaststate < 400");
         $result = $command->queryAll();
         $countConnectedToOperator=$result[0]['count'];
 
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("SELECT count(*)as count FROM archivecalls where 
+        $command = $connection->createCommand("SELECT count(*)as count FROM federated_archivecalls where 
  `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime
  AND responses != ''");
         $result = $command->queryAll();
         $countResponed=$result[0]['count'];
 
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("SELECT count(*)as count FROM archivecalls where 
+        $command = $connection->createCommand("SELECT count(*)as count FROM federated_archivecalls where 
  `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime
  AND responses != '' AND responses Not in ( SELECT distinct phoneNumber FROM phonenumber)");
         $result= $command->queryAll();
@@ -91,14 +91,14 @@ where `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime");
         $countCmmercialResponed=(int)$countResponed-(int)$tmp;
 
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("SELECT count(*)as count FROM archivecalls where 
+        $command = $connection->createCommand("SELECT count(*)as count FROM federated_archivecalls where 
  `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime
  AND service = '-7'");
         $result = $command->queryAll();
         $countOralResponed=$result[0]['count'];
 
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("select AVG(talktime)as average from archivecalls where 
+        $command = $connection->createCommand("select AVG(talktime)as average from federated_archivecalls where 
  `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime");
         $result = $command->queryAll();
         $averageTalkTime=$result[0]['average'];

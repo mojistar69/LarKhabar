@@ -45,7 +45,7 @@ use yii\captcha\Captcha;
 
 
 <div class="limiter">
-    <div class="container-login100" style="background-color: #f0f32f;">
+    <div class="container-login100" style="background-image:url(dist/img/matin.jpg); ">
         <div class="wrap-login100">
             <?php $form = ActiveForm::begin([
 
@@ -57,7 +57,7 @@ use yii\captcha\Captcha;
 
 					</span>
             <br>
-            <span class="login100-form-title p-b-34 p-t-27">سیستم مدیریتی 118 استان فارس
+            <span class="login100-form-title p-b-34 p-t-27">سیستم مدیریتی 118
 					</span>
 
 

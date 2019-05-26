@@ -38,6 +38,9 @@ AppAsset::register($this);
                         <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate', 'value' => $endDatetime]) ?>
                     </div>
                 </div>
+                <div class="form-group" align="center">
+                    <button id="searchbtn" class="btn btn-warning btn-lg">جستجو <i class="fa fa-search"></i></button>
+                </div>
 
                 <div class="row">
                     <div class="nav-tabs-custom" style="cursor: move;" align="center">
@@ -252,17 +255,21 @@ AppAsset::register($this);
 
 
 
-<script>
-    setInterval(function () { LoadChartdetails(); }, 3000);
-</script>
+<!--<script>-->
+<!--    setInterval(function () { LoadChartdetails(); }, 10000);-->
+<!--</script>-->
 
 <script type="text/javascript">
     function LoadChartdetails() {
         var startdate=$('#startDate').val();
         var enddate=$('#endDate').val();
+        var cityId=$('#cityId').val();
+        var zoneId=$('#zoneId').val();
+        if(!cityId) cityId=0;
+        if(!zoneId) zoneId=0;
         $.ajax({
             url: 'index.php?r=load/refresh-data',
-            data: "startdate=" +startdate  + "&enddate=" + enddate,
+            data: "startdate=" +startdate  + "&enddate=" + enddate+"&zoneId=" +zoneId+ "&cityId=" + cityId ,
             type: 'GET',
             dataType: "json",
 
@@ -298,4 +305,25 @@ AppAsset::register($this);
         }, true);
 
     }
+</script>
+<script type="text/javascript">
+    $( "#searchbtn" ).click(function() {
+        var start = $( "#startDate" ).val()
+        var end = $( "#endDate" ).val()
+        var email = /^[1-4]\d{3}\/((0[1-6]\/((3[0-1])|([1-2][0-9])|(0[1-9])))|((1[0-2]|(0[7-9]))\/(30|([1-2][0-9])|(0[1-9]))))$/;
+        if (email.test(start) && email.test(end) ) {
+            var start_num=start.substring(0,4)+start.substring(5,7)+start.substring(8,10);
+            var end_num=end.substring(0,4)+end.substring(5,7)+end.substring(8,10);
+            if(parseInt(end_num)>parseInt(start_num)){
+                LoadChartdetails();
+            }
+
+            else{
+                alert("تاریخ شروع بزرگتر از تاریخ پایان است!")
+            }
+        }
+        else {
+            alert("فرمت تاریخ وارد شده صحیح نیست")
+        }
+    });
 </script>

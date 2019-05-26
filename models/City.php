@@ -45,7 +45,7 @@ class City extends \yii\db\ActiveRecord
             'zoneid' => 'شماره منطقه',
             'code' => 'کد',
             'name' => 'نام',
-            'headernumber' => 'شماره',
+            'headernumber' => 'سر شماره',
             'newheadernumber' => 'Newheadernumber',
             'preCode' => 'Pre Code',
             'priority' => 'Priority',

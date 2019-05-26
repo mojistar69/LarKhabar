@@ -33,8 +33,8 @@ class OfflineTrafficController extends \yii\web\Controller
     public function actionIndex()
     {
         return $this->render('index',
-            ['startDatetime'=>'1397/01/01',
-                'endDatetime'=>'1398/01/01'
+            ['startDatetime'=>'1398/03/01',
+                'endDatetime'=>'1398/03/02'
             ]);
     }
     public function actionRefreshData()
@@ -80,13 +80,15 @@ class OfflineTrafficController extends \yii\web\Controller
         $endDatetime =  $endDate . ' 00:00:00';
 
         /////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////Offine Traffic Information Box////////////////
+        ///////////////////////////////Offline Traffic Information Box////////////////
         /// /////////////////////////////////////////////////////////////////////////
 
 
 
         $chart1_2 = $this->chart1($startDatetime,$endDatetime,$cityId);
+
         $chart4 = $this->chart4($startDatetime,$endDatetime,$cityId);
+
 
         $updateParameter = [ $chart1_2, $chart4];
         echo Json::encode($updateParameter);
@@ -131,7 +133,7 @@ class OfflineTrafficController extends \yii\web\Controller
         //AnswerWithoutCall
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("call spsArchiveCallsNew_GetCount202_byDate(:cityIds,:startDateTime,:endDateTime)")
-            ->bindValue(':cityIds', '109')
+            ->bindValue(':cityIds', $cityIds)
             ->bindValue(':startDateTime', $startDatetime)
             ->bindValue(':endDateTime', $endDatetime);
         $answerWithoutCallQuery = $command->queryAll();

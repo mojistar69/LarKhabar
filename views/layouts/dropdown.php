@@ -51,7 +51,7 @@ use app\models\Zone;
 </div>
 
 <script>
-    setInterval(function () { chartdetails(); }, 3000);
+    setInterval(function () { chartdetails(); }, 5000);
 </script>
 
 <script type="text/javascript">

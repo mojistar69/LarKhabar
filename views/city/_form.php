@@ -25,6 +25,11 @@ use yii\helpers\Html;
                 </div>
 
                 <div class="form-group">
+                    <?= $form->field($model, 'headernumber')->textInput(['maxlength' => 30,'style'=>'width:200px',
+                        'placeholder'=>' سر شماره']) ?>
+                </div>
+
+                <div class="form-group">
                     <?php
                     $zones = ArrayHelper::map(Zone::find()->all(), 'id', 'name');
                     ?>
