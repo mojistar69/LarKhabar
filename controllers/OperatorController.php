@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\City;
 use Yii;
 use app\models\Operator;
+use app\models\Cityoperator;
 use app\models\OperatorSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -20,11 +22,11 @@ class OperatorController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','view','create','update','delete','lists'],
+                'only' => ['index','view','create','update','delete','lists','selected'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','view','create','update','delete','lists'],
+                        'actions' => ['index','view','create','update','delete','lists','selected'],
                         'roles' => ['@'],
                     ],
                     [
@@ -53,12 +55,7 @@ class OperatorController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Operator model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionView($id)
     {
         return $this->render('view', [
@@ -66,16 +63,31 @@ class OperatorController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Operator model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
+
     public function actionCreate()
     {
         $model = new Operator();
+        if ($model->load(Yii::$app->request->post())) {
+            if(City::find()->where(['id' => $model->cityid])->one()) {
+                $model->citycode = City::find()->where(['id' => $model->cityid])->one()->code;
+            }
+            $model->save();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $city=Yii::$app->request->post('selection');
+            $cityoperator = new Cityoperator();
+            $cityoperator->cityId = $model->cityid;
+            $cityoperator->opid = $model->opid;
+            $cityoperator->save();
+            if(isset($city))
+            foreach ($city as $val) {
+                if($val==$cityoperator->cityId);
+                    else {
+                        $cityoperator = new Cityoperator();
+                        $cityoperator->cityId = $val;
+                        $cityoperator->opid = $model->opid;
+                        $cityoperator->save();
+                    }
+            }
             return $this->redirect(['view', 'id' => $model->opid]);
         }
 
@@ -84,18 +96,34 @@ class OperatorController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Operator model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->citycode = City::find()->where(['id' => $model->cityid])->one()->code;
+            $model->save();
+            $city=Yii::$app->request->post('selection');
+            $cityoperator = new Cityoperator();
+            Yii::$app
+                ->db
+                ->createCommand()
+                ->delete('cityoperators', ['opid' => $model->opid])
+                ->execute();
+            $cityoperator->cityId = $model->cityid;
+            $cityoperator->opid = $model->opid;
+            $cityoperator->save();
+            if(isset($city))
+            foreach ($city as $val) {
+                if($val==$cityoperator->cityId);
+                else {
+                    $cityoperator = new Cityoperator();
+                    $cityoperator->cityId = $val;
+                    $cityoperator->opid = $model->opid;
+                    $cityoperator->save();
+                }
+            }
             return $this->redirect(['view', 'id' => $model->opid]);
         }
 
@@ -104,13 +132,6 @@ class OperatorController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Operator model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -118,13 +139,6 @@ class OperatorController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Operator model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Operator the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Operator::findOne($id)) !== null) {
@@ -133,4 +147,6 @@ class OperatorController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
 }

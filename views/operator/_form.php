@@ -1,8 +1,13 @@
 <?php
 /* @var $this yii\web\View */
 
+use app\models\City;
+use app\models\Zone;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use app\models\CitySearch;
+use yii\grid\GridView;
 ?>
 <?php $form = ActiveForm::begin(); ?>
 <div class="row">
@@ -38,13 +43,13 @@ use yii\helpers\Html;
                 <div class="form-group">
                     <div class="radio">
                         <label>
-                            <input type="radio" name="Operator[sex]" checked="true" id="optionsRadios2" value="1">
+                            <input type="radio" name="Operator[sex]"  id="optionsRadios2" value="1">
                             مرد
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="Operator[sex]" id="optionsRadios3" value="0" >
+                            <input type="radio" name="Operator[sex]" checked="true" id="optionsRadios3" value="0" >
                             زن
                         </label>
                     </div>
@@ -59,6 +64,16 @@ use yii\helpers\Html;
                     <?= $form->field($model, 'mobile')->textInput(['style'=>'width:160px','type'=>'number',
                         'placeholder'=>'09332517700 مثال']) ?>
                 </div>
+
+                <div class="form-group">
+                    <?php
+                    $cities = ArrayHelper::map(City::find()->all(), 'id', 'name');
+                    ?>
+                    <label> &nbsp;&nbsp;شهر</label>
+                    <?= Html::dropDownList("Operator[cityid]", null, $cities, ['prompt' => 'انتخاب', 'id' => 'cityId', 'class' => 'form-control','options' => [$model->cityid => ['Selected'=>'selected']]]) ?>
+                </div>
+
+
             </div>
 
 
@@ -89,13 +104,48 @@ use yii\helpers\Html;
                 <div class="form-group">
                         <?= $form->field($model, 'pass')->passwordInput(['maxlength' => 30,'style'=>'width:200px']) ?>
                 </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'activate')->checkbox(); ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'supervisorconfirm')->checkbox(); ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'showcallerid')->checkbox(); ?>
+                </div>
+                <div class="form-group">
+                    <?= $form->field($model, 'showstatistics')->checkbox(); ?>
+                </div>
+
+
+                <?php
+                $searchModel = new CitySearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                echo GridView::widget(['dataProvider' => $dataProvider,
+                    'summary' => 'شهرهای دردسترس',
+                    'columns' => [
+                        [
+                            'class' => 'yii\grid\CheckboxColumn',
+                            'checkboxOptions' => function ($model, $key, $index, $widget) {
+                                return ['value' => $model['id']];
+                            },
+                        ],
+                        'name',
+
+                    ],
+                ]);
+                ?>
+
+
             </div>
             <!-- /.box-body -->
 
         </div>
         <div align="center">
-            <?= Html::submitButton('ذخیره', ['class' => 'btn btn-success',
-                'onClick'=>'validatePassword();']) ?>
+            <?= Html::submitButton(' ذخیره اپراتور', ['class' => 'btn btn-success btn-lg']) ?>
         </div>
 
         <!-- /.box -->
@@ -104,21 +154,25 @@ use yii\helpers\Html;
 </div>
 <?php ActiveForm::end(); ?>
 
-<script>
-    function validatePassword() {
+<script type="text/javascript">
+    $( "#citybtn" ).click(function() {
+        if($('td > input[type=checkbox]:checked').length == 0) {
+            $("#noSelected").modal('show');
+        }
 
-        var pass = $('#password').val();
-        var repass = $('#confirmpassword').val();
-        if (pass.length >= 6 && repass.length>=6) {
-            if (pass == repass) {
-                alert('matched')
-            }
-            else {
-                alert('no')
-            }
+        else{
+            alert('ok');
+            var str=0;
+            var array=$('td > input[type=checkbox]:checked').map(function()
+            {
+                return $(this).val();
+            }).get();
+            <?php
+
+            ?>
+
+
         }
-        else {
-            alert('less than 6 char')
-        }
-    }
+
+    });
 </script>

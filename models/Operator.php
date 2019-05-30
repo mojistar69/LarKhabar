@@ -46,7 +46,7 @@ class Operator extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['opnumber', 'pass', 'user', 'name', 'family'], 'required','message' => 'نمی تواند خالی باشد'],
+            [['opnumber', 'pass', 'user', 'name', 'family','cityid'], 'required','message' => 'نمی تواند خالی باشد'],
             [['opnumber', 'state', 'citycode', 'cityid', 'activate', 'sex', 'supervisorconfirm', 'showcallerid', 'showstatistics', 'serviceenabled', 'operationtype', 'opnumberpre'], 'integer'],
             [['currentcallid'], 'string', 'max' => 20],
             [['pass', 'user'], 'string', 'max' => 30],
@@ -75,9 +75,9 @@ class Operator extends \yii\db\ActiveRecord
             'phone' => ' شماره تلفن',
             'mobile' => ' شماره همراه',
             'sex' => 'جنسیت',
-            'supervisorconfirm' => 'Supervisorconfirm',
-            'showcallerid' => 'Showcallerid',
-            'showstatistics' => 'Showstatistics',
+            'supervisorconfirm' => 'مجوز خروج',
+            'showcallerid' => 'روئیت شماره',
+            'showstatistics' => 'رویت آمار تماسهای دریافتی',
             'serviceenabled' => 'Serviceenabled',
             'operationtype' => 'Operationtype',
             'opnumberpre' => 'Opnumberpre',

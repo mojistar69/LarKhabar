@@ -27,7 +27,7 @@ class City extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name','code'], 'required'],
             [['zoneid', 'code', 'priority'], 'integer'],
             [['name'], 'string', 'max' => 45],
             [['headernumber', 'newheadernumber'], 'string', 'max' => 10],
@@ -43,7 +43,7 @@ class City extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'zoneid' => 'شماره منطقه',
-            'code' => 'کد',
+            'code' => 'کد شهر',
             'name' => 'نام',
             'headernumber' => 'سر شماره',
             'newheadernumber' => 'Newheadernumber',

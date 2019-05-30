@@ -31,6 +31,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="active"><a href="<?= Yii::$app->homeUrl ?>?r=city"><i class="fa fa-circle-o"></i> شهر</a></li>
+                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=zone"><i class="fa fa-circle-o"></i> منطقه</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=manager"><i class="fa fa-circle-o"></i> مدیر</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=operator"><i class="fa fa-circle-o"></i> اپراتور</a></li>
                     </ul>

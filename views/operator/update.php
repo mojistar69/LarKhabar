@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'ویرایش اپراتور ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'اپراتور', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->opid]];
 $this->params['breadcrumbs'][] = 'ویرایش';
 ?>
 <div class="operator-update">
