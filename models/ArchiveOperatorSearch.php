@@ -45,8 +45,8 @@ class ArchiveOperatorSearch extends Archiveoperator
         $startdate=$params['startdate'];
         $enddate=$params['enddate'];
         $query = Archiveoperator::find();
-        $query->joinWith('operator');
-        $query->joinWith('city');
+        $query->innerJoinWith('operator');
+        $query->innerJoinWith('city');
         $query->groupBy('opid');
         $query->andwhere('logindatetime >='.$startdate);
         $query->andwhere('logindatetime <= '.$enddate);

@@ -33,11 +33,10 @@ class DisturberController extends \yii\web\Controller
     public function actionIndex()
     {
         return $this->render('index',
-            ['startDatetime'=>'1390/01/01',
-                'endDatetime'=>'1398/01/01'
+            ['startDatetime'=>'1398/03/01',
+                'endDatetime'=>'1398/03/12'
             ]);
     }
-
     public function actionGrid()
     {
         $startDate_Shamsi='';
@@ -65,7 +64,6 @@ class DisturberController extends \yii\web\Controller
             'endDatetime' => $endDate_Shamsi,
         ]);
     }
-
     public function doQuery($startDatetime,$endDatetime)
     {
         $connection = Yii::$app->getDb();
@@ -83,7 +81,6 @@ class DisturberController extends \yii\web\Controller
         return $dataProvider;
 
     }
-
     function jalali_to_gregorian($jy, $jm, $jd, $mod = '')
     {
         if ($jy > 979) {

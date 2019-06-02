@@ -30,7 +30,7 @@ class Zone extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','defaultCityCode'], 'required'],
+            [['name'], 'required'],
             [['defaultCityCode', 'waitingTime', 'waitingDeviation', 'defaultCityId'], 'integer'],
             [['name'], 'string', 'max' => 45],
         ];

@@ -2,12 +2,15 @@
 /* @var $this yii\web\View */
 
 use app\models\City;
+use app\models\Cityoperator;
 use app\models\Zone;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use app\models\CitySearch;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
+
 ?>
 <?php $form = ActiveForm::begin(); ?>
 <div class="row">
@@ -124,13 +127,20 @@ use yii\grid\GridView;
                 <?php
                 $searchModel = new CitySearch();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                echo GridView::widget(['dataProvider' => $dataProvider,
+                $dataProvider->pagination->pageSize=120;
+                echo GridView::widget([
+                    'dataProvider' => $dataProvider,
                     'summary' => 'شهرهای دردسترس',
                     'columns' => [
                         [
                             'class' => 'yii\grid\CheckboxColumn',
-                            'checkboxOptions' => function ($model, $key, $index, $widget) {
-                                return ['value' => $model['id']];
+                            'checkboxOptions' => function ($citymodel, $key, $index, $widget) {
+
+                                $cityoperator = Cityoperator::find()->where(['opid' =>Yii::$app->request->get('id'),'cityId'=>$citymodel->id])->all();;
+                                if(count($cityoperator)>0)
+                                    return ['value' => $citymodel['id'],'checked'=>true];
+                                else
+                                    return ['value' => $citymodel['id']];
                             },
                         ],
                         'name',
@@ -138,6 +148,7 @@ use yii\grid\GridView;
                     ],
                 ]);
                 ?>
+
 
 
             </div>

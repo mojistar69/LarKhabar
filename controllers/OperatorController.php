@@ -126,6 +126,8 @@ class OperatorController extends Controller
             }
             return $this->redirect(['view', 'id' => $model->opid]);
         }
+//        $cityoperator = Cityoperator::find()->where(['opid' => 17])->all();;
+//        var_dump($cityoperator[1]);
 
         return $this->render('update', [
             'model' => $model,

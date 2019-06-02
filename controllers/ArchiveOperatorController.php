@@ -33,8 +33,8 @@ class ArchiveOperatorController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArchiveOperatorSearch();
-        $startDate_Shamsi = '1397/01/01';
-        $endDate_Shamsi = '1398/01/01';
+        $startDate_Shamsi = '1398/03/01';
+        $endDate_Shamsi = '1398/03/12';
         //change shamsi to miladi
         $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');

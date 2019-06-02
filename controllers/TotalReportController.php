@@ -36,8 +36,8 @@ class TotalReportController extends \yii\web\Controller
         $Parameter = [0, 0, 0, 0,
             0, 0];
         return $this->render('index',
-            ['startDatetime'=>'1397/01/01',
-                'endDatetime'=>'1398/01/01',
+            ['startDatetime'=>'1398/03/01',
+                'endDatetime'=>'1398/03/12',
                 'Parameter'=>$Parameter
             ]);
     }

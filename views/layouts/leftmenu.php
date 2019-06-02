@@ -36,7 +36,18 @@
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=operator"><i class="fa fa-circle-o"></i> اپراتور</a></li>
                     </ul>
                 </li>
-
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>امکانات</span>
+                        <span class="pull-left-container">
+              <i class="fa fa-angle-right pull-left"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active"><a href="<?= Yii::$app->homeUrl ?>?r=currentoperators"><i class="fa fa-circle-o"></i> نظارت</a></li>
+                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=requested-number"><i class="fa fa-circle-o"></i> آمار درخواست ها</a></li>
+                    </ul>
+                </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-pie-chart"></i>

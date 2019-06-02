@@ -57,8 +57,8 @@ class ArchivecallSearch extends Archivecall
         $startdate=$params['startdate'];
         $enddate=$params['enddate'];
         $query = Archivecall::find();
-        $query->joinWith('operator');
-        $query->joinWith('city');
+        $query->innerJoinWith('operator');
+        $query->innerJoinWith('city');
         $query->andwhere('startdatetime >='.$startdate);
         $query->andwhere('enddatetime <= '.$enddate);
 

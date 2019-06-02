@@ -24,10 +24,6 @@ use yii\helpers\Html;
                         'placeholder'=>'نام شهر']) ?>
                 </div>
 
-                <div class="form-group">
-                    <?= $form->field($model, 'code')->textInput(['maxlength' => 30,'style'=>'width:200px',
-                        'placeholder'=>'کد شهر']) ?>
-                </div>
 
                 <div class="form-group">
                     <?= $form->field($model, 'headernumber')->textInput(['maxlength' => 30,'style'=>'width:200px',

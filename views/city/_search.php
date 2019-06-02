@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'zoneid') ?>
 
-    <?= $form->field($model, 'code') ?>
+<!--    --><?//= $form->field($model, 'code') ?>
 
     <?= $form->field($model, 'name') ?>
 
