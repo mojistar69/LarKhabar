@@ -22,11 +22,11 @@ class OperatorController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','view','create','update','delete','lists','selected'],
+                'only' => ['index','view','create','update','delete','lists','selected','cancel'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','view','create','update','delete','lists','selected'],
+                        'actions' => ['index','view','create','update','delete','lists','selected','cancel'],
                         'roles' => ['@'],
                     ],
                     [
@@ -148,6 +148,10 @@ class OperatorController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    public function actionCancelٍٍ()
+    {
+        return 'ok';
     }
 
 

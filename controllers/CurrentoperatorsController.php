@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Currentoperators;
 use app\models\CurrentoperatorsSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +21,22 @@ class CurrentoperatorsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','view','create','update','delete','exit'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','view','create','update','delete','exit'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['index','view','create','update','delete','lists'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -44,9 +61,36 @@ class CurrentoperatorsController extends Controller
         ]);
     }
 
-    public function actionExitٍٍ($opid)
+    public function actionDoexit($opid)
     {
-return opid;
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("call spsCurrentOperators_GetOperatorrequestByopnumber(:opid)")
+            ->bindValue(':opid' , $opid );
+        $requestQuery = $command->queryAll();
+        $request = $requestQuery[0]['operatorrequest'];
+
+
+//            $connection = Yii::$app->getDb();
+//            $command = $connection->createCommand("call spuCurrentOperators_supervisorconfirm(:opid)")
+//                ->bindValue(':opid' , $opid );
+//             $command->query();
+
+//        else
+//        {
+            $connection = Yii::$app->getDb();
+            $command = $connection->createCommand("call spuCurrentOperators_supervisorconfirmandoperatorrequest(:opid)")
+                ->bindValue(':opid' , $opid );
+            $Query = $command->query();
+//        }
+
+
+        $searchModel = new CurrentoperatorsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 

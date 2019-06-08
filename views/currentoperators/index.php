@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="container" style="max-width: 500px;">
 
             </div>
-            <?php Pjax::begin(['id' => 'pjax-grid-view']); ?>
+            <?php Pjax::begin(['id' => 'pjax-grid-view','enablePushState' => false]); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
@@ -83,7 +83,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => 'خروج',
                         'format' => 'raw',
                         'value' => function ($data) {
-                            return Html::a('خروج', ['/currentoperators']);
+                            $addr='currentoperators/doexit';
+
+                            return Html::a('خروج', [$addr, 'opid' => $data->opid]);
                         },
                     ],
 

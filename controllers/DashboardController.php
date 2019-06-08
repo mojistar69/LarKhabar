@@ -167,4 +167,9 @@ class DashboardController extends \yii\web\Controller
         $s=(int)($sum%60);
         return ''.$h.':'.$m.':'.$s;
     }
+
+    public function actionDo()
+    {
+        return'do';
+    }
 }

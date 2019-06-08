@@ -46,9 +46,9 @@ class City extends \yii\db\ActiveRecord
             'code' => 'کد شهر',
             'name' => 'نام',
             'headernumber' => 'سر شماره',
-            'newheadernumber' => 'Newheadernumber',
+            'newheadernumber' => 'سر شماره دوم',
             'preCode' => 'Pre Code',
-            'priority' => 'Priority',
+            'priority' => 'اولویت',
         ];
     }
 }

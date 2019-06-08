@@ -31,6 +31,16 @@ use yii\helpers\Html;
                 </div>
 
                 <div class="form-group">
+                    <?= $form->field($model, 'newheadernumber')->textInput(['maxlength' => 30,'style'=>'width:200px',
+                        'placeholder'=>' سر شماره دوم']) ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'priority')->textInput(['maxlength' => 30,'style'=>'width:70px',
+                        'placeholder'=>'اولویت']) ?>
+                </div>
+
+                <div class="form-group">
                     <?php
                     $zones = ArrayHelper::map(Zone::find()->all(), 'id', 'name');
                     ?>

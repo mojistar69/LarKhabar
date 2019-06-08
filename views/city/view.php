@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'name',
             'headernumber',
+            'newheadernumber',
             [
                 'attribute' => 'منطقه',
                 'value' => function ($Model) {

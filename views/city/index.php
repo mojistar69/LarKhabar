@@ -45,6 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'name',
 //                            'code',
                             'headernumber',
+                            'newheadernumber',
+            'priority',
 
 
 
