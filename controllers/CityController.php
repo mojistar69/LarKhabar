@@ -28,7 +28,7 @@ class CityController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index','view','create','update','delete','lists'],
-                        'roles' => ['@'],
+                        'roles' => ['admin'],
                     ],
                     [
                         'allow' => false,

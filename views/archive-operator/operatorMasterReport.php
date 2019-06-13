@@ -8,11 +8,6 @@ $this->params['breadcrumbs'][] = ['label' => 'کارکرد اپراتور ', 'ur
 $this->params['breadcrumbs'][] = 'گزارش دهی';
 $gridColumns = [
     [
-        'attribute'=>'disturber',
-        'value'=>'disturber',
-        'label'=>'معرفی مزاحم'
-    ],
-    [
         'attribute' => Yii::t('app', 'مدت زمان کل'),
         'format' => 'raw',
         'value' => function ($model) {
@@ -23,6 +18,12 @@ $gridColumns = [
             return ''.$h.':'.$m.':'.$s;
         },
     ],
+    [
+        'attribute'=>'disturber',
+        'value'=>'disturber',
+        'label'=>'معرفی مزاحم'
+    ],
+
     [
         'attribute'=>'all',
         'value'=>'all',
@@ -100,17 +101,40 @@ $gridColumns = [
                     'attribute'=>'alls',
                     'label'=>'همه تماس های اپراتور'
                 ],
+
                 [
                     'attribute'=>'cutfromcustomer',
                     'label'=>'قطع از طرف مشترک'
                 ],
-                [ 'attribute'=>'mechanized',
-                    'label'=>'اعلام نتایج سیستمی'
+
+                [
+                    'attribute'=>'oral',
+                    'label'=>'پاسخ شفاهی توسط اپراتور'
                 ],
                 [
-                    'attribute'=>'under10Bycu',
-                    'label'=>'قطع زیر 10  ثانیه از طرف مشترک'
+                    'attribute'=>'unrelated',
+                    'label'=>'سوال غیرمرتبط'
                 ],
+                [
+                    'attribute'=>'noinfo',
+                    'label'=>' عدم موجود بودن شماره'
+                ],
+                [
+                    'attribute'=>'disturber',
+                    'label'=>'معرفی مزاحم'
+                ],
+                [
+                    'attribute'=>'system',
+                    'label'=>'پاسخ از طریق سیستم',
+                    'value' => function ($Model) {
+                            return $Model['alls']-
+                                ($Model['oral']+$Model['disturber']+
+                                    $Model['noinfo']+$Model['unrelated']+
+                                    $Model['cutfromcustomer']
+                                    );
+                    },
+                ],
+
                 [
                     'attribute' => Yii::t('app', 'مدت زمان کل'),
                     'format' => 'raw',
@@ -122,22 +146,6 @@ $gridColumns = [
                         return ''.$h.':'.$m.':'.$s;
                     },
                 ],
-                [
-                    'attribute'=>'oral',
-                    'label'=>'پاسخ شفاهی توسط اپراتور'
-                ],
-                [
-                    'attribute'=>'unrelated',
-                    'label'=>'سوال غیرمرتبط'
-                ],
-                [
-                    'attribute'=>'noinfo',
-                    'label'=>'اعلام عدم موجود بودن شماره'
-                ],
-                [
-                    'attribute'=>'disturber',
-                    'label'=>'معرفی مزاحم'
-                ]
 
 
 

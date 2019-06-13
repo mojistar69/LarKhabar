@@ -28,7 +28,7 @@ class CurrentoperatorsController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index','view','create','update','delete','exit'],
-                        'roles' => ['@'],
+                        'roles' => ['admin','manager'],
                     ],
                     [
                         'allow' => false,
@@ -64,24 +64,10 @@ class CurrentoperatorsController extends Controller
     public function actionDoexit($opid)
     {
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("call spsCurrentOperators_GetOperatorrequestByopnumber(:opid)")
+        $command = $connection->createCommand("call spCurrentOperators_SetLogOffDatetimeAndExit(:opid)")
             ->bindValue(':opid' , $opid );
-        $requestQuery = $command->queryAll();
-        $request = $requestQuery[0]['operatorrequest'];
+        $command->query();
 
-
-//            $connection = Yii::$app->getDb();
-//            $command = $connection->createCommand("call spuCurrentOperators_supervisorconfirm(:opid)")
-//                ->bindValue(':opid' , $opid );
-//             $command->query();
-
-//        else
-//        {
-            $connection = Yii::$app->getDb();
-            $command = $connection->createCommand("call spuCurrentOperators_supervisorconfirmandoperatorrequest(:opid)")
-                ->bindValue(':opid' , $opid );
-            $Query = $command->query();
-//        }
 
 
         $searchModel = new CurrentoperatorsSearch();

@@ -20,7 +20,7 @@ class ArchivecallController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index','grid','selected'],
-                        'roles' => ['@'],
+                        'roles' => ['admin','manager'],
                     ],
                     [
                         'allow' => false,

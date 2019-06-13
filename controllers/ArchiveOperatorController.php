@@ -18,7 +18,7 @@ class ArchiveOperatorController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index','grid','selected'],
-                        'roles' => ['@'],
+                        'roles' => ['admin','manager']
                     ],
                     [
                         'allow' => false,
@@ -122,7 +122,7 @@ class ArchiveOperatorController extends Controller
     public function doQuerySelected($operators,$startDatetime,$endDatetime)
     {
         $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("call selectmaster(:operators,:startdate,:enddate)")
+        $command = $connection->createCommand("call selectmaster2(:operators,:startdate,:enddate)")
             ->bindValue(':operators', $operators)
             ->bindValue(':startdate', $startDatetime)
             ->bindValue(':enddate', $endDatetime);

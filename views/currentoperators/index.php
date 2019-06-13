@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="container" style="max-width: 500px;">
 
             </div>
-            <?php Pjax::begin(['id' => 'pjax-grid-view','enablePushState' => false]); ?>
+            <?php  Pjax::begin(['id' => 'pjax-grid-view','enablePushState' => false]); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
@@ -64,6 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function ($searchModel) {
                             $date = new DateTime($searchModel['logindatetime']);
                             return Yii::$app->jdate->date("o/n/d – H:i", (int)strtotime($date->format('Y-m-d H:i:s')));
+//                            return $result = $date->format('Y-m-d H:i:s');
                         },
                     ],
 
@@ -99,13 +100,21 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <script>
-    setInterval(function () { OnlineTrafficChartdetails(); }, 5000);
+
+    var isPaused = false;
+    setInterval(function () {
+        if(!isPaused) {
+            OnlineTrafficChartdetails();
+        } }, 5000);
 
 </script>
 
 <script type="text/javascript">
     function OnlineTrafficChartdetails() {
-        $.pjax.reload({container:'#pjax-grid-view'});
+            if ($.pjax) {
+                $.pjax.defaults.timeout = 5000;
+            }
+            $.pjax.reload({container:'#pjax-grid-view'});
     }
 </script>
 

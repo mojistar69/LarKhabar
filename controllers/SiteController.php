@@ -164,6 +164,7 @@ class SiteController extends Controller
 
         $auth->assign($admin,1);
         $auth->assign($manager,2);
+        $auth->assign($manager,3);
 
         $rule= new  component\ManagerRule;
         $auth->add($rule);

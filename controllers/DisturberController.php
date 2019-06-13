@@ -18,7 +18,7 @@ class DisturberController extends \yii\web\Controller
                     [
                         'allow' => true,
                         'actions' => ['index','grid'],
-                        'roles' => ['@'],
+                        'roles' => ['admin','manager'],
                     ],
                     [
                         'allow' => false,

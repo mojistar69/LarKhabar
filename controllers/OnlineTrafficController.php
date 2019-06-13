@@ -18,7 +18,7 @@ class OnlineTrafficController extends \yii\web\Controller
                     [
                         'allow' => true,
                         'actions' => ['index','refreshdata'],
-                        'roles' => ['@'],
+                        'roles' => ['admin','manager'],
                     ],
                     [
                         'allow' => false,
