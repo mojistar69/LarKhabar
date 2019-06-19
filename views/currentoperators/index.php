@@ -22,13 +22,51 @@ $this->params['breadcrumbs'][] = $this->title;
                 </button>
             </div>
         </div>
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <section class="col-lg-12 col-md-12">
+                <div class="box box-info">
+                    <div class="box-header"></div>
+                    <div class="box-body">
+                        <!body/.>
+                        <div class="row">
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3><span name="CurrentOperators"> 0 </span></h3>
+                                        <p>تعداد اپراتورهای آنلاین</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion-ios-barcode"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-yellow">
+                                    <div class="inner">
+                                        <h3><span name="WaitingQueue"> 0 </span></h3>
+                                        <p>در صف انتظار</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion-android-contacts"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- /.row -->
         <div class="box-body bg-gray-light text-black">
-            <div class="container" style="max-width: 500px;">
-
-            </div>
             <?php  Pjax::begin(['id' => 'pjax-grid-view','enablePushState' => false]); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'summary' => '',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -100,17 +138,13 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <script>
-
-    var isPaused = false;
-    setInterval(function () {
-        if(!isPaused) {
-            OnlineTrafficChartdetails();
-        } }, 5000);
+    setInterval(function () { OnlineCurrentOperators();
+         }, 5000);
 
 </script>
 
 <script type="text/javascript">
-    function OnlineTrafficChartdetails() {
+    function OnlineCurrentOperators() {
             if ($.pjax) {
                 $.pjax.defaults.timeout = 5000;
             }
@@ -118,4 +152,40 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 </script>
 
+<script>
+    setInterval(function () { OnlineWaitingCallsandCurrentOperators(); }, 3000);
+</script>
 
+<script type="text/javascript">
+
+    function OnlineWaitingCallsandCurrentOperators() {
+        var cityId=$('#cityId').val();
+        var zoneId=$('#zoneId').val();
+        if(!cityId) cityId=0;
+        if(!zoneId) zoneId=0;
+        $.ajax({
+            url: 'index.php?r=currentoperators/data',
+            data: "zoneId=" +zoneId  + "&cityId=" + cityId,
+            type: 'GET',
+            dataType: "json",
+            success: OnSuccess_,
+            error: OnErrorCall_
+        });
+
+        function OnSuccess_(data) {
+            console.log(data);
+            //CurrentOperators
+            $('span[name="CurrentOperators"]').empty();
+            $('span[name="CurrentOperators"]').append('<span name="CurrentOperators" >' + data[0] + '</span>');
+
+            //WaitingQueue
+            $('span[name="WaitingQueue"]').empty();
+            $('span[name="WaitingQueue"]').append('<span name="WaitingQueue" >' + data[1] + '</span>');
+
+        }
+        function OnErrorCall_(data) {
+            console.log(data);
+            console.log("اتصال به سرور قطع می باشد!");
+        }
+    }
+</script>

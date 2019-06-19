@@ -5,16 +5,6 @@
 <div class="row">
     <!-- /.box -->
     <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">اپراتورها</h3>
-            <!-- tools box -->
-            <div class="pull-left box-tools">
-                <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
-                        class="fa fa-minus"></i>
-                </button>
-            </div>
-            <!-- /. tools -->
-        </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
             <table class="table table-condensed OperatorInfo">
@@ -49,16 +39,7 @@
     <!-- /.col -->
     <!-- /.box -->
     <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">تماس ها</h3>
-            <!-- tools box -->
-            <div class="pull-left box-tools">
-                <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
-                        class="fa fa-minus"></i>
-                </button>
-            </div>
-            <!-- /. tools -->
-        </div>
+
         <!-- /.box-header -->
         <div class="box-body no-padding">
             <table class="table table-striped OperatorInfo">

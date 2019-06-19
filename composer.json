@@ -21,7 +21,8 @@
         "himiklab/yii2-recaptcha-widget": "*",
         "miloschuman/yii2-highcharts-widget": "^7.0",
         "mohammad-mahdy/yii2-jdate": "*",
-        "kartik-v/yii2-export": "@dev"
+        "kartik-v/yii2-export": "@dev",
+        "janisto/yii2-timepicker": "*"
 
 
     },

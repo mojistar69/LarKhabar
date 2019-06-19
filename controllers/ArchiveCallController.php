@@ -3,12 +3,12 @@
 namespace app\controllers;
 use Yii;
 use app\models\Archivecall;
-use app\models\ArchivecallSearch;
+use app\models\ArchiveCallSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-class ArchivecallController extends Controller
+class ArchiveCallController extends Controller
 {
     public function behaviors()
     {
@@ -34,23 +34,31 @@ class ArchivecallController extends Controller
     }
     public function actionIndex()
     {
-        $searchModel = new ArchivecallSearch();
-        $startDate_Shamsi='1398/03/01';
-        $endDate_Shamsi ='1398/03/12';
+        $searchModel = new ArchiveCallSearch();
+        $miladi_today=date("Y/m/d");
+        $t = explode('/',$miladi_today);
+        $today=$this->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
+        $tomarrow=$this->gregorian_to_jalali($t[0], $t[1], $t[2]+1,'/');
+        $startDate_Shamsi = $today;
+        $endDate_Shamsi = $tomarrow;
         //change shamsi to miladi
         $tmp1 = explode('/',$startDate_Shamsi );
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
-        $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
-        $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
+        $startTime='00:00:00';
+        $endTime='12:00:00';
+        $startDatetime = '\'' . $startDate_Miladi.' '.$startTime.'\'';
+        $endDatetime = '\'' . $endDate_Miladi .' '.$endTime.'\'';
         $tmp=Yii::$app->request->queryParams;
         $tmp['startdate']=$startDatetime;
         $tmp['enddate']=$endDatetime;
         $dataProvider = $searchModel->search($tmp);
         return $this->render('index', [
-            'startDatetime'=>'1398/03/01',
-            'endDatetime'=>'1398/03/12',
+            'startDatetime'=>$startDate_Shamsi,
+            'endDatetime'=>$endDate_Shamsi,
+            'startTime'=>'00:00',
+            'endTime'=>'00:00',
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -60,19 +68,27 @@ class ArchivecallController extends Controller
         $searchModel = new ArchivecallSearch();
         $startDate_Shamsi='';
         $endDate_Shamsi ='';
+        $startTime ='';
+        $endTime='';
         if (isset($_GET["startDate"])) {
             $startDate_Shamsi = $_GET["startDate"];
         }
         if (isset($_GET["endDate"])) {
             $endDate_Shamsi = $_GET["endDate"];
         }
+                if (isset($_GET["startTime"])) {
+            $startTime = $_GET["startTime"];
+        }
+        if (isset($_GET["endTime"])) {
+            $endTime = $_GET["endTime"];
+        }
         //change shamsi to miladi
         $tmp1 = explode('/',$startDate_Shamsi );
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
-        $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
-        $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
+        $startDatetime = '\'' . $startDate_Miladi.' '.$startTime.'\'';
+        $endDatetime = '\'' . $endDate_Miladi .' '.$endTime.'\'';
         $tmp=Yii::$app->request->queryParams;
         $tmp['startdate']=$startDatetime;
         $tmp['enddate']=$endDatetime;
@@ -80,6 +96,8 @@ class ArchivecallController extends Controller
         return $this->render('index', [
             'startDatetime'=>$startDate_Shamsi,
             'endDatetime'=>$endDate_Shamsi,
+            'startTime'=>$startTime,
+            'endTime'=>$endTime,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -114,4 +132,33 @@ class ArchivecallController extends Controller
         }
         return ($mod == '') ? array($gy, $gm, $gd) : $gy . $mod . $gm . $mod . $gd;
     }
+    
+   function gregorian_to_jalali($gy,$gm,$gd,$mod=''){
+ $g_d_m=array(0,31,59,90,120,151,181,212,243,273,304,334);
+ if($gy > 1600){
+  $jy=979;
+  $gy-=1600;
+ }else{
+  $jy=0;
+  $gy-=621;
+ }
+ $gy2=($gm > 2)?($gy+1):$gy;
+ $days=(365*$gy) +((int)(($gy2+3)/4)) -((int)(($gy2+99)/100)) +((int)(($gy2+399)/400)) -80 +$gd +$g_d_m[$gm-1];
+ $jy+=33*((int)($days/12053));
+ $days%=12053;
+ $jy+=4*((int)($days/1461));
+ $days%=1461;
+ $jy+=(int)(($days-1)/365);
+ if($days > 365)$days=($days-1)%365;
+ if($days < 186){
+  $jm=1+(int)($days/31);
+  $jd=1+($days%31);
+ }else{
+  $jm=7+(int)(($days-186)/30);
+  $jd=1+(($days-186)%30);
+ }
+ if($jm<10) $jm='0'.$jm;
+  if($jd<10) $jd='0'.$jd;
+ return($mod==='')?array($jy,$jm,$jd):$jy .$mod .$jm .$mod .$jd;
+}
 }

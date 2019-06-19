@@ -106,20 +106,7 @@ AppAsset::register($this);
                         </div>
                     </div>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-red">
-                        <div class="inner">
-                            <h3><span name="Calling"> <?php echo $Parameter[3] ?> </span></h3>
-                            <p>پاسخ داده شده تجاری</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion-android-call"></i>
 
-                        </div>
-                    </div>
-                </div>
                 <!-- ./col -->
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->

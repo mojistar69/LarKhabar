@@ -2,6 +2,7 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use app\assets\AppAsset;
 use faravaghi\jalaliDatePicker\jalaliDatePicker;
 use kartik\export\ExportMenu;
@@ -33,127 +34,97 @@ AppAsset::register($this);
 ?>
 
 <div class="row">
-    <div class="box">
-        <div class="box-header bg-purple-gradient">
-            <h3 class="box-title"> تست</h3>
-            <div class="pull-left box-tools">
-                <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
-                        class="fa fa-minus"></i>
-                </button>
+        <div class="col-md-3">
+
+          <div class="box box-danger">
+            <div class="box-header">
+              <h3 class="box-title">بازه ابتدا</h3>
             </div>
-        </div>
-        <div class="box-body ">
-            <div class="container" style="max-width: 500px;">
-                <div class="row">
-                <div class="form-group col-md-8" >
-                    <div class="input-group">
-                        <label for="startDate">از تاریخ</label>
-                        <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click"
-                             data-targetselector="#fromDate1" data-groupid="group1" data-fromdate="true"
-                             data-enabletimepicker="false" data-placement="left">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </div>
-                        <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate',
-                            'value' => $startDatetime]) ?>
-                    </div>
-                    <div class="input-group">
-                        <label for="endDate">تا تاریخ</label>
-                        <div class="input-group-addon" data-MdDateTimePicker="true" data-trigger="click"
-                             data-targetselector="#toDate1" data-groupid="group1" data-todate="true"
-                             data-enabletimepicker="true" data-placement="left">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </div>
-                        <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate', 'value' => $endDatetime]) ?>
-                    </div>
+            <div class="box-body">
+              <!-- Date dd/mm/yyyy -->
+              <div class="form-group">
+                <label> تاریخ</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                              <?= jDate\DatePicker::widget(['name' => 'startDate', 'id' => 'startDate',
+                                'value' => $startDatetime]) ?>
                 </div>
-                <div class="form-group col-md-4" >
-                    <?= Html::submitButton(Yii::t('app', 'جستجو'), ['class' => 'btn btn-primary'
-                        , 'id' => 'searchbtn']) ?>
-            <?php
-            if (isset($dataProvider)) {
-            ?>
-            <div class="form-group" align="center">
-                <div class="modal fade" id="noSelected" role="dialog">
-                    <div class="modal-dialog">
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
 
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">کاربر گرامی</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>موردی جهت گزارش گیری انتخاب نشده است!</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
-                            </div>
-                        </div>
-
-                    </div>
+              <!-- Date mm/dd/yyyy -->
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <input  type="time" name="startTime" id="startTime" width='100%' value=<?=$startTime?>>
                 </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+
             </div>
-                <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDatetime ?>">
-                <input type="hidden" id="endDate"  name="endDate" value="<?php echo $endDatetime ?>">
-                <?php echo Html::submitButton('گزارش', ['class' => 'btn btn-info','id'=>'report']); ?>
-            </div>
-            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+         <button id="searchbtn" class="btn btn-warning btn-lg">جستجو <i class="fa fa-search"></i></button>
+          <!-- /.box -->
         </div>
-        <?php
-        echo ExportMenu::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => $gridColumns,
-        ]);
-        echo GridView::widget(['dataProvider' => $dataProvider,
-            'summary' => '',
-            'columns' => [
-                [
-                    'class' => 'yii\grid\CheckboxColumn',
-                    'checkboxOptions' => function ($model, $key, $index, $widget) {
-                        return ['value' => $model['opnumber']];
-                    },
-                ],
+    
+    
+    
+    <div class="col-md-3">
 
-                [
-                    'attribute' => 'calluid',
-                    'label' => 'calluid',
-                    'label' => 'شماره تماس',
-                ],
-                [
-                    'attribute' => 'opid',
-                    'label' => 'شماره اپراتور'
-                ],
-                [
-                    'attribute' => 'name',
-                    'value' => 'name',
-                    'label' => 'نام'
-                ],
-                [
-                    'attribute' => 'family',
-                    'value' => 'family',
-                    'headerOptions' => ['width' => '80'],
-                    'label' => ' نام خانوادگی اپراتور'
-                ],
-                [
-                    'attribute' => 'تاریخ',
-                    'format' => 'raw',
-                    'contentOptions' => ['style' => 'max-width: 80px'],
+          <div class="box box-danger">
+            <div class="box-header">
+              <h3 class="box-title">بازه انتها</h3>
+            </div>
+            <div class="box-body">
+              <!-- Date dd/mm/yyyy -->
+              <div class="form-group">
+                <label> تاریخ</label>
 
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                                              <?= jDate\DatePicker::widget(['name' => 'endDate', 'id' => 'endDate',
+                                'value' => $endDatetime]) ?>
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
 
-                    'value' => function ($searchModel) {
-                        $date = new DateTime($searchModel['startdatetime']);
-                        return Yii::$app->jdate->date("o/n/d – H:i", (int)strtotime($date->format('Y-m-d H:i:s')));
-                    },
-                ],
-            ],
-        ]);
+              <!-- Date mm/dd/yyyy -->
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input  type="time" name="startTime" id="startTime" width='100%' value=<?=$startTime?>>
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
 
-        }
-        ?>
-    </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+         
+          <!-- /.box -->
+        </div>
+    
 </div>
-</div>
-
+        <!-- /.col (left) -->
+       
 <script>
     $(document).ready(function () {
         var date = '&startDate=' + $("#startDate").val() + '&endDate=' + $("#endDate").val();

@@ -9,7 +9,7 @@ use app\models\Archivecall;
 /**
  * ArchivecallSearch represents the model behind the search form of `app\models\Archivecall`.
  */
-class ArchivecallSearch extends Archivecall
+class ArchiveCallSearch extends Archivecall
 {
     public $name;
     public $operator_number;
@@ -60,7 +60,8 @@ class ArchivecallSearch extends Archivecall
         $query->innerJoinWith('operator');
         $query->innerJoinWith('city');
         $query->andwhere('startdatetime >='.$startdate);
-        $query->andwhere('enddatetime <= '.$enddate);
+        $query->andwhere('startdatetime <= '.$enddate);
+        $query->orderBy('startdatetime ASC');
 
         // add conditions that should always apply here
 

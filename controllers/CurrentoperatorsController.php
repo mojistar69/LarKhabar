@@ -6,28 +6,25 @@ use Yii;
 use app\models\Currentoperators;
 use app\models\CurrentoperatorsSearch;
 use yii\filters\AccessControl;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * CurrentoperatorsController implements the CRUD actions for Currentoperators model.
- */
+
 class CurrentoperatorsController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','view','create','update','delete','exit'],
+                'only' => ['index','view','create','update','delete','exit','data'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','view','create','update','delete','exit'],
+                        'actions' => ['index','view','create','update','delete','exit','data'],
                         'roles' => ['admin','manager'],
                     ],
                     [
@@ -46,21 +43,18 @@ class CurrentoperatorsController extends Controller
         ];
     }
 
-    /**
-     * Lists all Currentoperators models.
-     * @return mixed
-     */
+
     public function actionIndex()
     {
         $searchModel = new CurrentoperatorsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize=120;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
-
     public function actionDoexit($opid)
     {
         $connection = Yii::$app->getDb();
@@ -72,64 +66,88 @@ class CurrentoperatorsController extends Controller
 
         $searchModel = new CurrentoperatorsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->pagination->pageSize=120;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
-
-
-    public function actionView($id)
+    public function actionData()
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+
+        if(!isset($_GET['zoneId']))
+            return;
+        $zoneId = $_GET['zoneId'];
+        //array of all cities in the selected zoneId
+        $listCityId = '1';
+
+        //was selected a zone
+        if ($zoneId != '0') {
+            //query of all cities of  selected zone
+            $connection = Yii::$app->getDb();
+            $command = $connection->createCommand("call spsCities_Id_GetByZoneId(:zoneId)")
+                ->bindValue(':zoneId', $zoneId);
+            $citiesId = $command->queryAll();
+            //list of all cities of selected zone and concat CitiesIds
+            $listCityId = $this->concatCityIds($citiesId);
+
+        } else  //was not select a certain zone so select all cities by default
+
+            $listCityId = $this->getAllCities();
 
 
-    public function actionCreate()
-    {
-        $model = new Currentoperators();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        //was not select a city
+        if ($_GET['cityId'] === '0') {
+            $cityId = $listCityId;
+        } else {
+            //selected cityId
+            $cityId = $_GET['cityId'];
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+
+        /////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////Online CurrentOperators Information Box////////////////
+        /// /////////////////////////////////////////////////////////////////////////
+
+        //CurrentOperators
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("call spsCurrentOperators_GetCountByCityCode(:cityId)")
+            ->bindValue(':cityId', '');
+        $CurrentOperatorsQuery = $command->queryAll();
+        $CurrentOperators = $CurrentOperatorsQuery[0]['count'];
+
+        //Waiting
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("call spsCurrentCalls_GetStatesAndCountByCityCode_Waiting(:cityId)")
+            ->bindValue(':cityId', $cityId);
+        $WaitingQuery = $command->queryAll();
+        if (count($WaitingQuery) == 0)
+            $Waiting = 0;
+        else
+            $Waiting = $WaitingQuery[0]['count'];
+
+        $updateParameter = [$CurrentOperators, $Waiting];
+        echo Json::encode($updateParameter);
     }
-
-
-    public function actionUpdate($id)
+    public function getAllCities()
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("call spsCities_CityCodes");
+        $citiesId = $command->queryAll();
+        $listCityId = $this->concatCityIds($citiesId);
+        return $listCityId;
+    }
+    public function concatCityIds($cityRows)
+    {
+        $stringIds = "";
+        foreach ($cityRows as $city) {
+            $stringIds = $stringIds . $city['id'] . ',';
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        $stringIds = substr($stringIds, 0, strlen($stringIds) - 1);
+        return $stringIds;
     }
 
 
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
 
 
-    protected function findModel($id)
-    {
-        if (($model = Currentoperators::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 }

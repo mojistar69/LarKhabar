@@ -35,9 +35,15 @@ class TotalReportController extends \yii\web\Controller
     {
         $Parameter = [0, 0, 0, 0,
             0, 0];
+         $miladi_today=date("Y/m/d");
+        $t = explode('/',$miladi_today);
+        $today=$this->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
+        $tomarrow=$this->gregorian_to_jalali($t[0], $t[1], $t[2]+1,'/');
+        $startDate_Shamsi = $today;
+        $endDate_Shamsi = $tomarrow;
         return $this->render('index',
-            ['startDatetime'=>'1398/03/01',
-                'endDatetime'=>'1398/03/12',
+            ['startDatetime'=>$startDate_Shamsi,
+                'endDatetime'=>$endDate_Shamsi,
                 'Parameter'=>$Parameter
             ]);
     }
@@ -141,4 +147,33 @@ where `startdatetime` >= $startDatetime AND `startdatetime`<= $endDatetime");
             $gd-=$v;
         }
         return($mod=='')?array($gy,$gm,$gd):$gy.$mod.$gm.$mod.$gd;}
+        
+                   function gregorian_to_jalali($gy,$gm,$gd,$mod=''){
+ $g_d_m=array(0,31,59,90,120,151,181,212,243,273,304,334);
+ if($gy > 1600){
+  $jy=979;
+  $gy-=1600;
+ }else{
+  $jy=0;
+  $gy-=621;
+ }
+ $gy2=($gm > 2)?($gy+1):$gy;
+ $days=(365*$gy) +((int)(($gy2+3)/4)) -((int)(($gy2+99)/100)) +((int)(($gy2+399)/400)) -80 +$gd +$g_d_m[$gm-1];
+ $jy+=33*((int)($days/12053));
+ $days%=12053;
+ $jy+=4*((int)($days/1461));
+ $days%=1461;
+ $jy+=(int)(($days-1)/365);
+ if($days > 365)$days=($days-1)%365;
+ if($days < 186){
+  $jm=1+(int)($days/31);
+  $jd=1+($days%31);
+ }else{
+  $jm=7+(int)(($days-186)/30);
+  $jd=1+(($days-186)%30);
+ }
+ if($jm<10) $jm='0'.$jm;
+  if($jd<10) $jd='0'.$jd;
+ return($mod==='')?array($jy,$jm,$jd):$jy .$mod .$jm .$mod .$jd;
+}
 }

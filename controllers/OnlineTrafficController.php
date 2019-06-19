@@ -125,6 +125,7 @@ class OnlineTrafficController extends \yii\web\Controller
         $updateParameter = [$Channel, $EnterCall, $Waiting, $Talking, $Listening, $chart1_2, $chart3, $chart4];
         echo Json::encode($updateParameter);
     }
+
     public function chart1($cityIds)
     {
         //allTodayOperators

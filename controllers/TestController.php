@@ -9,13 +9,48 @@ use yii\data\ArrayDataProvider;
 class TestController extends \yii\web\Controller
 {
     public function actionIndex()
+            
     {
-
+//        $miladi_today=date("Y/m/d");
+//        $t = explode('/','2019/03/15');
+//        $today=$this->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
+//        return $today ;
+ $model = new ArchiveCallSearch();
         return $this->render('index',
             ['startDatetime'=>'1397/01/01',
-                'endDatetime'=>'1398/01/01'
+                'endDatetime'=>'1398/01/01',
+                'startTime'=>'00:00:00',
+                'endTime'=>'00:00:',
+                'model'=>$model,
             ]);
     }
+    
+    function gregorian_to_jalali($gy,$gm,$gd,$mod=''){
+ $g_d_m=array(0,31,59,90,120,151,181,212,243,273,304,334);
+ if($gy > 1600){
+  $jy=979;
+  $gy-=1600;
+ }else{
+  $jy=0;
+  $gy-=621;
+ }
+ $gy2=($gm > 2)?($gy+1):$gy;
+ $days=(365*$gy) +((int)(($gy2+3)/4)) -((int)(($gy2+99)/100)) +((int)(($gy2+399)/400)) -80 +$gd +$g_d_m[$gm-1];
+ $jy+=33*((int)($days/12053));
+ $days%=12053;
+ $jy+=4*((int)($days/1461));
+ $days%=1461;
+ $jy+=(int)(($days-1)/365);
+ if($days > 365)$days=($days-1)%365;
+ if($days < 186){
+  $jm=1+(int)($days/31);
+  $jd=1+($days%31);
+ }else{
+  $jm=7+(int)(($days-186)/30);
+  $jd=1+(($days-186)%30);
+ }
+ return($mod==='')?array($jy,$jm,$jd):$jy .$mod .$jm .$mod .$jd;
+}
 
     public function actionGrid()
     {
