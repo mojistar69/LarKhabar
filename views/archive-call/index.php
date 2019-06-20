@@ -29,12 +29,12 @@ $gridColumns = [
                         'label' => 'شهر',
                     ],
 
-                    [
-                        'attribute' => 'operator_family',
-                        'value' => function($model) { return $model['operator']['name']  . " ". $model['operator']['family'] ;},
-                        'headerOptions' => ['width' => '180'],
-                        'label' => '  اپراتور'
-                    ],
+                   [
+                     'attribute' => 'ofamily',
+                     'value' => 'operator.family',
+                     'headerOptions' => ['width' => '80'],
+                     'label' => ' نام خانوادگی اپراتور'
+                     ],
                     [
                         'attribute' => 'operator_number',
                         'label' => 'شماره اپراتور',

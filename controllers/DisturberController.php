@@ -1,89 +1,110 @@
 <?php
 
 namespace app\controllers;
-use app\models\ArchiveCallSearch;
-use Yii;
-use yii\data\ArrayDataProvider;
-use yii\filters\AccessControl;
 
-class DisturberController extends \yii\web\Controller
+use Yii;
+use app\models\Disturber;
+use app\models\DisturberSearch;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+
+/**
+ * DisturberController implements the CRUD actions for Disturber model.
+ */
+class DisturberController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['index','grid'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index','grid'],
-                        'roles' => ['admin','manager'],
-                    ],
-                    [
-                        'allow' => false,
-                        'actions' => ['index','grid'],
-                        'roles' => ['?'],
-                    ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
             ],
-
         ];
     }
+
+    /**
+     * Lists all Disturber models.
+     * @return mixed
+     */
     public function actionIndex()
-            
     {
-         $miladi_today=date("Y/m/d");
+        
+        $searchModel = new DisturberSearch();
+        $miladi_today=date("Y/m/d");
         $t = explode('/',$miladi_today);
         $today=$this->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
         $tomarrow=$this->gregorian_to_jalali($t[0], $t[1], $t[2]+1,'/');
         $startDate_Shamsi = $today;
         $endDate_Shamsi = $tomarrow;
-        
-        return $this->render('index',
-            ['startDatetime'=>$startDate_Shamsi,
-                'endDatetime'=>$endDate_Shamsi
-            ]);
-    }
-    public function actionGrid()
-    {
-        $startDate_Shamsi='';
-        $endDate_Shamsi ='';
+        //change shamsi to miladi
+        $tmp1 = explode('/', $startDate_Shamsi);
+        $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
+        $tmp2 = explode('/', $endDate_Shamsi);
+        $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
+        $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
+        $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
+        $tmp = Yii::$app->request->queryParams;
+        $tmp['startdate'] = $startDatetime;
+        $tmp['enddate'] = $endDatetime;
+        $dataProvider = $searchModel->search($tmp);
+        return $this->render('index', [
+            'startDatetime' => $startDate_Shamsi,
+            'endDatetime' => $endDate_Shamsi,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
 
+        
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+        public function actionGrid()
+    {
+        $searchModel = new DisturberSearch;
         if (isset($_GET["startDate"])) {
             $startDate_Shamsi = $_GET["startDate"];
         }
         if (isset($_GET["endDate"])) {
             $endDate_Shamsi = $_GET["endDate"];
         }
-
-        $tmp1 = explode('/',$startDate_Shamsi );
+        //change shamsi to miladi
+        $tmp1 = explode('/', $startDate_Shamsi);
         $startDate_Miladi = $this->jalali_to_gregorian($tmp1[0], $tmp1[1], $tmp1[2], '-');
         $tmp2 = explode('/', $endDate_Shamsi);
         $endDate_Miladi = $this->jalali_to_gregorian($tmp2[0], $tmp2[1], $tmp2[2], '-');
 
-        $startDatetime = $startDate_Miladi . ' 00:00:00';
-        $endDatetime = $endDate_Miladi . ' 00:00:00';
-        $dataProvider=$this->doQuery($startDatetime,$endDatetime);
+        $startDatetime = '\'' . $startDate_Miladi . ' 00:00:00\'';
+        $endDatetime = '\'' . $endDate_Miladi . ' 00:00:00\'';
+        $tmp = Yii::$app->request->queryParams;
+        $tmp['startdate'] = $startDatetime;
+        $tmp['enddate'] = $endDatetime;
 
+        $dataProvider = $searchModel->search($tmp);
+        
+ 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
             'startDatetime' => $startDate_Shamsi,
             'endDatetime' => $endDate_Shamsi,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
-    }
-    public function doQuery($startDatetime,$endDatetime)
-    {
-        $connection = Yii::$app->getDb();
-        $command = $connection->createCommand("call spsDisturber_GetAllByCityCodesAndOpNumber(:startDateTime,:endDateTime)")
-            ->bindValue(':startDateTime', $startDatetime)
-            ->bindValue(':endDateTime', $endDatetime);
-        $result = $command->queryAll();
-        $dataProvider= new ArrayDataProvider(['allModels'=>$result,]);
-        $dataProvider->pagination->pageSize=10;
-        return $dataProvider;
 
     }
+
+
+    
+        //change shamsi to miladi
     function jalali_to_gregorian($jy, $jm, $jd, $mod = '')
     {
         if ($jy > 979) {
@@ -114,7 +135,7 @@ class DisturberController extends \yii\web\Controller
         return ($mod == '') ? array($gy, $gm, $gd) : $gy . $mod . $gm . $mod . $gd;
     }
     
-           function gregorian_to_jalali($gy,$gm,$gd,$mod=''){
+     function gregorian_to_jalali($gy,$gm,$gd,$mod=''){
  $g_d_m=array(0,31,59,90,120,151,181,212,243,273,304,334);
  if($gy > 1600){
   $jy=979;
@@ -142,5 +163,7 @@ class DisturberController extends \yii\web\Controller
   if($jd<10) $jd='0'.$jd;
  return($mod==='')?array($jy,$jm,$jd):$jy .$mod .$jm .$mod .$jd;
 }
+
+
 
 }

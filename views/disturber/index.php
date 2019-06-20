@@ -8,11 +8,7 @@ use kartik\export\ExportMenu;
 $this->title = 'مزاحمین';
 $this->params['breadcrumbs'][] = $this->title;
 $gridColumns = [
-    [
-        'attribute' => 'name',
-        'value' => 'name',
-        'label' => 'شهر'
-    ],
+
 
     [
         'attribute' => 'callerid',
@@ -27,11 +23,7 @@ $gridColumns = [
         'label' => 'تماس گیرنده'
     ],
 
-    [
-        'attribute' => 'count',
-        'value' => 'count',
-        'label' => 'دفعات'
-    ],
+
 ];
 AppAsset::register($this);
 ?>
@@ -108,6 +100,7 @@ AppAsset::register($this);
             'columns' => $gridColumns,
         ]);
         echo GridView::widget(['dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
 //            'summary' => '',
             'columns' => [
                 [
@@ -120,18 +113,32 @@ AppAsset::register($this);
                             return 'نامشخص';
                         }
                     },
-                    'label' => 'تماس گیرنده'
+                    'label' => 'شماره مزاحم'
                 ],
+                    [
+                        'attribute' => 'ofamily',
+                        'value' => function($model) { return $model['operator']['name']  . " ". $model['operator']['family'] ;},
+                        'headerOptions' => ['width' => '180'],
+                        'label' => 'اپراتور پاسخگو'
+                    ],
+                                
+                    [
+                        'attribute' => 'cname',
+                        'value' => 'city.name',
+                        'label' => 'شهر',
+                    ],
+                            
+                                        
                 [
-                    'attribute' => 'count',
-                    'value' => 'count',
-                    'label' => 'دفعات'
+                    'attribute' => Yii::t('app', 'زمان تماس'),
+                    'format' => 'raw',
+                    'value' => function ($searchModel) {
+                        $date = new DateTime($searchModel['d_date']);
+                        return Yii::$app->jdate->date("o/n/d – H:i", (int) strtotime($date->format('Y-m-d H:i:s')));
+                    },
                 ],
-                [
-                    'attribute' => 'name',
-                    'value' => 'name',
-                    'label' => 'شهر'
-                ],
+
+                                                
             ],
         ]);
         }
