@@ -30,7 +30,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="<?= Yii::$app->homeUrl ?>?r=city"><i class="fa fa-circle-o"></i> شهر</a></li>
+                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=city"><i class="fa fa-circle-o"></i> شهر</a></li>
                         <li ><a href="<?= Yii::$app->homeUrl ?>?r=zone"><i class="fa fa-circle-o"></i> منطقه</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=manager"><i class="fa fa-circle-o"></i> مدیر</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=operator"><i class="fa fa-circle-o"></i> اپراتور</a></li>
@@ -46,7 +46,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="<?= Yii::$app->homeUrl ?>?r=currentoperators"><i class="fa fa-circle-o"></i> نظارت</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=currentoperators"><i class="fa fa-circle-o"></i> نظارت</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=online-traffic"><i class="fa fa-circle-o"></i>ترافیک آنلاین</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=offline-traffic"><i class="fa fa-circle-o"></i>ترافیک آفلاین</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=load"><i class="fa fa-circle-o"></i>اوج ترافیک</a></li>
