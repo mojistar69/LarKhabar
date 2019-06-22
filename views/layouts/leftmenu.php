@@ -46,7 +46,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=currentoperators"><i class="fa fa-circle-o"></i> نظارت</a></li>
+                        <li><a href="<?= Yii::$app->homeUrl ?>?r=currentoperators"><i class="fa fa-circle-o"></i> نظارت  </a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=online-traffic"><i class="fa fa-circle-o"></i>ترافیک آنلاین</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=offline-traffic"><i class="fa fa-circle-o"></i>ترافیک آفلاین</a></li>
                         <li><a href="<?= Yii::$app->homeUrl ?>?r=load"><i class="fa fa-circle-o"></i>اوج ترافیک</a></li>
