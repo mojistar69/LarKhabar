@@ -79,6 +79,7 @@ class ArchiveOperatorController extends Controller
         $tmp['enddate'] = $endDatetime;
 
         $dataProvider = $searchModel->search($tmp);
+        $dataProvider->pagination->pageSize=120;
 
         return $this->render('index', [
             'startDatetime' => $startDate_Shamsi,
