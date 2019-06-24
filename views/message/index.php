@@ -25,22 +25,34 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'operator.name',
             'operator.family',
-            'senderType',
-            'senderId',
-            'receiveType',
-            'receiveId',
+            //'senderType',
+            //'senderId',
+            //'receiveType',
+            //'receiveId',
+            'message.body',
+            [
+                'attribute' => Yii::t('app', 'تاریخ ارسال'),
+                'format' => 'raw',
+                'value' => function ($searchModel) {
+                    $date = new DateTime($searchModel['sendDate']);
+                    return Yii::$app->jdate->date("o/n/d – H:i", (int) strtotime($date->format('Y-m-d H:i:s')));
+                },
+            ],
+            [
+                'attribute' => Yii::t('app', 'تاریخ مشاهده'),
+                'format' => 'raw',
+                'value' => function ($searchModel) {
+                    $date = new DateTime($searchModel['sendDate']);
+                    return Yii::$app->jdate->date("o/n/d – H:i", (int) strtotime($date->format('Y-m-d H:i:s')));
+                },
+            ],
 
-//            [
-//                'attribute' => 'oname',
-//                'value' => 'operator.name',
-//                'label' => 'نام اپراتور'
-//            ],
             //'messageId',
             //'state',
             //'sendDate',
             //'seenDate',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>

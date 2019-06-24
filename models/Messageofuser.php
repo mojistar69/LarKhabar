@@ -46,7 +46,7 @@ class Messageofuser extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'شماره',
             'senderType' => 'Sender Type',
             'senderId' => 'Sender ID',
             'receiveType' => 'Receive Type',
@@ -64,6 +64,6 @@ class Messageofuser extends \yii\db\ActiveRecord
     }
     public function getMessage()
     {
-        return $this->hasOne(Message::className(), ['opid' => 'senderId']);
+        return $this->hasOne(Message::className(), ['id' => 'messageId']);
     }
 }

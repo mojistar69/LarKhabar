@@ -27,9 +27,11 @@ class MessageController extends Controller
 
     public function actionIndex()
     {
-        $query = Messageofuser::find();
+        $query = Messageofuser::find()-> where('receiveId=6');
+
         $query->innerJoinWith('operator');
-        $query->where('receiveId==6');
+        $query->innerJoinWith('message');
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

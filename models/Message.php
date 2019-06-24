@@ -37,8 +37,8 @@ class Message extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'body' => 'Body',
+            'id' => 'شماره',
+            'body' => 'پیام',
         ];
     }
 
