@@ -7,22 +7,22 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'پیام ها';
+$this->title = 'پیام های ارسالی';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="messageofuser-index">
     <div class="row">
         <div class="box">
             <div class="box-header bg-blue-active">
-                <h3 class="box-title">پیام های دریافتی</h3>
+                <h3 class="box-title">پیام های ارسالی</h3>
                 <div class="pull-left box-tools">
                     <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
+                            class="fa fa-minus"></i>
                     </button>
                 </div>
             </div>
 
-            <div class="box-body bg-info text-black">
+            <div class="box-body bg-danger text-black">
                 <?php  Pjax::begin(['id' => 'pjax-grid-view','enablePushState' => false]); ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
@@ -32,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         [
                             'attribute' => 'operator_family',
-                            'value' => function($model) { return $model['operator']['name']  . " ". $model['operator']['family'] ;},
+                            'value' => function($model) { return $model['operatorReceive']['name']  . " ". $model['operatorReceive']['family'] ;},
                             'headerOptions' => ['width' => '180'],
-                            'label' => 'فرستنده'
+                            'label' => 'گیرنده'
                         ],
                         [
                             'attribute' => Yii::t( 'app', ' تاریخ ارسال '),
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($searchModel) {
                                 $date = new DateTime($searchModel['seenDate']);
                                 if($searchModel['seenDate']!=null)
-                                return Yii::$app->jdate->date("o/n/d – H:i", (int) strtotime($date->format('Y-m-d H:i:s')));
+                                    return Yii::$app->jdate->date("o/n/d – H:i", (int) strtotime($date->format('Y-m-d H:i:s')));
                                 else
                                     return 'خوانده نشده';
                             },
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'yii\grid\ActionColumn',
                             'header' => 'امکانات',
                             'headerOptions' => ['style' => 'color:#337ab7'],
-                            'template' => '{view}{reply}{delete}',
+                            'template' => '{view}{delete}',
                             'buttons' => [
                                 'view' => function ($url, $model) {
                                     return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
@@ -69,11 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]);
                                 },
 
-                                'reply' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                        'title' => Yii::t('app', 'پاسخ'),
-                                    ]);
-                                },
+
                                 'delete' => function ($url, $model) {
                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                                         'title' => Yii::t('app', 'حذف'),
@@ -83,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'urlCreator' => function ($action, $model, $key, $index) {
                                 if ($action === 'view') {
-                                    $url ='index.php?r=message/view&id='.$model->id;
+                                    $url ='index.php?r=send-message/view&id='.$model->id;
                                     return $url;
                                 }
 
@@ -92,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                                    return $url;
 //                                }
                                 if ($action === 'delete') {
-                                    $url ='index.php?r=message/delete&id='.$model->id;
+                                    $url ='index.php?r=send-message/delete&id='.$model->id;
                                     return $url;
                                 }
 

@@ -62,6 +62,10 @@ class Messageofuser extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Operator::className(), ['opid' => 'senderId']);
     }
+    public function getOperatorReceive()
+    {
+        return $this->hasOne(Operator::className(), ['opid' => 'receiveId']);
+    }
     public function getMessage()
     {
         return $this->hasOne(Message::className(), ['id' => 'messageId']);

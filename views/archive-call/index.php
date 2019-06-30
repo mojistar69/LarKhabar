@@ -225,6 +225,35 @@ AppAsset::register($this);
                         },
                     ],
 
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => 'امکانات',
+                        'headerOptions' => ['style' => 'color:#337ab7'],
+                        'template' => '{view}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a('<span class="glyphicon glyphicon-play"></span>', $url, [
+                                    'title' => Yii::t('app', 'پخش'),
+                                ]);
+                            },
+
+
+
+                        ],
+                        'urlCreator' => function ($action, $model, $key, $index) {
+                            if ($action === 'view') {
+                                $date=substr($model['startdatetime'],0,10);
+                                $date[4]='/';
+                                $date[7]='/';
+                                $url ='http://192.168.8.131/getvoice.php?method=listen&id='.$model['lastcallid'].'&prefix='.$date;
+                                return $url;
+
+                            }
+
+
+                        }
+                    ],
+
 
                 ],
             ]);

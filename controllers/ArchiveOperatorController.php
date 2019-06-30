@@ -133,7 +133,7 @@ class ArchiveOperatorController extends Controller
             ->bindValue(':enddate', $endDatetime);
         $result = $command->queryAll();
         $dataProvider = new ArrayDataProvider(['allModels' => $result,]);
-        $dataProvider->pagination->pageSize=10;
+        $dataProvider->pagination->pageSize=120;
         return $dataProvider;
     }
     //change shamsi to miladi

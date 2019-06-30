@@ -19,6 +19,7 @@ class MessageController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'delete' => ['GET'],
                 ],
             ],
         ];
@@ -27,10 +28,13 @@ class MessageController extends Controller
 
     public function actionIndex()
     {
-        $query = Messageofuser::find()-> where('receiveId=6');
 
+        $identity = Yii::$app->user->identity;
+
+        $query = Messageofuser::find()-> where('receiveId='.$identity->id);
         $query->innerJoinWith('operator');
         $query->innerJoinWith('message');
+        $query->addOrderBy('sendDate DESC');
 
 
         $dataProvider = new ActiveDataProvider([
@@ -41,51 +45,50 @@ class MessageController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionSend()
+    {
+
+        $identity = Yii::$app->user->identity;
+
+        $query = Messageofuser::find()-> where('senderId='.$identity->id);
+        $query->innerJoinWith('operatorReceive');
+        $query->innerJoinWith('message');
+        $query->addOrderBy('sendDate DESC');
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('sendMessage', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $query = Messageofuser::find()-> where('messageofusers.id='.$id);
+        $query->innerJoinWith('message');
+        $row=$query->one();
+         $back_url=Yii::$app->homeUrl.'?r=message';
+        $tag='<a href="'.$back_url.'">'.'بازگشت'.'<a>';
+        echo '<div class="alert alert-success">'.$row->message->body.'
+</div>
+'.$tag.'
+';
+
+        //update seen date
+        $Messageofuser = Messageofuser::findOne($id);
+        $Messageofuser->seenDate = date("Y-m-d").' '.date("h:i:s");
+        $Messageofuser->save();
+
     }
-
-
-    public function actionCreate()
-    {
-        $model = new Messageofuser();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
-
-
     protected function findModel($id)
     {
         if (($model = Messageofuser::findOne($id)) !== null) {

@@ -66,6 +66,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
+                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=send-message"><i class="fa fa-circle-o"></i> ارسال پیام</a></li>
+                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=message"><i class="fa fa-circle-o"></i> پیام های دریافتی</a></li>
+                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=message%2Fsend"><i class="fa fa-circle-o"></i>پیام های ارسال شده</a></li>
                         <li ><a href="<?= Yii::$app->homeUrl ?>?r=requested-number"><i class="fa fa-circle-o"></i> آمار درخواست ها</a></li>
                         <li><a href="<?= Yii::$app->homeUrl?>?r=manager%2Fupdate&id=<?php if(isset($identity))echo ($identity->id)?>"><i class="fa fa-circle-o"></i> تغییر مشخصات </a></li>
 
