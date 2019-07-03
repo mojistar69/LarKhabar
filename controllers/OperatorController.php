@@ -27,7 +27,7 @@ class OperatorController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index','view','create','update','delete','lists','selected','cancel'],
-                        'roles' => ['admin','manager'],
+                        'roles' => ['admin'],
                     ],
                     [
                         'allow' => false,

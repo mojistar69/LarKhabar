@@ -32,9 +32,8 @@ class SendMessageController extends \yii\web\Controller
         }
 
         $dataProvider=$this->doQuerySelected($operators,$MessageBody);
-//        return $this->render('operatorMasterReport',
-//            ['dataProvider' => $dataProvider,
-//            ]);
+
+        return $this->redirect( Yii::$app->homeUrl.'?r=message%2Fsend');
     }
 
     public function doQuerySelected($operators,$Messagebody)
@@ -58,7 +57,7 @@ class SendMessageController extends \yii\web\Controller
              $command->query();
         }
 
-        return $this->redirect( Yii::$app->homeUrl.'?r=message%2Fsend');
+
 
     }
 
@@ -79,10 +78,7 @@ class SendMessageController extends \yii\web\Controller
         $row=$query->one();
         $back_url=Yii::$app->homeUrl.'?r=message%2Fsend';
         $tag='<a href="'.$back_url.'">'.'بازگشت'.'<a>';
-        echo '<div class="alert alert-success">'.$row->message->body.'
-</div>
-'.$tag.'
-';
+        echo '<div class="alert alert-success">'.$row->message->body.'</div>'.$tag;
 
 
     }

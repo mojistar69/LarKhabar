@@ -233,7 +233,7 @@ AppAsset::register($this);
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a('<span class="glyphicon glyphicon-play"></span>', $url, [
-                                    'title' => Yii::t('app', 'پخش'),
+                                    'title' => Yii::t('app', 'شنود'),
                                 ]);
                             },
 
@@ -245,7 +245,7 @@ AppAsset::register($this);
                                 $date=substr($model['startdatetime'],0,10);
                                 $date[4]='/';
                                 $date[7]='/';
-                                $url ='http://192.168.8.131/getvoice.php?method=listen&id='.$model['lastcallid'].'&prefix='.$date;
+                                $url ='http://192.168.118.244/getvoice.php?method=listen&id='.$model['lastcallid'].'&prefix='.$date;
                                 return $url;
 
                             }
