@@ -66,7 +66,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect(['online-traffic/index']);
+        return $this->redirect(['khabar/index']);
     }
 
     /**
@@ -83,7 +83,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
-            return $this->redirect(['online-traffic/index']);
+            return $this->redirect(['khabar/index']);
 
         }
         $model->password = '';

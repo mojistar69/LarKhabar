@@ -34,7 +34,7 @@ class LoginForm extends Model
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
             $rules[] = ['captcha', 'required','message' => 'نمی تواند خالی باشد'],
-            $rules[] = ['captcha', 'captcha','message' => 'دوباره سعی کنید'],
+            $rules[] = ['captcha', 'captcha','message' => 'عبارت امنیتی نادرست است'],
         ];
 
     }

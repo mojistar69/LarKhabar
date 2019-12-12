@@ -191,6 +191,12 @@ a:focus {
   max-height: 100px;
   z-index: 1030;
 }
+.mygrid {
+  overflow: auto;
+  overflow-y: auto;
+  Height:70%;
+}
+
 .main-header .navbar {
   -webkit-transition: margin-right 0.3s ease-in-out;
   -o-transition: margin-right 0.3s ease-in-out;

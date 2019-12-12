@@ -23,56 +23,86 @@
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">منو</li>
                 <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> <span>تعاریف اولیه</span>
+                    <a href="#"></a>
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=khabar">
+                        <i class="fa fa-newspaper-o"></i> <span>خبر</span>
                         <span class="pull-left-container">
-              <i class="fa fa-angle-right pull-left"></i>
             </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=city"><i class="fa fa-circle-o"></i> شهر</a></li>
-                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=zone"><i class="fa fa-circle-o"></i> منطقه</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=manager"><i class="fa fa-circle-o"></i> مدیر</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=operator"><i class="fa fa-circle-o"></i> اپراتور</a></li>
-                    </ul>
                 </li>
 
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-pie-chart"></i>
-                        <span>گزارش ها</span>
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=gorooh">
+                        <i class="fa fa-folder-o"></i> <span>گروه</span>
                         <span class="pull-left-container">
-              <i class="fa fa-angle-right pull-left"></i>
             </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=currentoperators"><i class="fa fa-circle-o"></i> نظارت  </a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=online-traffic"><i class="fa fa-circle-o"></i>ترافیک آنلاین</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=offline-traffic"><i class="fa fa-circle-o"></i>ترافیک آفلاین</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=load"><i class="fa fa-circle-o"></i>اوج ترافیک</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=disturber"><i class="fa fa-circle-o"></i>مزاحمین</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=archive-operator"><i class="fa fa-circle-o"></i>آرشیو اپراتور</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=archive-call"><i class="fa fa-circle-o"></i>آرشیو تماس ها</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=log-operators"><i class="fa fa-circle-o"></i>گزارش ورورد و خروج اپراتور</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>?r=total-report"><i class="fa fa-circle-o"></i>آمار کلی تماس ها</a></li>
-                    </ul>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-laptop"></i>
-                        <span>امکانات</span>
+
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=didgah">
+                        <i class="fa fa-commenting-o"></i> <span>دیدگاه</span>
                         <span class="pull-left-container">
-              <i class="fa fa-angle-right pull-left"></i>
             </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=send-message"><i class="fa fa-circle-o"></i> ارسال پیام</a></li>
-                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=message"><i class="fa fa-circle-o"></i> پیام های دریافتی</a></li>
-                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=message%2Fsend"><i class="fa fa-circle-o"></i>پیام های ارسال شده</a></li>
-                        <li ><a href="<?= Yii::$app->homeUrl ?>?r=requested-number"><i class="fa fa-circle-o"></i> آمار درخواست ها</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl?>?r=manager%2Fupdate&id=<?php if(isset($identity))echo ($identity->id)?>"><i class="fa fa-circle-o"></i> تغییر مشخصات </a></li>
+                </li>
 
-                    </ul>
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=manager">
+                        <i class="fa fa-user-o"></i> <span> مدیر</span>
+                        <span class="pull-left-container">
+            </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=tablig">
+                        <i class="fa fa-user-o"></i> <span> تبلیغ</span>
+                        <span class="pull-left-container">
+            </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=weather">
+                        <i class="fa fa-user-o"></i> <span> آب و هوا</span>
+                        <span class="pull-left-container">
+            </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=speak">
+                        <i class="fa fa-user-o"></i> <span> حرف مردم</span>
+                        <span class="pull-left-container">
+            </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=update">
+                        <i class="fa fa-user-o"></i> <span> آپدیت</span>
+                        <span class="pull-left-container">
+            </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?= Yii::$app->homeUrl?>?r=manager%2Fupdate&id=<?php if(isset($identity))echo ($identity->id)?>">
+                        <i class="fa fa-tachometer"></i> <span> تغییر مشخصات </span>
+                        <span class="pull-left-container">
+            </span>
+                    </a>
+                </li>
+                </li>
+
+                <li>
+                    <a href="<?= Yii::$app->homeUrl?>?r=site/logout" data-method="post">
+                        <i class="fa fa-sign-out"></i> <span> خروج</span>
+                        <span class="pull-left-container">
+            </span>
+                    </a>
                 </li>
             </ul>
         </section>

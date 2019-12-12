@@ -45,19 +45,17 @@ use yii\captcha\Captcha;
 
 
 <div class="limiter">
-    <div class="container-login100" style="background-image:url(dist/img/matin.jpg); ">
+    <div class="container-login100" style="background-image:url(dist/img/news2.jpg); ">
         <div class="wrap-login100">
             <?php $form = ActiveForm::begin([
 
             ]); ?>
             <span class="login100-form-logo">
 						<!--<i class="zmdi zmdi-landscape"></i>-->
-						<img src="images/logo3.png" alt="Smiley face" width="110" height="100
-">
 
 					</span>
             <br>
-            <span class="login100-form-title p-b-34 p-t-27">سیستم مدیریتی 118
+            <span class="login100-form-title p-b-34 p-t-27">لار خبر
 					</span>
 
 
@@ -71,7 +69,7 @@ use yii\captcha\Captcha;
             </div>
 
             <div class="wrap-input100 validate-input" data-validate = "Enter captcha">
-                <?= $form->field($model, 'captcha')->widget(Captcha::className()) ?>
+                <?= $form->field($model, 'captcha')->widget(Captcha::className())->label(FALSE) ?>
             </div>
 
 

@@ -18,8 +18,6 @@ use app\models\Zone;
     </section>
 
     <section class="content">
-        <?= $this->render('dropdown.php') ?>
-        <?= $this->render('information.php') ?>
         <?= $content ?>
     </section>
 </div>

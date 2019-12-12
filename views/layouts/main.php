@@ -28,6 +28,8 @@ $layout = 'primary';
 if (Yii::$app->controller->action->id === 'login') {
     $layout = 'user-entry';
 }
+
+
 if (Yii::$app->controller->action->id === 'signup') {
     $layout = 'user-entry';
 }

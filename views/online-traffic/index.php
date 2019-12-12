@@ -1,13 +1,14 @@
 <?php
-?>
+
+use kartik\grid\GridView; ?>
 
 <!-- Small boxes (Stat box) -->
 <div class="row">
     <section class="col-lg-12 col-md-12">
-        <div class="box box-info">
+        <div class="box box-primary">
             <div class="box-header">
 
-                <h3 class="box-title">ترافیک آنلاین</h3>
+                <h3 class="box-title">خبرها</h3>
                 <!-- tools box -->
                 <div class="pull-left box-tools">
                     <button type="button" class="btn bg-info btn-sm" data-widget="collapse"><i
@@ -17,297 +18,89 @@
                 <!-- /. tools -->
             </div>
             <div class="box-body">
-                <!body/.>
-                <div class="row">
-                    <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-aqua">
-                            <div class="inner">
-                                <h3><span name="channelNumber"> 0 </span></h3>
-                                <p>تعداد کانال</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion-ios-barcode"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <h3><span name="entranceCall"> 0 </span></h3>
-                                <p>تماس ورودی</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion-log-in"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-yellow">
-                            <div class="inner">
-                                <h3><span name="WaitingQueue"> 0 </span></h3>
-                                <p>در صف انتظار</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion-android-contacts"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-red">
-                            <div class="inner">
-                                <h3><span name="Calling"> 0 </span></h3>
-                                <p>در حال مکالمه</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion-android-call"></i>
 
+                    <!-- /.box -->
+
+
+
+                            <!--/////////////////////////////////////////////////-->
+
+                            <div class="city-index">
+
+                                <p>
+                                    <a href="<?= Yii::$app->homeUrl ?>?r=khabar%2Fcreate" class="btn btn-primary btn-lg">
+                                        ایجاد خبر  <i class="fa fa-plus"></i>
+                                    </a>
+                                </p>
+                                <?= GridView::widget([
+                                    'dataProvider' => $dataProvider,
+                                    'filterModel' => $searchModel,
+                                    'columns' => [
+                                        ['class' => 'yii\grid\SerialColumn'],
+                                        [
+                                            'attribute' => 'goroohname',
+                                            'value' => 'tbl_gorooh.onvan',
+                                            'label' => 'گروه',
+                                        ],
+                                        'lid:ntext',
+
+                                        'titr:ntext',
+                                        [
+                                            'attribute' => ' تاریخ درج خبر',
+                                            'format' => 'raw',
+                                            'headerOptions' => ['width' => '180'],
+                                            'contentOptions' => ['style' => 'max-width: 80px'],
+                                            'value' => function ($searchModel) {
+                                                $date = new DateTime($searchModel['tarikh']);
+                                                return Yii::$app->jdate->date("o/n/d – H:i:s", (int)strtotime($date->format('Y-m-d H:i:s')));
+                                            },
+                                        ],
+                                        //'roo_titr:ntext',
+                                        //'matn:ntext',
+                                        //'ax_k:ntext',
+                                        //'ax_b:ntext',
+                                        //'tarikh',
+                                        //'manba:ntext',
+                                        //'film:ntext',
+                                        //'film_aparat:ntext',
+                                        //'film_onvan:ntext',
+                                        //'slide',
+                                        [
+                                            'attribute' => 'taeed',
+                                            'value' => function($model) {
+                                                if ($model['taeed']==1)  return 'تایید';
+                                                else return 'عدم تایید';},
+                                            'headerOptions' => ['width' => '180'],
+                                            'label' => ' وضعیت'
+                                        ],
+
+                                        [
+                                            'attribute' => 'view',
+                                            'value' => 'view',
+                                            'label' => 'تعداد بازدید',
+                                        ],
+                                        //'viewtype',
+                                        //'view_fm',
+
+                                        ['class' => 'yii\grid\ActionColumn'],
+                                    ],
+                                ]); ?>
                             </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-orange">
-                            <div class="inner">
-                                <h3><span name="listiningResult"> 0 </span></h3>
-                                <p>در حال شنیدن نتایج</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion-android-volume-up"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                </div>
+
+
+
+
+
             </div>
         </div>
     </section>
 </div>
 <!-- /.row -->
 
-<div class="row">
-    <div class="nav-tabs-custom" style="cursor: move;" align="center">
-
-        <div id="chart1" style="width:60%; height:400px;">
-            <script>
-            var mChart1;
-            document.addEventListener('DOMContentLoaded', function () {
-            Highcharts.setOptions({
-            chart: {
-            style: {
-            fontFamily: 'Vazir',
-            },
-            }
-            });
-            mChart1 =
-            Highcharts.chart('chart1', {
-            chart: {
-            type: 'column'
-            },
-            title: {
-            text: 'تعداد اپراتورها'
-            },
-            subtitle: {
-            text: ''
-            },
-            xAxis: {
-            categories: [
-            'همه اپراتورها',
-            'فعال',
-            'غیرفعال',
-            ],
-            crosshair: true
-            },
-            yAxis: {
-            min: 0,
-            title: {
-            text: 'نفر'
-            }
-            },
-            tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0;font-size:10px">{series.name}: </td>' +
-                    '<td style="padding:0;font-size:10px"><b>{point.y} نفر</b></td></tr>',
-                footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-            },
-            plotOptions: {
-            column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-            }
-            },
-            series: [{
-            name: 'در حال حاضر',
-            data: [0, 0, 0]
-            }, {
-            name: 'امروز',
-            data: [0, 0, 0]
-            }]
-            });
-            });
-            </script>
-        </div>
-
-    </div>
-
-</div>
+<div class="row"></div>
 
 
-<div class="row">
-    <!-- right col -->
-    <section class="col-lg-7 connectedSortable ui-sortable">
-        <!-- Custom tabs (Charts with tabs)-->
-
-        <!-- /.nav-tabs-custom -->
-
-        <!-- /.box (chat box) -->
-
-        <div id="chart4" style="width:100%; height:400px;">
-
-            <script>
-                var mChart4;
-                document.addEventListener('DOMContentLoaded', function () {
-                    Highcharts.setOptions({
-                        chart: {
-                            style: {
-                                fontFamily: 'Vazir',
-
-                            },
-                        }
-                    });
-                    mChart4 =
-                        Highcharts.chart('chart4', {
-                            chart: {
-                                type: 'pie',
-                                plotBackgroundColor: null,
-                                plotBorderWidth: null,
-                                plotShadow: false,
-                            },
-                            title: {
-                                text: ' تماس های امروز'
-                            },
-                            subtitle: {
-                                text: 'تعداد'
-                            },
-                            tooltip: {
-                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                pointFormat: '<tr><td style="color:{series.color};padding:0;font-size:10px">{series.name}: </td>' +
-                                    '<td style="padding:0";font-size:10px><b>{point.percentage:.1f}%</b>{point.y:,.0f}</td></tr>',
-                                footerFormat: '</table>',
-                                shared: true,
-                                useHTML: true
-                            },
-                            plotOptions: {
-                                pie: {
-                                    dataLabels: {
-                                        enabled: false
-                                    },
-                                    stacking: 'percent',
-                                    showInLegend: true
-                                }
-                            },
-
-                            series: [{
-                                name: 'تماسهای امروز ',
-                                data: [1]
-                            }],
-                            legend: {
-                                labelFormatter: function () {
-                                    return this.name + ' ' + (this.y ? this.y : 0)
-                                }
-                            }
-                        });
-
-
-                });
-            </script>
-
-        </div>
-
-        <!-- TO DO List -->
-    </section>
-    <!-- /.right col -->
-    <!-- left col (We are only adding the ID to make the widgets sortable)-->
-    <section class="col-lg-5 connectedSortable ui-sortable">
-        <!-- Map box -->
-        <div class="box box-solid bg-light-blue-gradient">
-
-            <div id="chart3" style="width:100%; height:400px;">
-
-                <script>
-                    var mChart3;
-                    document.addEventListener('DOMContentLoaded', function () {
-                        Highcharts.setOptions({
-                            chart: {
-                                style: {
-                                    fontFamily: 'Vazir',
-                                },
-                            }
-                        });
-                        mChart3 =
-                            Highcharts.chart('chart3', {
-                                chart: {
-                                    type: 'column'
-                                },
-                                title: {
-                                    text: 'وضعیت تماس ها'
-                                },
-                                subtitle: {
-                                    text: 'امروز'
-                                },
-                                xAxis: {
-                                    categories: [
-                                        'تماس جدید',
-                                        'درحال صحبت کردن',
-                                        'در حال شنیدن نتایج',
-                                    ],
-                                    crosshair: true
-                                },
-                                yAxis: {
-                                    min: 0,
-                                    title: {
-                                        text: 'نفر'
-                                    }
-                                },
-                                tooltip: {
-                                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                    pointFormat: '<tr><td style="color:{series.color};padding:0;font-size:10px">{series.name}</td>' +
-                                        '<td style="padding:0"><b>{point.y}</b></td></tr>',
-                                    footerFormat: '</table>',
-                                    shared: true,
-                                    useHTML: true
-                                },
-                                plotOptions: {
-                                    column: {
-                                        pointPadding: 0.2,
-                                        borderWidth: 0
-                                    }
-                                },
-                                series: [{
-                                    colorByPoint: true,
-                                    name: 'وضعیت تماس ها ',
-                                    data: [0, 0, 0]
-                                }]
-                            });
-                    });
-                </script>
-
-            </div>
-
-        </div>
-
-    </section>
-    <!-- left col -->
-</div>
+<div class="row"></div>
 <!-- /.row (main row) -->
 
 

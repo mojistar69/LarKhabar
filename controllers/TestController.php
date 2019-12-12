@@ -11,18 +11,10 @@ class TestController extends \yii\web\Controller
     public function actionIndex()
             
     {
-//        $miladi_today=date("Y/m/d");
-//        $t = explode('/','2019/03/15');
-//        $today=$this->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
-//        return $today ;
- $model = new ArchiveCallSearch();
-        return $this->render('index',
-            ['startDatetime'=>'1397/01/01',
-                'endDatetime'=>'1398/01/01',
-                'startTime'=>'00:00:00',
-                'endTime'=>'00:00:',
-                'model'=>$model,
-            ]);
+        if(unlink(Yii::$app->params['rbtUploadDir'].'test.jpg' ))
+        return 'ok';
+        else
+        return 'false';
     }
     
     function gregorian_to_jalali($gy,$gm,$gd,$mod=''){

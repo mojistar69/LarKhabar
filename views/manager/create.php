@@ -1,10 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Manager */
-
 $this->title = 'ایجاد مدیر';
 $this->params['breadcrumbs'][] = ['label' => 'مدیر', 'url' => ['index']];
 $this->params['breadcrumbs'][] =$this->title ;

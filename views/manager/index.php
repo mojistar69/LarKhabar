@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <div class="manager-index">
                 <p>
-                    <a href="<?= Yii::$app->homeUrl ?>?r=manager%2Fcreate" class="btn btn-primary btn-lg">
+                    <a href="<?= Yii::$app->homeUrl ?>?r=manager%2Fcreate" class="btn btn-flat btn-info">
                         ایجاد مدیر  <i class="fa fa-plus"></i>
                     </a>
                 </p>

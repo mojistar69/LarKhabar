@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\KhabarSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
@@ -33,7 +34,13 @@ class OnlineTrafficController extends \yii\web\Controller
 
     public function actionIndex()
     {
-       return $this->render('index');
+        $searchModel = new KhabarSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
     public function actionRefreshData()
     {
