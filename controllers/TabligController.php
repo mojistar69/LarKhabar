@@ -30,10 +30,6 @@ class TabligController extends Controller
         ];
     }
 
-    /**
-     * Lists all Tablig models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new TabligSearch();
@@ -45,12 +41,6 @@ class TabligController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Tablig model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -124,33 +114,32 @@ class TabligController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Tablig model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $chd=new ChangeDate();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $t = explode('/',$model->tarikh_start);
+            $model->tarikh_start=$chd->jalali_to_gregorian($t[0], $t[1], $t[2],'/');
+            $t = explode('/',$model->tarikh_end);
+            $model->tarikh_end=$chd->jalali_to_gregorian($t[0], $t[1], $t[2],'/');
+            $model->update();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+
+        $t = explode('-',$model->tarikh_start);
+        $model->tarikh_start=$chd->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
+        $t = explode('-',$model->tarikh_end);
+        $model->tarikh_end=$chd->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
         return $this->render('update', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Deletes an existing Tablig model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
+
+
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -158,13 +147,6 @@ class TabligController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Tablig model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Tablig the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Tablig::findOne($id)) !== null) {

@@ -1,5 +1,6 @@
 <?php
 
+use app\controllers\ChangeDate;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -47,8 +48,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['width' => '180'],
                 'contentOptions' => ['style' => 'max-width: 80px'],
                      'value' => function ($searchModel) {
-                    $date = new DateTime($searchModel['tarikh_start']);
-                    return Yii::$app->jdate->date("o/n/d", (int)strtotime($date->format('Y-m-d')));
+                         $t = explode('-',$searchModel['tarikh_start']);
+                         $chd=new ChangeDate();
+                        $shamsi_start=$chd->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
+                    return $shamsi_start;
                 },
             ],
             [
@@ -57,8 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['width' => '180'],
                 'contentOptions' => ['style' => 'max-width: 80px'],
                 'value' => function ($searchModel) {
-                    $date = new DateTime($searchModel['tarikh_end']);
-                    return Yii::$app->jdate->date("o/n/d", (int)strtotime($date->format('Y-m-d')));
+                    $t = explode('-',$searchModel['tarikh_end']);
+                    $chd=new ChangeDate();
+                    $shamsi_end=$chd->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
+                    return $shamsi_end;
                 },
             ],
             [

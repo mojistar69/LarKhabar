@@ -21,8 +21,6 @@
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">منو</li>
-                <li class="treeview">
                     <a href="#"></a>
                 <li>
                     <a href="<?= Yii::$app->homeUrl ?>?r=khabar">
@@ -58,7 +56,7 @@
 
                 <li>
                     <a href="<?= Yii::$app->homeUrl ?>?r=tablig">
-                        <i class="fa fa-user-o"></i> <span> تبلیغ</span>
+                        <i class="fa fa-money"></i> <span> تبلیغ</span>
                         <span class="pull-left-container">
             </span>
                     </a>
@@ -66,7 +64,7 @@
 
                 <li>
                     <a href="<?= Yii::$app->homeUrl ?>?r=weather">
-                        <i class="fa fa-user-o"></i> <span> آب و هوا</span>
+                        <i class="fa fa-sun-o"></i> <span> آب و هوا</span>
                         <span class="pull-left-container">
             </span>
                     </a>
@@ -74,7 +72,7 @@
 
                 <li>
                     <a href="<?= Yii::$app->homeUrl ?>?r=speak">
-                        <i class="fa fa-user-o"></i> <span> حرف مردم</span>
+                        <i class="fa fa-smile-o"></i> <span> حرف مردم</span>
                         <span class="pull-left-container">
             </span>
                     </a>
@@ -82,7 +80,15 @@
 
                 <li>
                     <a href="<?= Yii::$app->homeUrl ?>?r=update">
-                        <i class="fa fa-user-o"></i> <span> آپدیت</span>
+                        <i class="fa fa-file-text-o"></i> <span> آپدیت</span>
+                        <span class="pull-left-container">
+            </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?= Yii::$app->homeUrl ?>?r=comment">
+                        <i class="fa fa-comments-o"></i> <span> ارسال نظرات</span>
                         <span class="pull-left-container">
             </span>
                     </a>

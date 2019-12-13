@@ -98,7 +98,7 @@ use yii\widgets\ActiveForm;
                             $t = explode('/',$miladi_today);
                         }
                         $chdt=new ChangeDate();
-                        $sdate=$chdt->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
+                      //  $sdate=$chdt->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
 
                         echo $form->field($model, 'tarikh_start')->widget(jDate\DatePicker::className()) ?>
                         <div class="input-group-addon">
@@ -141,7 +141,7 @@ use yii\widgets\ActiveForm;
                         $t = explode('/',$miladi_today);
                         }
                         $chdt=new ChangeDate();
-                        $edate=$chdt->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
+                       // $edate=$chdt->gregorian_to_jalali($t[0], $t[1], $t[2],'/');
 
                         echo $form->field($model, 'tarikh_end')->widget(jDate\DatePicker::className()) ?>
 

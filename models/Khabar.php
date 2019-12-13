@@ -9,6 +9,7 @@ class Khabar extends \yii\db\ActiveRecord
     public $goroohname;
     public $musicFile1;
     public $musicFile2;
+    public $File3;
     public static function tableName()
     {
         return 'tbl_khabar';
@@ -19,6 +20,7 @@ class Khabar extends \yii\db\ActiveRecord
     {
         return [
             [['musicFile1','musicFile2'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg'],
+            [['File3'], 'file', 'skipOnEmpty' => true, 'extensions' =>'mp3, mp4', 'maxSize' => 1024*1024*5], //20 Mbyte
             [['lid', 'gorooh', 'titr', 'roo_titr', 'matn', 'ax_k', 'ax_b', 'tarikh', 'manba', 'view'], 'required'],
             [['lid', 'titr', 'roo_titr', 'matn', 'ax_k', 'ax_b', 'manba', 'film', 'film_aparat', 'film_onvan'], 'string'],
             [['gorooh', 'slide', 'taeed', 'view', 'viewtype', 'view_fm'], 'integer'],

@@ -49,19 +49,28 @@ use yii\helpers\Html;
             </div>
             <div class="box-body">
                 <div class="col-md-6">
+                    <?php
+                    $url_k=substr($model->ax_k,4,strlen($model->ax_k)-4);
+                    $url_b=substr($model->ax_b,4,strlen($model->ax_b)-4);
+                    ?>
                 <div class="form-group">
                     <?= $form->field($model, 'musicFile1')->fileInput()->label('عکس کوچک') ?>
                 </div>
+                    <img src="<?=$url_k?>" height="50" width="50" alt="عکس کوچک">
+
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <?= $form->field($model, 'musicFile2')->fileInput()->label('عکس بزرگ') ?>
                     </div>
+                    <img src="<?=$url_b?>" height="75" width="75" alt="عکس بزرگ">
                 </div>
 
-                <div class="form-group">
-                    <?= $form->field($model, 'film')->textarea(['rows' => 1]) ?>
-                </div>
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <?= $form->field($model, 'File3')->fileInput()->label('آدرس فیلم یا صوت (host)') ?>
+                    </div>
 
                 <div class="form-group">
                     <?= $form->field($model, 'film_aparat')->textarea(['rows' => 1]) ?>
@@ -69,6 +78,7 @@ use yii\helpers\Html;
 
                 <div class="form-group">
                     <?= $form->field($model, 'film_onvan')->textarea(['rows' => 1])->label('عنوان فیلم') ?>                </div>
+            </div>
             </div>
 
         </div>
@@ -119,7 +129,9 @@ use yii\helpers\Html;
 
                 <div class="col-md-6">
                 <div class="form-group">
-                    <?= $form->field($model, 'view_fm')->radioList([2 => 'متن',1 => 'صوت', 0 => 'ویدئو'])->label('نوع آیکون لوگوی خبر'); ?>
+                    <?= $form->field($model, 'view_fm')->
+                    radioList([1 => 'آیکون فیلم بر روی تصویر نمایش می دهد',2 => 'آیکون موسیقی', 0 => 'متن'])->
+                    label('نوع آیکون لوگوی خبر'); ?>
                 </div>
                 </div>
                             </div>

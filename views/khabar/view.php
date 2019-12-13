@@ -14,6 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="khabar-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+   <?php
+
+   if(isset($role['manager']))
+       echo 'manager';
+   ?>
+
 
     <p>
         <?= Html::a('ویرایش', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -24,6 +30,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php
+        $role=Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
+        $adminobject=Yii::$app->authManager->getRoles();
+        //var_dump($adminopject['admin']);
+        if(isset($role['admin']))
+
+            if($model->taeed==0)
+            echo Html::a('تایید', ['confirm', 'id' => $model->id], [
+            'class' => 'btn btn-success',
+            'data' => [
+                'confirm' => 'آیا مطمئن هستید می خواهید تایید کنید؟',
+                'method' => 'post',
+            ],
+        ]) ;
+        else
+            echo Html::a('عدم تایید', ['disapproval', 'id' => $model->id], [
+                'class' => 'btn btn-warning',
+                'data' => [
+                    'confirm' => 'آیا  می خواهید تایید را بردارید؟',
+                    'method' => 'post',
+                ],
+            ]) ;
+        ?>
     </p>
 
     <?= DetailView::widget([
@@ -41,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'matn:ntext',
             [
                 'label' => ' عکس کوچک',
-                'format' => ['image',['width'=>'100','height'=>'100']],
+                'format' => ['image',['width'=>'50','height'=>'50']],
                 'value'=>function($data) { return $data->imageurlk; },
             ],
             [
@@ -52,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'عکس بزرگ',
-                'format' => ['image',['width'=>'100','height'=>'100']],
+                'format' => ['image',['width'=>'75','height'=>'75']],
                 'value'=>function($data) { return $data->imageurlb; },
             ],
             [
