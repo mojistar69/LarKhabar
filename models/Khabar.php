@@ -19,9 +19,9 @@ class Khabar extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['musicFile1','musicFile2'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg'],
-            [['File3'], 'file', 'skipOnEmpty' => true, 'extensions' =>'mp3, mp4', 'maxSize' => 1024*1024*5], //20 Mbyte
-            [['lid', 'gorooh', 'titr', 'roo_titr', 'matn', 'ax_k', 'ax_b', 'tarikh', 'manba', 'view'], 'required'],
+            [['musicFile1','musicFile2'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png,jpeg'],
+            [['File3'], 'file', 'skipOnEmpty' => true, 'extensions' =>'mp3, mp4, png, jpeg', 'maxSize' => 1024*1024*20], //20 Mbyte
+            [['lid', 'gorooh', 'titr', 'roo_titr', 'matn', 'ax_k', 'ax_b', 'tarikh', 'manba', 'view','slide', 'viewtype', 'view_fm'], 'required'],
             [['lid', 'titr', 'roo_titr', 'matn', 'ax_k', 'ax_b', 'manba', 'film', 'film_aparat', 'film_onvan'], 'string'],
             [['gorooh', 'slide', 'taeed', 'view', 'viewtype', 'view_fm'], 'integer'],
             [['tarikh'], 'safe'],

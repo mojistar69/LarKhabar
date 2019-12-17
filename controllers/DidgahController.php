@@ -27,12 +27,17 @@ class DidgahController extends Controller
             return [
                 'access' => [
                     'class' => AccessControl::className(),
-                    'only' => ['index','view','create','update','delete'],
+                    'only' => ['index','view','create','update','delete','confirm','disapproval'],
                     'rules' => [
                         [
                             'allow' => true,
-                            'actions' => ['index','view','create','update','delete','lists'],
+                            'actions' => ['index','view','create','update','delete','lists','confirm','disapproval'],
                             'roles' => ['admin'],
+                        ],
+                        [
+                            'allow' => true,
+                            'actions' => ['index','view','create','update','lists'],
+                            'roles' => ['manager'],
                         ],
                         [
                             'allow' => false,
@@ -131,13 +136,20 @@ class DidgahController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Didgah model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Didgah the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function actionConfirm($id)
+    {
+        $model = $this->findModel($id);
+        $model->taeed=1;
+        $model->save();
+        return $this->redirect(['index']);
+    }
+    public function actionDisapproval($id)
+    {
+        $model = $this->findModel($id);
+        $model->taeed=0;
+        $model->save();
+        return $this->redirect(['index']);
+    }
     protected function findModel($id)
     {
         if (($model = Didgah::findOne($id)) !== null) {

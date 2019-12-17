@@ -54,22 +54,38 @@ use yii\helpers\Html;
                     $url_b=substr($model->ax_b,4,strlen($model->ax_b)-4);
                     ?>
                 <div class="form-group">
-                    <?= $form->field($model, 'musicFile1')->fileInput()->label('عکس کوچک') ?>
+                    <?= $form->field($model, 'musicFile1')->fileInput()->label('انتخاب فایل عکس کوچک جهت بارگذاری') ?>
                 </div>
                     <img src="<?=$url_k?>" height="50" width="50" alt="عکس کوچک">
 
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <?= $form->field($model, 'musicFile2')->fileInput()->label('عکس بزرگ') ?>
+                        <?= $form->field($model, 'musicFile2')->fileInput()->label('انتخاب فایل عکس بزرگ جهت بارگذاری') ?>
                     </div>
                     <img src="<?=$url_b?>" height="75" width="75" alt="عکس بزرگ">
                 </div>
-
-                <div class="col-md-12">
+                <div class="col-md-8">
 
                     <div class="form-group">
-                        <?= $form->field($model, 'File3')->fileInput()->label('آدرس فیلم یا صوت (host)') ?>
+                        <?= $form->field($model, 'File3')->fileInput()->label('انتخاب فایل فیلم یا صوت جهت بارگذاری') ?>
+                    </div>
+                    </div>
+                 <div class="col-md-12">
+                        <div class="col-md-3">
+                        <row> <br> </row>
+                        <row>
+                            <a href="<?= Yii::$app->homeUrl ?>?r=khabar/remove">
+                                <i class="fa fa-remove"></i> <span>حذف فیلم</span>
+                                <span class="pull-left-container">
+            </span>
+                            </a>
+                        </row>
+                        </div>
+                        <div class="col-md-9">
+                        <?= $form->field($model, 'film')->textarea(['rows' => 1,'disabled'=>'true'])->label(' فیلم یا صوت بارگذاری شده') ?>
+                        </div>
+
                     </div>
 
                 <div class="form-group">
@@ -82,7 +98,7 @@ use yii\helpers\Html;
             </div>
 
         </div>
-        </div>
+
     <div class="col-md-6">
 
         <div class="box box-info">
@@ -130,7 +146,7 @@ use yii\helpers\Html;
                 <div class="col-md-6">
                 <div class="form-group">
                     <?= $form->field($model, 'view_fm')->
-                    radioList([1 => 'آیکون فیلم بر روی تصویر نمایش می دهد',2 => 'آیکون موسیقی', 0 => 'متن'])->
+                    radioList([2 => 'آیکون فیلم',1 => 'آیکون موسیقی', 0 => 'متن'])->
                     label('نوع آیکون لوگوی خبر'); ?>
                 </div>
                 </div>

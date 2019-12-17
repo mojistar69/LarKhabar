@@ -17,9 +17,7 @@ use Yii;
  */
 class Didgah extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    public $khabarname;
     public static function tableName()
     {
         return 'tbl_didgah';
@@ -31,7 +29,7 @@ class Didgah extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['g_id', 'name', 'email', 'matn'], 'required'],
+            [['g_id', 'name', 'matn'], 'required'],
             [['g_id', 'taeed'], 'integer'],
             [['matn'], 'string'],
             [['tarikh'], 'safe'],
@@ -54,5 +52,10 @@ class Didgah extends \yii\db\ActiveRecord
             'tarikh' => 'تاریخ',
             'taeed' => 'وضعیت تایید',
         ];
+    }
+
+    public function getTbl_khabar()
+    {
+        return $this->hasOne(Khabar::className(), ['id' => 'g_id']);
     }
 }

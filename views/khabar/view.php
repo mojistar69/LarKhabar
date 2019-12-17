@@ -104,14 +104,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'film:ntext',
             'film_aparat:ntext',
             'film_onvan:ntext',
-            'slide',
+            [
+                'attribute' => 'slide',
+                'format' => 'raw',
+                'enableSorting' => false,
+                'value' => function($model) {
+                    if ($model['slide']==1)  return '<span class="label label-warning">ویژه</span>';
+                    else return 'عادی';},
+                'headerOptions' => ['width' => '50'],
+
+                'label' => 'نوع'
+            ],
             [
                 'attribute' => 'taeed',
+                'format' => 'raw',
                 'value' => function($model) {
-                    if ($model['taeed']==1)  return 'تایید';
-                    else return 'عدم تایید';},
-                'headerOptions' => ['width' => '180'],
-                'label' => '  وضعیت تایید'
+                    if ($model['taeed']==1)  return '<span class="label label-success">تایید</span>';
+                    else return '<span class="label label-danger">عدم تایید</span>';},
+                'headerOptions' => ['width' => '100'],
+                'label' => ' وضعیت'
             ],
             'view',
 //            'viewtype',

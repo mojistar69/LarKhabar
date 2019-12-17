@@ -11,14 +11,12 @@ use app\models\Didgah;
  */
 class DidgahSearch extends Didgah
 {
-    /**
-     * {@inheritdoc}
-     */
+    public $khabarname;
     public function rules()
     {
         return [
             [['id', 'g_id', 'taeed'], 'integer'],
-            [['name', 'email', 'matn', 'tarikh'], 'safe'],
+            [['name', 'email', 'matn', 'tarikh','khabarname'], 'safe'],
         ];
     }
 
@@ -31,16 +29,12 @@ class DidgahSearch extends Didgah
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
+
     public function search($params)
     {
         $query = Didgah::find();
+        $query->innerJoinWith('tbl_khabar');
+        $query->orderBy('id DESC');
 
         // add conditions that should always apply here
 
@@ -58,15 +52,16 @@ class DidgahSearch extends Didgah
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'g_id' => $this->g_id,
-            'tarikh' => $this->tarikh,
-            'taeed' => $this->taeed,
+            'tbl_didgah.id' => $this->id,
+            'tbl_didgah.g_id' => $this->g_id,
+            'tbl_didgah.tarikh' => $this->tarikh,
+            'tbl_didgah.taeed' => $this->taeed,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'matn', $this->matn]);
+            ->andFilterWhere(['like', 'tbl_didgah.matn', $this->matn])
+        ->andFilterWhere(['like', 'tbl_khabar.titr', $this->khabarname]);
 
         return $dataProvider;
     }

@@ -5,7 +5,10 @@ use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 //use dosamigos\datepicker\DatePicker;
 use kartik\date\DatePicker;
- ?>
+use yii\helpers\Html;
+use yii\widgets\Pjax;
+
+?>
 
 <!-- Small boxes (Stat box) -->
 <div class="row">
@@ -36,10 +39,12 @@ use kartik\date\DatePicker;
                         <a href="<?= Yii::$app->homeUrl ?>?r=khabar%2Fcreate" class="btn btn-flat btn-info">
                             ایجاد خبر  <i class="fa fa-plus"></i>
                         </a>
-                        <a href="<?= Yii::$app->homeUrl ?>?r=khabar%2Fcreate" class="btn btn-flat btn-primary">
-                            جستجو خبر  <i class="fa fa-search"></i>
+                        <a href="<?= Yii::$app->homeUrl ?>?r=khabar%2Findex" class="btn btn-flat btn-primary">
+                            نمایش همه  <i class="fa fa-search"></i>
                         </a>
+
                     </p>
+                    <?php  Pjax::begin(['id' => 'pjax-grid-view','enablePushState' => false]); ?>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
@@ -78,7 +83,7 @@ use kartik\date\DatePicker;
                                     else return '';},
                                 'headerOptions' => ['width' => '50'],
                                 'filter'=>array("1"=>"ویژه","0"=>"عادی"),
-                                'label' => 'نوع خبر'
+                                'label' => 'نوع'
                             ],
 //                            [
 //                                'attribute' => 'lid',
@@ -102,6 +107,7 @@ use kartik\date\DatePicker;
                                 'headerOptions' => ['width' => '120'],
                                 'enableSorting' => false,
                                 'contentOptions' => ['style' => 'max-width: 60px'],
+                                'label' => 'تاریخ درج',
                                 'value' => function ($searchModel) {
                                     $date = new DateTime($searchModel['tarikh']);
                                     return Yii::$app->jdate->date("o/n/d – H:i:s", (int)strtotime($date->format('Y-m-d H:i:s')));
@@ -127,7 +133,7 @@ use kartik\date\DatePicker;
                             [
                                 'attribute' => 'view',
                                 'value' => 'view',
-                                'label' => 'تعداد بازدید',
+                                'label' => 'بازدید',
                                 'enableSorting' => false,
                                 'filter'=>array("1"=>"پر بازدید ترین","0"=>"کم بازدید ترین"),
                             ],
@@ -136,9 +142,40 @@ use kartik\date\DatePicker;
 
                             ['class' => 'yii\grid\ActionColumn',
                                 'header' => 'امکانات',
+                                'template' => '{view}{update}{delete}{confirm}{disapproval}',
+                                'buttons' => [
+                                    'view' => function ($url, $model) {
+                                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+                                            'title' => Yii::t('app', 'مشاهده'),
+                                        ]);
+                                    },
+                                    'update' => function ($url, $model) {
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                            'title' => Yii::t('app', 'ویرایش'),
+                                        ]);
+                                    },
+
+                                    'confirm' => function ($url, $model) {
+                                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, [
+                                            'title' => Yii::t('app', 'تایید'),
+                                        ]);
+                                    },
+                                    'disapproval' => function ($url, $model) {
+                                        return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, [
+                                            'title' => Yii::t('app', 'عدم تایید'),
+                                        ]);
+                                    },
+                                    'delete' => function ($url, $model) {
+                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                            'title' => Yii::t('app', 'حذف'),
+                                        ]);
+                                    }
+
+                                ],
                                 ],
                         ],
                     ]); ?>
+                    <?php Pjax::end(); ?>
                 </div>
 
 

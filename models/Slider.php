@@ -37,7 +37,7 @@ class Slider extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['File1','File2','File3','File4'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg'],
+            [['File1','File2','File3','File4'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,png,jpeg'],
             [['Description1', 'Description2', 'Description3', 'Description4', 'Description5', 'Description6', 'Description7', 'Description8', 'Description9', 'Description10'], 'string'],
         ];
     }

@@ -101,7 +101,7 @@ class KhabarSearch extends Khabar
             ->andFilterWhere(['like', 'film', $this->film])
             ->andFilterWhere(['like', 'film_aparat', $this->film_aparat])
             ->andFilterWhere(['like', 'film_onvan', $this->film_onvan])
-        ->andFilterWhere(['like', 'tbl_gorooh.onvan', $this->goroohname]);
+            ->andFilterWhere(['like', 'tbl_gorooh.onvan', $this->goroohname]);
 
 
         return $dataProvider;

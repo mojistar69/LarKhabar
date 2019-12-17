@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
                 <div class="form-group">
                     <?php $form = ActiveForm::begin(); ?>
                     <?= $form->field($model, 'g_id')->textarea(['rows' => 1,'maxlength' => 90,'style'=>'width:200px',
-                        'placeholder'=>'شناسه خبر']) ?>
+                        'placeholder'=>'شناسه خبر','disabled'=>'true']) ?>
                 </div>
                 <div class="form-group">
                     <?= $form->field($model, 'name')->textarea(['rows' => 1,'maxlength' => 90,'style'=>'width:200px',
@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
                         'placeholder'=>'متن']) ?>
                 </div>
 
-                <?= $form->field($model, 'taeed')->checkbox(); ?>
+
 
                 <div class="form-group">
                     <?= Html::submitButton('ذخیره', ['class' => 'btn btn-success']) ?>
